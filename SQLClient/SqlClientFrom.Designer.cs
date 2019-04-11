@@ -41,12 +41,15 @@
             this.tsmiMenuOpenConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMenuCloseConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.导出连接ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.导入连接ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.查看ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.收藏夹ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.窗口ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.帮助ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExportConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiImportConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiView = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiStore = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCommand = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiOption = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDropDownHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbtnConnect = new System.Windows.Forms.ToolStripButton();
             this.tsbtnUser = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -54,9 +57,6 @@
             this.tsbtnView = new System.Windows.Forms.ToolStripButton();
             this.tsbtnSelect = new System.Windows.Forms.ToolStripButton();
             this.msMain = new System.Windows.Forms.MenuStrip();
-            this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.命令界面ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.选项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsObject = new System.Windows.Forms.ToolStrip();
             this.tsObjectBlank = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
@@ -158,6 +158,10 @@
             this.tsmiExprotSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiRefreshSelect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.tcMain)).BeginInit();
             this.tcMain.SuspendLayout();
             this.tsSystemMain.SuspendLayout();
@@ -198,7 +202,7 @@
             this.tvMain.Name = "tvMain";
             this.tvMain.SelectedImageIndex = 0;
             this.tvMain.ShowLines = false;
-            this.tvMain.Size = new System.Drawing.Size(260, 394);
+            this.tvMain.Size = new System.Drawing.Size(260, 400);
             this.tvMain.TabIndex = 0;
             this.tvMain.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMain_NodeMouseDoubleClick);
             this.tvMain.Leave += new System.EventHandler(this.tvMain_Leave);
@@ -226,7 +230,7 @@
             this.tcMain.Margin = new System.Windows.Forms.Padding(0);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedTabPage = this.tpObject;
-            this.tcMain.Size = new System.Drawing.Size(862, 394);
+            this.tcMain.Size = new System.Drawing.Size(862, 400);
             this.tcMain.TabIndex = 0;
             this.tcMain.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.tpObject});
@@ -240,7 +244,7 @@
             this.tpObject.Margin = new System.Windows.Forms.Padding(0);
             this.tpObject.Name = "tpObject";
             this.tpObject.ShowCloseButton = DevExpress.Utils.DefaultBoolean.False;
-            this.tpObject.Size = new System.Drawing.Size(856, 365);
+            this.tpObject.Size = new System.Drawing.Size(856, 371);
             this.tpObject.Text = "对象";
             // 
             // imgListListView
@@ -258,10 +262,11 @@
             this.tsSystemMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsSystemMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiFile,
-            this.查看ToolStripMenuItem1,
-            this.收藏夹ToolStripMenuItem,
-            this.窗口ToolStripMenuItem,
-            this.帮助ToolStripMenuItem1});
+            this.tsmiView,
+            this.tsmiStore,
+            this.tsmiTool,
+            this.tsmiWindow,
+            this.tsmiDropDownHelp});
             this.tsSystemMain.Location = new System.Drawing.Point(0, 0);
             this.tsSystemMain.Name = "tsSystemMain";
             this.tsSystemMain.Padding = new System.Windows.Forms.Padding(0);
@@ -276,8 +281,8 @@
             this.tsmiMenuOpenConnect,
             this.tsmiMenuCloseConnect,
             this.toolStripSeparator9,
-            this.导出连接ToolStripMenuItem,
-            this.导入连接ToolStripMenuItem});
+            this.tsmiExportConnect,
+            this.tsmiImportConnect});
             this.tsmiFile.Name = "tsmiFile";
             this.tsmiFile.Size = new System.Drawing.Size(44, 25);
             this.tsmiFile.Text = "文件";
@@ -286,64 +291,91 @@
             // tsmiConnect
             // 
             this.tsmiConnect.Name = "tsmiConnect";
-            this.tsmiConnect.Size = new System.Drawing.Size(152, 22);
+            this.tsmiConnect.Size = new System.Drawing.Size(124, 22);
             this.tsmiConnect.Text = "新建连接";
             this.tsmiConnect.Click += new System.EventHandler(this.tsbtnConnect_Click);
             // 
             // tsmiMenuOpenConnect
             // 
             this.tsmiMenuOpenConnect.Name = "tsmiMenuOpenConnect";
-            this.tsmiMenuOpenConnect.Size = new System.Drawing.Size(152, 22);
+            this.tsmiMenuOpenConnect.Size = new System.Drawing.Size(124, 22);
             this.tsmiMenuOpenConnect.Text = "打开连接";
             this.tsmiMenuOpenConnect.Click += new System.EventHandler(this.tsmiMenuOpenConnect_Click);
             // 
             // tsmiMenuCloseConnect
             // 
             this.tsmiMenuCloseConnect.Name = "tsmiMenuCloseConnect";
-            this.tsmiMenuCloseConnect.Size = new System.Drawing.Size(152, 22);
+            this.tsmiMenuCloseConnect.Size = new System.Drawing.Size(124, 22);
             this.tsmiMenuCloseConnect.Text = "关闭连接";
             this.tsmiMenuCloseConnect.Click += new System.EventHandler(this.tsmiCloseConnect_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(121, 6);
             // 
-            // 导出连接ToolStripMenuItem
+            // tsmiExportConnect
             // 
-            this.导出连接ToolStripMenuItem.Name = "导出连接ToolStripMenuItem";
-            this.导出连接ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.导出连接ToolStripMenuItem.Text = "导出连接";
+            this.tsmiExportConnect.Name = "tsmiExportConnect";
+            this.tsmiExportConnect.Size = new System.Drawing.Size(124, 22);
+            this.tsmiExportConnect.Text = "导出连接";
             // 
-            // 导入连接ToolStripMenuItem
+            // tsmiImportConnect
             // 
-            this.导入连接ToolStripMenuItem.Name = "导入连接ToolStripMenuItem";
-            this.导入连接ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.导入连接ToolStripMenuItem.Text = "导入连接";
+            this.tsmiImportConnect.Name = "tsmiImportConnect";
+            this.tsmiImportConnect.Size = new System.Drawing.Size(124, 22);
+            this.tsmiImportConnect.Text = "导入连接";
             // 
-            // 查看ToolStripMenuItem1
+            // tsmiView
             // 
-            this.查看ToolStripMenuItem1.Name = "查看ToolStripMenuItem1";
-            this.查看ToolStripMenuItem1.Size = new System.Drawing.Size(44, 25);
-            this.查看ToolStripMenuItem1.Text = "查看";
+            this.tsmiView.Name = "tsmiView";
+            this.tsmiView.Size = new System.Drawing.Size(44, 25);
+            this.tsmiView.Text = "查看";
             // 
-            // 收藏夹ToolStripMenuItem
+            // tsmiStore
             // 
-            this.收藏夹ToolStripMenuItem.Name = "收藏夹ToolStripMenuItem";
-            this.收藏夹ToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
-            this.收藏夹ToolStripMenuItem.Text = "收藏夹";
+            this.tsmiStore.Name = "tsmiStore";
+            this.tsmiStore.Size = new System.Drawing.Size(56, 25);
+            this.tsmiStore.Text = "收藏夹";
             // 
-            // 窗口ToolStripMenuItem
+            // tsmiTool
             // 
-            this.窗口ToolStripMenuItem.Name = "窗口ToolStripMenuItem";
-            this.窗口ToolStripMenuItem.Size = new System.Drawing.Size(44, 25);
-            this.窗口ToolStripMenuItem.Text = "窗口";
+            this.tsmiTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCommand,
+            this.tsmiOption});
+            this.tsmiTool.Name = "tsmiTool";
+            this.tsmiTool.Size = new System.Drawing.Size(44, 25);
+            this.tsmiTool.Text = "工具";
             // 
-            // 帮助ToolStripMenuItem1
+            // tsmiCommand
             // 
-            this.帮助ToolStripMenuItem1.Name = "帮助ToolStripMenuItem1";
-            this.帮助ToolStripMenuItem1.Size = new System.Drawing.Size(44, 25);
-            this.帮助ToolStripMenuItem1.Text = "帮助";
+            this.tsmiCommand.Image = global::SQLClient.Resource.command_line_16;
+            this.tsmiCommand.Name = "tsmiCommand";
+            this.tsmiCommand.Size = new System.Drawing.Size(152, 22);
+            this.tsmiCommand.Text = "命令界面";
+            // 
+            // tsmiOption
+            // 
+            this.tsmiOption.Name = "tsmiOption";
+            this.tsmiOption.Size = new System.Drawing.Size(152, 22);
+            this.tsmiOption.Text = "选项";
+            // 
+            // tsmiWindow
+            // 
+            this.tsmiWindow.Name = "tsmiWindow";
+            this.tsmiWindow.Size = new System.Drawing.Size(44, 25);
+            this.tsmiWindow.Text = "窗口";
+            // 
+            // tsmiDropDownHelp
+            // 
+            this.tsmiDropDownHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiHelp,
+            this.tsmiCheckUpdate,
+            this.toolStripSeparator12,
+            this.tsmiAbout});
+            this.tsmiDropDownHelp.Name = "tsmiDropDownHelp";
+            this.tsmiDropDownHelp.Size = new System.Drawing.Size(44, 25);
+            this.tsmiDropDownHelp.Text = "帮助";
             // 
             // tsbtnConnect
             // 
@@ -431,28 +463,6 @@
             this.msMain.TabIndex = 16;
             this.msMain.Text = "menuStrip1";
             // 
-            // 工具ToolStripMenuItem
-            // 
-            this.工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.命令界面ToolStripMenuItem,
-            this.选项ToolStripMenuItem});
-            this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
-            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.工具ToolStripMenuItem.Text = "工具";
-            // 
-            // 命令界面ToolStripMenuItem
-            // 
-            this.命令界面ToolStripMenuItem.Image = global::SQLClient.Resource.command_line_16;
-            this.命令界面ToolStripMenuItem.Name = "命令界面ToolStripMenuItem";
-            this.命令界面ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.命令界面ToolStripMenuItem.Text = "命令界面";
-            // 
-            // 选项ToolStripMenuItem
-            // 
-            this.选项ToolStripMenuItem.Name = "选项ToolStripMenuItem";
-            this.选项ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.选项ToolStripMenuItem.Text = "选项";
-            // 
             // tsObject
             // 
             this.tsObject.BackColor = System.Drawing.SystemColors.Control;
@@ -466,7 +476,7 @@
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripSeparator14});
-            this.tsObject.Location = new System.Drawing.Point(0, 104);
+            this.tsObject.Location = new System.Drawing.Point(0, 98);
             this.tsObject.Name = "tsObject";
             this.tsObject.Padding = new System.Windows.Forms.Padding(0);
             this.tsObject.Size = new System.Drawing.Size(1125, 25);
@@ -488,7 +498,8 @@
             // tsObjectOwner
             // 
             this.tsObjectOwner.Name = "tsObjectOwner";
-            this.tsObjectOwner.Size = new System.Drawing.Size(0, 22);
+            this.tsObjectOwner.Size = new System.Drawing.Size(78, 22);
+            this.tsObjectOwner.Text = "数据库: 用户:";
             // 
             // toolStripButton1
             // 
@@ -530,7 +541,7 @@
             this.tsIndexs,
             this.tsPrimaryKeys,
             this.tsTriggers});
-            this.tsDesignTable.Location = new System.Drawing.Point(0, 79);
+            this.tsDesignTable.Location = new System.Drawing.Point(0, 73);
             this.tsDesignTable.Name = "tsDesignTable";
             this.tsDesignTable.Padding = new System.Windows.Forms.Padding(0);
             this.tsDesignTable.Size = new System.Drawing.Size(1125, 25);
@@ -594,7 +605,7 @@
             this.toolStripSeparator7,
             this.toolStripLabel5,
             this.toolStripSeparator10});
-            this.tsNewSelect.Location = new System.Drawing.Point(0, 54);
+            this.tsNewSelect.Location = new System.Drawing.Point(0, 48);
             this.tsNewSelect.Name = "tsNewSelect";
             this.tsNewSelect.Padding = new System.Windows.Forms.Padding(0);
             this.tsNewSelect.Size = new System.Drawing.Size(1125, 25);
@@ -681,7 +692,7 @@
             this.tsOpenTableWarn,
             this.toolStripSeparator11});
             this.tsOpenTable.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.tsOpenTable.Location = new System.Drawing.Point(0, 29);
+            this.tsOpenTable.Location = new System.Drawing.Point(0, 23);
             this.tsOpenTable.Name = "tsOpenTable";
             this.tsOpenTable.Padding = new System.Windows.Forms.Padding(0);
             this.tsOpenTable.Size = new System.Drawing.Size(1125, 25);
@@ -758,7 +769,7 @@
             this.spStatusBar.Panel2.Controls.Add(this.tsDesignTable);
             this.spStatusBar.Panel2.Controls.Add(this.tsObject);
             this.spStatusBar.Size = new System.Drawing.Size(1125, 524);
-            this.spStatusBar.SplitterDistance = 394;
+            this.spStatusBar.SplitterDistance = 400;
             this.spStatusBar.SplitterWidth = 1;
             this.spStatusBar.TabIndex = 32;
             // 
@@ -777,7 +788,7 @@
             // spMain.Panel2
             // 
             this.spMain.Panel2.Controls.Add(this.tcMain);
-            this.spMain.Size = new System.Drawing.Size(1125, 394);
+            this.spMain.Size = new System.Drawing.Size(1125, 400);
             this.spMain.SplitterDistance = 260;
             this.spMain.SplitterWidth = 3;
             this.spMain.TabIndex = 5;
@@ -1264,6 +1275,29 @@
             this.tsmiRefreshSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiRefreshSelect.Text = "刷新";
             // 
+            // tsmiHelp
+            // 
+            this.tsmiHelp.Name = "tsmiHelp";
+            this.tsmiHelp.Size = new System.Drawing.Size(152, 22);
+            this.tsmiHelp.Text = "帮助";
+            // 
+            // tsmiCheckUpdate
+            // 
+            this.tsmiCheckUpdate.Name = "tsmiCheckUpdate";
+            this.tsmiCheckUpdate.Size = new System.Drawing.Size(152, 22);
+            this.tsmiCheckUpdate.Text = "检查更新";
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
+            // 
+            // tsmiAbout
+            // 
+            this.tsmiAbout.Name = "tsmiAbout";
+            this.tsmiAbout.Size = new System.Drawing.Size(152, 22);
+            this.tsmiAbout.Text = "关于";
+            // 
             // SqlClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1273,7 +1307,6 @@
             this.Controls.Add(this.msMain);
             this.Controls.Add(this.tsSystemMain);
             this.DoubleBuffered = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.msMain;
             this.Name = "SqlClientForm";
@@ -1334,15 +1367,15 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiMenuOpenConnect;
         private System.Windows.Forms.ToolStripMenuItem tsmiMenuCloseConnect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripMenuItem 导出连接ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 导入连接ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 查看ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 收藏夹ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 命令界面ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 选项ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 窗口ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExportConnect;
+        private System.Windows.Forms.ToolStripMenuItem tsmiImportConnect;
+        private System.Windows.Forms.ToolStripMenuItem tsmiView;
+        private System.Windows.Forms.ToolStripMenuItem tsmiStore;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTool;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCommand;
+        private System.Windows.Forms.ToolStripMenuItem tsmiOption;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWindow;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDropDownHelp;
         private System.Windows.Forms.ToolStrip tsOpenTable;
         private System.Windows.Forms.ToolStrip tsNewSelect;
         private System.Windows.Forms.ToolStripLabel tsNewSelectBlank;
@@ -1445,6 +1478,10 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiDatabaseNewView;
         private System.Windows.Forms.ToolStripTextBox tsNewSelectStmt;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem tsmiHelp;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCheckUpdate;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
     }
 }
 

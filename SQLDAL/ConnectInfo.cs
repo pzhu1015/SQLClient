@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
+using System.ComponentModel;
 
 namespace SQLDAL
 {
@@ -15,6 +16,7 @@ namespace SQLDAL
         public static string LocalConnectionString = $@"Data Source = {Application.StartupPath}\AppData\SQL.db";
         public event CloseConnectEventHandler CloseConnect;
         public event OpenConnectEventHandler OpenConnect;
+        protected string driverName;
         protected string name;
         protected string user;
         protected string password;
@@ -32,6 +34,7 @@ namespace SQLDAL
         
         protected List<DatabaseInfo> databases = new List<DatabaseInfo>();
 
+        [Browsable(false)]
         public List<DatabaseInfo> Databases
         {
             get
@@ -45,6 +48,7 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(false)]
         public bool IsOpen
         {
             get
@@ -58,6 +62,7 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(false)]
         public string Message
         {
             get
@@ -71,6 +76,8 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(false)]
+        [Description("连接字符串")]
         public string ConnectionString
         {
             get
@@ -84,6 +91,7 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(false)]
         public string Name
         {
             get
@@ -97,6 +105,9 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(true)]
+        [Category("基本")]
+        [Description("驱动程序集名称")]
         public string AssemblyName
         {
             get
@@ -110,6 +121,9 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(true)]
+        [Category("基本")]
+        [Description("驱动程序命令空间")]
         public string NamespaceName
         {
             get
@@ -123,6 +137,9 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(true)]
+        [Category("基本")]
+        [Description("驱动程序连接信息类名")]
         public string ClassName
         {
             get
@@ -136,6 +153,7 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(false)]
         public string User
         {
             get
@@ -149,6 +167,7 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(false)]
         public string Password
         {
             get
@@ -162,6 +181,9 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(true)]
+        [Category("脚本")]
+        [Description("当前数据库查看表设计的脚本模版")]
         public string DesignTable
         {
             get
@@ -175,6 +197,9 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(true)]
+        [Category("脚本")]
+        [Description("当前数据库打开表的脚本模版")]
         public string OpenTable
         {
             get
@@ -188,6 +213,9 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(true)]
+        [Category("脚本")]
+        [Description("当前数据库支持的所有数据类型集合")]
         public string[] DataTypes
         {
             get
@@ -201,6 +229,9 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(true)]
+        [Category("脚本")]
+        [Description("当前数据库打开视图的脚本模版")]
         public string OpenView
         {
             get
@@ -214,6 +245,7 @@ namespace SQLDAL
             }
         }
 
+        [Browsable(false)]
         public TreeNode Node
         {
             get
@@ -224,6 +256,22 @@ namespace SQLDAL
             set
             {
                 node = value;
+            }
+        }
+
+        [Browsable(true)]
+        [Category("基本")]
+        [Description("当前数据库的驱动程序名称")]
+        public string DriverName
+        {
+            get
+            {
+                return driverName;
+            }
+
+            set
+            {
+                driverName = value;
             }
         }
 

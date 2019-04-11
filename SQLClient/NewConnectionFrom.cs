@@ -8,7 +8,7 @@ using System.Data;
 
 namespace SQLClient
 {
-    public partial class NewConnectionFrom : DevExpress.XtraEditors.XtraForm
+    public partial class NewConnectionFrom : Form
     {
         private ConnectInfo connectionInfo;
 
@@ -54,13 +54,18 @@ namespace SQLClient
                 foreach(DataRow dr in dt.Rows)
                 {
                     AccordionControlElement element = new AccordionControlElement(ElementStyle.Item);
-                    string name = dr["name"].ToString();
-                    element.Text = name;
-                    element.Tag = dr;
+                    ConnectInfo info = ReflectionHelper.CreateInstance<ConnectInfo>(dr["assemblyName"].ToString(), dr["namespaceName"].ToString(), dr["className"].ToString());
+                    info.DriverName = dr["name"].ToString();
+                    info.AssemblyName = dr["assemblyName"].ToString();
+                    info.ClassName = dr["className"].ToString();
+                    info.NamespaceName = dr["namespaceName"].ToString();
+                    info.DesignTable = dr["designTable"].ToString();
+                    info.OpenTable = dr["openTable"].ToString();
+                    info.OpenView = dr["openView"].ToString();
+                    info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                    element.Text = info.DriverName;
+                    element.Tag = info;
                     this.accDataSource.Elements[0].Elements.Add(element);
-                    TreeNode dbNodeEdit = new TreeNode(name);
-                    dbNodeEdit.Tag = dr;
-                    this.tvDataSourceEdit.Nodes.Add(dbNodeEdit);
                 }
 
                 if (this.accDataSource.SelectedElement != null)
@@ -101,24 +106,17 @@ namespace SQLClient
             try
             {
                 if (this.accDataSource.SelectedElement == null) return;
-                DataRow dr = this.accDataSource.SelectedElement.Tag as DataRow;
-                ConnectInfo info = ReflectionHelper.CreateInstance<ConnectInfo>(dr["assemblyName"].ToString(), dr["namespaceName"].ToString(), dr["className"].ToString());
-                info.AssemblyName = dr["assemblyName"].ToString();
-                info.ClassName = dr["className"].ToString();
-                info.NamespaceName = dr["namespaceName"].ToString();
+                ConnectInfo info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
                 Form form = info.GetConnectForm();
+                IConnectionForm connInfo = form as IConnectionForm;
+                connInfo.LoadConnectionInfo(info);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    IConnectionForm connInfo = form as IConnectionForm;
                     info.ConnectionString = connInfo.ConnectionString;
                     info.User = connInfo.User;
                     info.Password = connInfo.Password;
                     this.connectionInfo = info;
-                    this.txtConnectionString.Text = this.connectionInfo.ConnectionString;
-                    info.DesignTable = dr["designTable"].ToString();
-                    info.OpenTable = dr["openTable"].ToString();
-                    info.OpenView = dr["openView"].ToString();
-                    info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                    this.txtConnectionString.Text = connInfo.ConnectionString;
                 }
             }
             catch(Exception ex)
@@ -133,11 +131,12 @@ namespace SQLClient
             {
                 this.btnAdvance.Enabled = true;
                 this.btnOK.Enabled = true;
-                DataRow dr = this.accDataSource.SelectedElement.Tag as DataRow;
-                if (this.connectionInfo != null && this.connectionInfo.ClassName != dr["className"].ToString())
+                ConnectInfo info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
+                if (this.connectionInfo != null && this.connectionInfo.DriverName != info.DriverName)
                 {
                     this.connectionInfo = null;
                 }
+                this.pg.SelectedObject = info;
             }
             else
             {
