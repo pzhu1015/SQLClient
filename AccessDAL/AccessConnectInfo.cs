@@ -67,14 +67,14 @@ namespace AccessDAL
             return new AccessDatabaseInfo();
         }
 
-        public override Image CloseImage()
+        public override Image CloseImage
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        public override Image OpenImage()
+        public override Image OpenImage
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
         public override DbConnection GetConnection(string database)

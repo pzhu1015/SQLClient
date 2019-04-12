@@ -18,6 +18,16 @@ namespace SQLServerDAL
 
         }
 
+        public override Image CloseImage
+        {
+            get { return Resources.sqlserver_close_16; }
+        }
+
+        public override Image OpenImage
+        {
+            get { return Resources.sqlserver_open_16; }
+        }
+
         public override void Drop(string name)
         {
             try
@@ -102,15 +112,7 @@ namespace SQLServerDAL
             return new SQLServerConnectForm();
         }
 
-        public override Image CloseImage()
-        {
-            return Resources.sqlserver_close_16;
-        }
-
-        public override Image OpenImage()
-        {
-            return Resources.sqlserver_open_16;
-        }
+        
 
         public override DbConnection GetConnection(string database)
         {

@@ -17,6 +17,16 @@ namespace MySQLDAL
         {
         }
 
+        public override Image CloseImage
+        {
+            get { return Resources.mysql_close_16; }
+        }
+
+        public override Image OpenImage
+        {
+            get { return Resources.mysql_open_16; }
+        }
+
         public override void Drop(string name)
         {
             try
@@ -97,15 +107,7 @@ namespace MySQLDAL
             return new MySQLConnectForm();
         }
 
-        public override Image CloseImage()
-        {
-            return Resources.mysql_close_16;
-        }
-
-        public override Image OpenImage()
-        {
-            return Resources.mysql_open_16;
-        }
+       
 
         public override DbConnection GetConnection(string database)
         {

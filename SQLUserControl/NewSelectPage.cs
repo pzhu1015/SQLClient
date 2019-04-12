@@ -15,6 +15,7 @@ using System.IO;
 using System.Reflection;
 using SQLParser;
 using System.Threading;
+using SQLUserControl.Properties;
 
 namespace SQLUserControl
 {
@@ -292,11 +293,11 @@ namespace SQLUserControl
                             NodeTypeInfo sgNodeTypeInfo = sgNode.Tag as NodeTypeInfo;
                             TreeNode sNode = new TreeNode();
                             sNode.Text = this.selectInfo.Name;
-                            sNode.ImageKey = Resource.image_key_select;
-                            sNode.SelectedImageKey = Resource.image_key_select;
+                            sNode.ImageKey = Resources.image_key_select;
+                            sNode.SelectedImageKey = Resources.image_key_select;
                             sNode.Tag = new NodeTypeInfo(NodeType.eSelect, sNode, this.selectInfo);
                             sgNode.Nodes.Add(sNode);
-                            sgNodeTypeInfo.SelectList.AddItem(this.selectInfo, Resource.image_key_select);
+                            sgNodeTypeInfo.SelectList.AddItem(this.selectInfo, Resources.image_key_select);
                             this.page.Text = $"{this.selectInfo.Name}@{this.databaseInfo.Name}({this.databaseInfo.ConnectInfo.Name})-查询";
                             TabPageTypeInfo pageTypeInfo = this.page.Tag as TabPageTypeInfo;
                             pageTypeInfo.PageType = TabPageType.eOpenSelect;

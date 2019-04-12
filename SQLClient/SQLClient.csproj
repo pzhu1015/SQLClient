@@ -75,16 +75,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
     <Compile Include="LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpLoadDriverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpLoadDriverForm.Designer.cs">
+      <DependentUpon>UpLoadDriverForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="SqlClientFrom.resx">
       <DependentUpon>SqlClientFrom.cs</DependentUpon>
@@ -103,160 +104,65 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpLoadDriverForm.resx">
+      <DependentUpon>UpLoadDriverForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="AppData\SQL.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\VIEW_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\EVENT_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\FUNCTION_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CONNECT_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SELECT_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TABLE_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\USER_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\database_close_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\database_open_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\select_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\view_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\function_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\event_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\open_table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\new_table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\design_table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\delete_view_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\export_view_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\open_view_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\new_view_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\design_view_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\design_select_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\open_select_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\new_select_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\delete_select_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\delete_table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\export_table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\import_table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\user_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\command_line_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\menu_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\insert_item_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save_as_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\delete_item_16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\add_item_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\key_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\down_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\up_16.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\command_line_16.png" />
+    <None Include="Resources\CONNECT_32.png" />
     <None Include="Resources\copy_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\past_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\select_table_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\run_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stop_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\load_select_16.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\database_close_16.png" />
+    <None Include="Resources\database_open_16.png" />
+    <None Include="Resources\delete_item_16.png" />
+    <None Include="Resources\delete_select_16.png" />
+    <None Include="Resources\delete_table_16.png" />
+    <None Include="Resources\delete_view_16.png" />
+    <None Include="Resources\design_select_16.png" />
+    <None Include="Resources\design_table_16.png" />
+    <None Include="Resources\design_view_16.png" />
+    <None Include="Resources\down_16.png" />
+    <None Include="Resources\event_16.png" />
+    <None Include="Resources\EVENT_32.png" />
     <None Include="Resources\export_select_16.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\export_table_16.png" />
+    <None Include="Resources\export_view_16.png" />
     <None Include="Resources\format_sql_16.png" />
+    <None Include="Resources\function_16.png" />
+    <None Include="Resources\FUNCTION_32.png" />
+    <None Include="Resources\import_table_16.png" />
+    <None Include="Resources\insert_item_16.png" />
+    <None Include="Resources\key_16.png" />
+    <None Include="Resources\load_select_16.png" />
+    <None Include="Resources\menu_16.png" />
+    <None Include="Resources\new_select_16.png" />
+    <None Include="Resources\new_table_16.png" />
+    <None Include="Resources\new_view_16.png" />
+    <None Include="Resources\open_select_16.png" />
+    <None Include="Resources\open_table_16.png" />
+    <None Include="Resources\open_view_16.png" />
+    <None Include="Resources\past_16.png" />
+    <None Include="Resources\run_16.png" />
+    <None Include="Resources\save_16.png" />
+    <None Include="Resources\save_as_16.png" />
+    <None Include="Resources\select_16.png" />
+    <None Include="Resources\SELECT_32.png" />
+    <None Include="Resources\select_table_16.png" />
+    <None Include="Resources\stop_16.png" />
+    <None Include="Resources\table_16.png" />
+    <None Include="Resources\TABLE_32.png" />
+    <None Include="Resources\up_16.png" />
+    <None Include="Resources\user_16.png" />
+    <None Include="Resources\USER_32.png" />
+    <None Include="Resources\view_16.png" />
+    <None Include="Resources\VIEW_32.png" />
+    <None Include="Resources\view_details_16.png" />
+    <None Include="Resources\view_list_16.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Helper\Helper.csproj">
@@ -275,12 +181,6 @@
       <Project>{6c2bc445-6d3d-44c9-85ef-faff93a5aa61}</Project>
       <Name>SQLUserControl</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\view_details_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\view_list_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

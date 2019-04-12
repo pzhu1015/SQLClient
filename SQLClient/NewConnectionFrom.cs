@@ -5,6 +5,7 @@ using Helper;
 using SQLDAL;
 using System.IO;
 using System.Data;
+using SQLClient.Properties;
 
 namespace SQLClient
 {
@@ -64,9 +65,11 @@ namespace SQLClient
                     info.OpenView = dr["openView"].ToString();
                     info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
                     element.Text = info.DriverName;
+                    element.Image = info.OpenImage;
                     element.Tag = info;
                     this.accDataSource.Elements[0].Elements.Add(element);
                 }
+                this.accDataSource.SelectedElement = this.accDataSource.Elements[0].Elements[0];
 
                 if (this.accDataSource.SelectedElement != null)
                 {
@@ -85,19 +88,6 @@ namespace SQLClient
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
-            }
-        }
-
-        private void btnUpLoad_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = Resource.select_driver;
-            ofd.Filter = $"{Resource.dynamic_libaray}(*.dll)|*.dll";
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                string filename = ofd.FileName;
-                FileInfo info = new FileInfo(filename);
-                info.CopyTo($@"{Application.StartupPath}\{info.Name}");
             }
         }
 
@@ -142,6 +132,24 @@ namespace SQLClient
             {
                 this.btnAdvance.Enabled = false;
                 this.btnOK.Enabled = false;
+            }
+        }
+
+        private void btnUpLoad_Click(object sender, EventArgs e)
+        {
+            UpLoadDriverForm form = new UpLoadDriverForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //TODO get the DAL and Driver info then to insert driver list
+                bool rslt = ConnectInfo.AddDriver(form.ConnectInfo);
+                if (rslt)
+                {
+                    AccordionControlElement element = new AccordionControlElement(ElementStyle.Item);
+                    element.Text = form.ConnectInfo.DriverName;
+                    element.Image = form.ConnectInfo.OpenImage;
+                    element.Tag = form.ConnectInfo;
+                    this.accDataSource.Elements[0].Elements.Add(element);
+                }
             }
         }
     }

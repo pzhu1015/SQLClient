@@ -349,7 +349,7 @@
             // 
             // tsmiCommand
             // 
-            this.tsmiCommand.Image = global::SQLClient.Resource.command_line_16;
+            this.tsmiCommand.Image = global::SQLClient.Properties.Resources.command_line_16;
             this.tsmiCommand.Name = "tsmiCommand";
             this.tsmiCommand.Size = new System.Drawing.Size(152, 22);
             this.tsmiCommand.Text = "命令界面";
@@ -379,7 +379,7 @@
             // 
             // tsbtnConnect
             // 
-            this.tsbtnConnect.Image = global::SQLClient.Resource.CONNECT_32;
+            this.tsbtnConnect.Image = global::SQLClient.Properties.Resources.CONNECT_32;
             this.tsbtnConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnConnect.Margin = new System.Windows.Forms.Padding(5, 1, 0, 1);
@@ -392,7 +392,7 @@
             // 
             // tsbtnUser
             // 
-            this.tsbtnUser.Image = global::SQLClient.Resource.USER_32;
+            this.tsbtnUser.Image = global::SQLClient.Properties.Resources.USER_32;
             this.tsbtnUser.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnUser.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnUser.Margin = new System.Windows.Forms.Padding(5, 1, 0, 1);
@@ -409,7 +409,7 @@
             // 
             // tsbtnTable
             // 
-            this.tsbtnTable.Image = global::SQLClient.Resource.TABLE_32;
+            this.tsbtnTable.Image = global::SQLClient.Properties.Resources.TABLE_32;
             this.tsbtnTable.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnTable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTable.Margin = new System.Windows.Forms.Padding(5, 1, 0, 1);
@@ -422,7 +422,7 @@
             // 
             // tsbtnView
             // 
-            this.tsbtnView.Image = global::SQLClient.Resource.VIEW_32;
+            this.tsbtnView.Image = global::SQLClient.Properties.Resources.VIEW_32;
             this.tsbtnView.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnView.Margin = new System.Windows.Forms.Padding(5, 1, 0, 1);
@@ -435,7 +435,7 @@
             // 
             // tsbtnSelect
             // 
-            this.tsbtnSelect.Image = global::SQLClient.Resource.SELECT_32;
+            this.tsbtnSelect.Image = global::SQLClient.Properties.Resources.SELECT_32;
             this.tsbtnSelect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSelect.Margin = new System.Windows.Forms.Padding(5, 1, 0, 1);
@@ -808,7 +808,7 @@
             // 
             // tsmiGroupNewTable
             // 
-            this.tsmiGroupNewTable.Image = global::SQLClient.Resource.new_table_16;
+            this.tsmiGroupNewTable.Image = global::SQLClient.Properties.Resources.new_table_16;
             this.tsmiGroupNewTable.Name = "tsmiGroupNewTable";
             this.tsmiGroupNewTable.Size = new System.Drawing.Size(124, 22);
             this.tsmiGroupNewTable.Text = "新建表";
@@ -821,14 +821,14 @@
             // 
             // tsmiImportTableGroup
             // 
-            this.tsmiImportTableGroup.Image = global::SQLClient.Resource.import_table_16;
+            this.tsmiImportTableGroup.Image = global::SQLClient.Properties.Resources.import_table_16;
             this.tsmiImportTableGroup.Name = "tsmiImportTableGroup";
             this.tsmiImportTableGroup.Size = new System.Drawing.Size(124, 22);
             this.tsmiImportTableGroup.Text = "导入向导";
             // 
             // tsmiExportTableGroup
             // 
-            this.tsmiExportTableGroup.Image = global::SQLClient.Resource.export_table_16;
+            this.tsmiExportTableGroup.Image = global::SQLClient.Properties.Resources.export_table_16;
             this.tsmiExportTableGroup.Name = "tsmiExportTableGroup";
             this.tsmiExportTableGroup.Size = new System.Drawing.Size(124, 22);
             this.tsmiExportTableGroup.Text = "导出向导";
@@ -857,7 +857,7 @@
             // 
             // tsmiGroupNewView
             // 
-            this.tsmiGroupNewView.Image = global::SQLClient.Resource.new_view_16;
+            this.tsmiGroupNewView.Image = global::SQLClient.Properties.Resources.new_view_16;
             this.tsmiGroupNewView.Name = "tsmiGroupNewView";
             this.tsmiGroupNewView.Size = new System.Drawing.Size(124, 22);
             this.tsmiGroupNewView.Text = "新建视图";
@@ -869,7 +869,7 @@
             // 
             // tsmiGroupExprotView
             // 
-            this.tsmiGroupExprotView.Image = global::SQLClient.Resource.export_view_16;
+            this.tsmiGroupExprotView.Image = global::SQLClient.Properties.Resources.export_view_16;
             this.tsmiGroupExprotView.Name = "tsmiGroupExprotView";
             this.tsmiGroupExprotView.Size = new System.Drawing.Size(124, 22);
             this.tsmiGroupExprotView.Text = "导出向导";
@@ -896,7 +896,7 @@
             // 
             // tsmiGrupNewSelect
             // 
-            this.tsmiGrupNewSelect.Image = global::SQLClient.Resource.new_select_16;
+            this.tsmiGrupNewSelect.Image = global::SQLClient.Properties.Resources.new_select_16;
             this.tsmiGrupNewSelect.Name = "tsmiGrupNewSelect";
             this.tsmiGrupNewSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiGrupNewSelect.Text = "新建查询";
@@ -1016,7 +1016,7 @@
             // 
             // tsmiDatabaseNewTable
             // 
-            this.tsmiDatabaseNewTable.Image = global::SQLClient.Resource.new_table_16;
+            this.tsmiDatabaseNewTable.Image = global::SQLClient.Properties.Resources.new_table_16;
             this.tsmiDatabaseNewTable.Name = "tsmiDatabaseNewTable";
             this.tsmiDatabaseNewTable.Size = new System.Drawing.Size(136, 22);
             this.tsmiDatabaseNewTable.Text = "新建表";
@@ -1024,7 +1024,7 @@
             // 
             // tsmiDatabaseNewView
             // 
-            this.tsmiDatabaseNewView.Image = global::SQLClient.Resource.new_view_16;
+            this.tsmiDatabaseNewView.Image = global::SQLClient.Properties.Resources.new_view_16;
             this.tsmiDatabaseNewView.Name = "tsmiDatabaseNewView";
             this.tsmiDatabaseNewView.Size = new System.Drawing.Size(136, 22);
             this.tsmiDatabaseNewView.Text = "新建视图";
@@ -1032,7 +1032,7 @@
             // 
             // tsmiDatabaseNewSelect
             // 
-            this.tsmiDatabaseNewSelect.Image = global::SQLClient.Resource.new_select_16;
+            this.tsmiDatabaseNewSelect.Image = global::SQLClient.Properties.Resources.new_select_16;
             this.tsmiDatabaseNewSelect.Name = "tsmiDatabaseNewSelect";
             this.tsmiDatabaseNewSelect.Size = new System.Drawing.Size(136, 22);
             this.tsmiDatabaseNewSelect.Text = "新建查询";
@@ -1083,7 +1083,7 @@
             // 
             // tsmiOpenTable
             // 
-            this.tsmiOpenTable.Image = global::SQLClient.Resource.open_table_16;
+            this.tsmiOpenTable.Image = global::SQLClient.Properties.Resources.open_table_16;
             this.tsmiOpenTable.Name = "tsmiOpenTable";
             this.tsmiOpenTable.Size = new System.Drawing.Size(124, 22);
             this.tsmiOpenTable.Text = "打开表";
@@ -1091,7 +1091,7 @@
             // 
             // tsmiDesignTable
             // 
-            this.tsmiDesignTable.Image = global::SQLClient.Resource.design_table_16;
+            this.tsmiDesignTable.Image = global::SQLClient.Properties.Resources.design_table_16;
             this.tsmiDesignTable.Name = "tsmiDesignTable";
             this.tsmiDesignTable.Size = new System.Drawing.Size(124, 22);
             this.tsmiDesignTable.Text = "设计表";
@@ -1099,7 +1099,7 @@
             // 
             // tsmiTableNewTable
             // 
-            this.tsmiTableNewTable.Image = global::SQLClient.Resource.new_table_16;
+            this.tsmiTableNewTable.Image = global::SQLClient.Properties.Resources.new_table_16;
             this.tsmiTableNewTable.Name = "tsmiTableNewTable";
             this.tsmiTableNewTable.Size = new System.Drawing.Size(124, 22);
             this.tsmiTableNewTable.Text = "新建表";
@@ -1107,7 +1107,7 @@
             // 
             // tsmiDeleteTable
             // 
-            this.tsmiDeleteTable.Image = global::SQLClient.Resource.delete_table_16;
+            this.tsmiDeleteTable.Image = global::SQLClient.Properties.Resources.delete_table_16;
             this.tsmiDeleteTable.Name = "tsmiDeleteTable";
             this.tsmiDeleteTable.Size = new System.Drawing.Size(124, 22);
             this.tsmiDeleteTable.Text = "删除表";
@@ -1119,14 +1119,14 @@
             // 
             // tsmiImportTable
             // 
-            this.tsmiImportTable.Image = global::SQLClient.Resource.import_table_16;
+            this.tsmiImportTable.Image = global::SQLClient.Properties.Resources.import_table_16;
             this.tsmiImportTable.Name = "tsmiImportTable";
             this.tsmiImportTable.Size = new System.Drawing.Size(124, 22);
             this.tsmiImportTable.Text = "导入向导";
             // 
             // tsmiExportTable
             // 
-            this.tsmiExportTable.Image = global::SQLClient.Resource.export_table_16;
+            this.tsmiExportTable.Image = global::SQLClient.Properties.Resources.export_table_16;
             this.tsmiExportTable.Name = "tsmiExportTable";
             this.tsmiExportTable.Size = new System.Drawing.Size(124, 22);
             this.tsmiExportTable.Text = "导出向导";
@@ -1158,7 +1158,7 @@
             // 
             // tsmiOpenView
             // 
-            this.tsmiOpenView.Image = global::SQLClient.Resource.open_view_16;
+            this.tsmiOpenView.Image = global::SQLClient.Properties.Resources.open_view_16;
             this.tsmiOpenView.Name = "tsmiOpenView";
             this.tsmiOpenView.Size = new System.Drawing.Size(124, 22);
             this.tsmiOpenView.Text = "打开视图";
@@ -1166,21 +1166,21 @@
             // 
             // tsmiDesignView
             // 
-            this.tsmiDesignView.Image = global::SQLClient.Resource.design_view_16;
+            this.tsmiDesignView.Image = global::SQLClient.Properties.Resources.design_view_16;
             this.tsmiDesignView.Name = "tsmiDesignView";
             this.tsmiDesignView.Size = new System.Drawing.Size(124, 22);
             this.tsmiDesignView.Text = "视计视图";
             // 
             // tsmiViewNewView
             // 
-            this.tsmiViewNewView.Image = global::SQLClient.Resource.new_view_16;
+            this.tsmiViewNewView.Image = global::SQLClient.Properties.Resources.new_view_16;
             this.tsmiViewNewView.Name = "tsmiViewNewView";
             this.tsmiViewNewView.Size = new System.Drawing.Size(124, 22);
             this.tsmiViewNewView.Text = "新建视图";
             // 
             // tsmiDeleteView
             // 
-            this.tsmiDeleteView.Image = global::SQLClient.Resource.delete_view_16;
+            this.tsmiDeleteView.Image = global::SQLClient.Properties.Resources.delete_view_16;
             this.tsmiDeleteView.Name = "tsmiDeleteView";
             this.tsmiDeleteView.Size = new System.Drawing.Size(124, 22);
             this.tsmiDeleteView.Text = "删除视图";
@@ -1192,7 +1192,7 @@
             // 
             // tsmiExportView
             // 
-            this.tsmiExportView.Image = global::SQLClient.Resource.export_view_16;
+            this.tsmiExportView.Image = global::SQLClient.Properties.Resources.export_view_16;
             this.tsmiExportView.Name = "tsmiExportView";
             this.tsmiExportView.Size = new System.Drawing.Size(124, 22);
             this.tsmiExportView.Text = "导出视图";
@@ -1224,7 +1224,7 @@
             // 
             // tsmiOpenSelect
             // 
-            this.tsmiOpenSelect.Image = global::SQLClient.Resource.open_select_16;
+            this.tsmiOpenSelect.Image = global::SQLClient.Properties.Resources.open_select_16;
             this.tsmiOpenSelect.Name = "tsmiOpenSelect";
             this.tsmiOpenSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiOpenSelect.Text = "打开查询";
@@ -1232,14 +1232,14 @@
             // 
             // tsmiDesignSelect
             // 
-            this.tsmiDesignSelect.Image = global::SQLClient.Resource.design_select_16;
+            this.tsmiDesignSelect.Image = global::SQLClient.Properties.Resources.design_select_16;
             this.tsmiDesignSelect.Name = "tsmiDesignSelect";
             this.tsmiDesignSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiDesignSelect.Text = "设计查询";
             // 
             // tsmiNewSelect
             // 
-            this.tsmiNewSelect.Image = global::SQLClient.Resource.new_select_16;
+            this.tsmiNewSelect.Image = global::SQLClient.Properties.Resources.new_select_16;
             this.tsmiNewSelect.Name = "tsmiNewSelect";
             this.tsmiNewSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiNewSelect.Text = "新建查询";
@@ -1247,7 +1247,7 @@
             // 
             // tsmiDeleteSelect
             // 
-            this.tsmiDeleteSelect.Image = global::SQLClient.Resource.delete_select_16;
+            this.tsmiDeleteSelect.Image = global::SQLClient.Properties.Resources.delete_select_16;
             this.tsmiDeleteSelect.Name = "tsmiDeleteSelect";
             this.tsmiDeleteSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiDeleteSelect.Text = "删除查询";
@@ -1259,7 +1259,7 @@
             // 
             // tsmiExprotSelect
             // 
-            this.tsmiExprotSelect.Image = global::SQLClient.Resource.export_select_16;
+            this.tsmiExprotSelect.Image = global::SQLClient.Properties.Resources.export_select_16;
             this.tsmiExprotSelect.Name = "tsmiExprotSelect";
             this.tsmiExprotSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiExprotSelect.Text = "导出查询";

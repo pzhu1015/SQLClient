@@ -120,7 +120,7 @@
             this.查看VToolStripMenuItem,
             this.toolStripSeparator4,
             this.关闭CToolStripMenuItem});
-            this.toolStripDropDownButton3.Image = global::SQLUserControl.Resource.menu_16;
+            this.toolStripDropDownButton3.Image = global::SQLUserControl.Properties.Resources.menu_16;
             this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
             this.toolStripDropDownButton3.Size = new System.Drawing.Size(29, 22);
@@ -140,21 +140,21 @@
             // 
             // 新建ToolStripMenuItem
             // 
-            this.新建ToolStripMenuItem.Image = global::SQLUserControl.Resource.new_select_16;
+            this.新建ToolStripMenuItem.Image = global::SQLUserControl.Properties.Resources.new_select_16;
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
             this.新建ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.新建ToolStripMenuItem.Text = "新建";
             // 
             // 保存ToolStripMenuItem
             // 
-            this.保存ToolStripMenuItem.Image = global::SQLUserControl.Resource.save_16;
+            this.保存ToolStripMenuItem.Image = global::SQLUserControl.Properties.Resources.save_16;
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
             this.保存ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.保存ToolStripMenuItem.Text = "保存";
             // 
             // 另存为ToolStripMenuItem
             // 
-            this.另存为ToolStripMenuItem.Image = global::SQLUserControl.Resource.save_as_16;
+            this.另存为ToolStripMenuItem.Image = global::SQLUserControl.Properties.Resources.save_as_16;
             this.另存为ToolStripMenuItem.Name = "另存为ToolStripMenuItem";
             this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.另存为ToolStripMenuItem.Text = "另存为";
@@ -172,7 +172,7 @@
             // 
             // 导出结果ToolStripMenuItem
             // 
-            this.导出结果ToolStripMenuItem.Image = global::SQLUserControl.Resource.export_select_16;
+            this.导出结果ToolStripMenuItem.Image = global::SQLUserControl.Properties.Resources.export_select_16;
             this.导出结果ToolStripMenuItem.Name = "导出结果ToolStripMenuItem";
             this.导出结果ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.导出结果ToolStripMenuItem.Text = "导出结果";
@@ -240,7 +240,7 @@
             this.tsbtnRun.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnRunSelect,
             this.tsbtnRunOne});
-            this.tsbtnRun.Image = global::SQLUserControl.Resource.run_16;
+            this.tsbtnRun.Image = global::SQLUserControl.Properties.Resources.run_16;
             this.tsbtnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnRun.Name = "tsbtnRun";
             this.tsbtnRun.Size = new System.Drawing.Size(64, 22);
@@ -263,7 +263,7 @@
             // tsbtnStop
             // 
             this.tsbtnStop.Enabled = false;
-            this.tsbtnStop.Image = global::SQLUserControl.Resource.stop_16;
+            this.tsbtnStop.Image = global::SQLUserControl.Properties.Resources.stop_16;
             this.tsbtnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnStop.Name = "tsbtnStop";
             this.tsbtnStop.Size = new System.Drawing.Size(52, 22);
@@ -271,7 +271,7 @@
             // 
             // tsbtnNew
             // 
-            this.tsbtnNew.Image = global::SQLUserControl.Resource.new_select_16;
+            this.tsbtnNew.Image = global::SQLUserControl.Properties.Resources.new_select_16;
             this.tsbtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnNew.Name = "tsbtnNew";
             this.tsbtnNew.Size = new System.Drawing.Size(52, 22);
@@ -280,7 +280,7 @@
             // 
             // tsbtnLoad
             // 
-            this.tsbtnLoad.Image = global::SQLUserControl.Resource.load_select_16;
+            this.tsbtnLoad.Image = global::SQLUserControl.Properties.Resources.load_select_16;
             this.tsbtnLoad.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnLoad.Name = "tsbtnLoad";
             this.tsbtnLoad.Size = new System.Drawing.Size(52, 22);
@@ -289,7 +289,7 @@
             // 
             // tsbtnSave
             // 
-            this.tsbtnSave.Image = global::SQLUserControl.Resource.save_16;
+            this.tsbtnSave.Image = global::SQLUserControl.Properties.Resources.save_16;
             this.tsbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSave.Name = "tsbtnSave";
             this.tsbtnSave.Size = new System.Drawing.Size(52, 22);
@@ -298,7 +298,7 @@
             // 
             // tsbtnSaveAs
             // 
-            this.tsbtnSaveAs.Image = global::SQLUserControl.Resource.save_as_16;
+            this.tsbtnSaveAs.Image = global::SQLUserControl.Properties.Resources.save_as_16;
             this.tsbtnSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSaveAs.Name = "tsbtnSaveAs";
             this.tsbtnSaveAs.Size = new System.Drawing.Size(64, 22);
@@ -307,7 +307,7 @@
             // 
             // tsbtnFormat
             // 
-            this.tsbtnFormat.Image = global::SQLUserControl.Resource.format_sql_16;
+            this.tsbtnFormat.Image = global::SQLUserControl.Properties.Resources.format_sql_16;
             this.tsbtnFormat.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnFormat.Name = "tsbtnFormat";
             this.tsbtnFormat.Size = new System.Drawing.Size(75, 22);
@@ -316,7 +316,7 @@
             // 
             // toolStripButton33
             // 
-            this.toolStripButton33.Image = global::SQLUserControl.Resource.export_select_16;
+            this.toolStripButton33.Image = global::SQLUserControl.Properties.Resources.export_select_16;
             this.toolStripButton33.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton33.Name = "toolStripButton33";
             this.toolStripButton33.Size = new System.Drawing.Size(52, 22);

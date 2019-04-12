@@ -7,6 +7,7 @@ using System.Drawing;
 using Helper;
 using System.Data;
 using DevExpress.XtraTab;
+using SQLUserControl.Properties;
 
 namespace SQLUserControl
 {
@@ -115,7 +116,7 @@ namespace SQLUserControl
 
         private Bitmap GetPrimaryKey(int i)
         {
-            Bitmap Bmp = Resource.key_16;
+            Bitmap Bmp = Resources.key_16;
             Bitmap NewBmp = new Bitmap(80, 22);
             Graphics G = Graphics.FromImage(NewBmp);
             G.DrawImage(Bmp, 20, 3, Bmp.Width, Bmp.Height);
@@ -557,11 +558,11 @@ namespace SQLUserControl
                             NodeTypeInfo tgNodeTypeInfo = tgNode.Tag as NodeTypeInfo;
                             TreeNode tbNode = new TreeNode();
                             tbNode.Text = this.tableInfo.Name;
-                            tbNode.ImageKey = Resource.image_key_table;
-                            tbNode.SelectedImageKey = Resource.image_key_table;
+                            tbNode.ImageKey = Resources.image_key_table;
+                            tbNode.SelectedImageKey = Resources.image_key_table;
                             tbNode.Tag = new NodeTypeInfo(NodeType.eTable, tbNode, this.tableInfo);
                             tgNode.Nodes.Add(tbNode);
-                            tgNodeTypeInfo.TableList.AddItem(this.tableInfo, Resource.image_key_table);
+                            tgNodeTypeInfo.TableList.AddItem(this.tableInfo, Resources.image_key_table);
                             this.page.Text = $"{this.tableInfo.Name}@{this.databaseInfo.Name}({this.databaseInfo.ConnectInfo.Name})-表";
                         }
                         else

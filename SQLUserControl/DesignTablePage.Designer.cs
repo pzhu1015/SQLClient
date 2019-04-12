@@ -122,7 +122,7 @@
             this.编辑ToolStripMenuItem1,
             this.toolStripSeparator2,
             this.关闭ToolStripMenuItem1});
-            this.toolStripDropDownButton2.Image = global::SQLUserControl.Resource.menu_16;
+            this.toolStripDropDownButton2.Image = global::SQLUserControl.Properties.Resources.menu_16;
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.Size = new System.Drawing.Size(29, 22);
@@ -207,7 +207,7 @@
             // 
             // tsbtnNew
             // 
-            this.tsbtnNew.Image = global::SQLUserControl.Resource.new_table_16;
+            this.tsbtnNew.Image = global::SQLUserControl.Properties.Resources.new_table_16;
             this.tsbtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnNew.Name = "tsbtnNew";
             this.tsbtnNew.Size = new System.Drawing.Size(52, 22);
@@ -216,7 +216,7 @@
             // 
             // tsbtnSave
             // 
-            this.tsbtnSave.Image = global::SQLUserControl.Resource.save_16;
+            this.tsbtnSave.Image = global::SQLUserControl.Properties.Resources.save_16;
             this.tsbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSave.Name = "tsbtnSave";
             this.tsbtnSave.Size = new System.Drawing.Size(52, 22);
@@ -225,7 +225,7 @@
             // 
             // tsbtnSaveAs
             // 
-            this.tsbtnSaveAs.Image = global::SQLUserControl.Resource.save_as_16;
+            this.tsbtnSaveAs.Image = global::SQLUserControl.Properties.Resources.save_as_16;
             this.tsbtnSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSaveAs.Name = "tsbtnSaveAs";
             this.tsbtnSaveAs.Size = new System.Drawing.Size(64, 22);
@@ -238,7 +238,7 @@
             // 
             // tsbtnAddField
             // 
-            this.tsbtnAddField.Image = global::SQLUserControl.Resource.add_item_16;
+            this.tsbtnAddField.Image = global::SQLUserControl.Properties.Resources.add_item_16;
             this.tsbtnAddField.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAddField.Name = "tsbtnAddField";
             this.tsbtnAddField.Size = new System.Drawing.Size(76, 22);
@@ -247,7 +247,7 @@
             // 
             // tsbtnInsertFields
             // 
-            this.tsbtnInsertFields.Image = global::SQLUserControl.Resource.insert_item_16;
+            this.tsbtnInsertFields.Image = global::SQLUserControl.Properties.Resources.insert_item_16;
             this.tsbtnInsertFields.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnInsertFields.Name = "tsbtnInsertFields";
             this.tsbtnInsertFields.Size = new System.Drawing.Size(76, 22);
@@ -256,7 +256,7 @@
             // 
             // tsbtnDeleteField
             // 
-            this.tsbtnDeleteField.Image = global::SQLUserControl.Resource.delete_item_16;
+            this.tsbtnDeleteField.Image = global::SQLUserControl.Properties.Resources.delete_item_16;
             this.tsbtnDeleteField.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDeleteField.Name = "tsbtnDeleteField";
             this.tsbtnDeleteField.Size = new System.Drawing.Size(76, 22);
@@ -270,7 +270,7 @@
             // 
             // tsbtnPrimaryKey
             // 
-            this.tsbtnPrimaryKey.Image = global::SQLUserControl.Resource.key_16;
+            this.tsbtnPrimaryKey.Image = global::SQLUserControl.Properties.Resources.key_16;
             this.tsbtnPrimaryKey.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnPrimaryKey.Name = "tsbtnPrimaryKey";
             this.tsbtnPrimaryKey.Size = new System.Drawing.Size(52, 22);
@@ -279,7 +279,7 @@
             // 
             // tsbtnMoveUp
             // 
-            this.tsbtnMoveUp.Image = global::SQLUserControl.Resource.up_16;
+            this.tsbtnMoveUp.Image = global::SQLUserControl.Properties.Resources.up_16;
             this.tsbtnMoveUp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnMoveUp.Name = "tsbtnMoveUp";
             this.tsbtnMoveUp.Size = new System.Drawing.Size(52, 22);
@@ -288,7 +288,7 @@
             // 
             // tsbtnMoveDown
             // 
-            this.tsbtnMoveDown.Image = global::SQLUserControl.Resource.down_16;
+            this.tsbtnMoveDown.Image = global::SQLUserControl.Properties.Resources.down_16;
             this.tsbtnMoveDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnMoveDown.Name = "tsbtnMoveDown";
             this.tsbtnMoveDown.Size = new System.Drawing.Size(52, 22);

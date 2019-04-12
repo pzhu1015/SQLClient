@@ -18,6 +18,16 @@ namespace SQLiteDAL
 
         }
 
+        public override Image CloseImage
+        {
+            get { return Resources.sqlite_close_16; }
+        }
+
+        public override Image OpenImage
+        {
+            get { return Resources.sqlite_open_16; }
+        }
+
         public override void Drop(string name)
         {
             try
@@ -77,15 +87,7 @@ namespace SQLiteDAL
             return new SQLiteConnectForm();
         }
 
-        public override Image CloseImage()
-        {
-            return Resources.sqlite_close_16;
-        }
-
-        public override Image OpenImage()
-        {
-            return Resources.sqlite_open_16;
-        }
+     
 
         public override DbConnection GetConnection(string database)
         {

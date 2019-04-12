@@ -74,7 +74,7 @@
             this.查看VToolStripMenuItem,
             this.toolStripSeparator1,
             this.关闭CToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = global::SQLUserControl.Resource.menu_16;
+            this.toolStripDropDownButton1.Image = global::SQLUserControl.Properties.Resources.menu_16;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
@@ -92,7 +92,7 @@
             // 
             // 导出ToolStripMenuItem
             // 
-            this.导出ToolStripMenuItem.Image = global::SQLUserControl.Resource.export_view_16;
+            this.导出ToolStripMenuItem.Image = global::SQLUserControl.Properties.Resources.export_view_16;
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
             this.导出ToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.导出ToolStripMenuItem.Text = "导出(&X)";
@@ -104,14 +104,14 @@
             // 
             // 设计表ToolStripMenuItem
             // 
-            this.设计表ToolStripMenuItem.Image = global::SQLUserControl.Resource.design_view_16;
+            this.设计表ToolStripMenuItem.Image = global::SQLUserControl.Properties.Resources.design_view_16;
             this.设计表ToolStripMenuItem.Name = "设计表ToolStripMenuItem";
             this.设计表ToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.设计表ToolStripMenuItem.Text = "设计表(&Y) Ctrl+D";
             // 
             // 查询表ToolStripMenuItem
             // 
-            this.查询表ToolStripMenuItem.Image = global::SQLUserControl.Resource.new_select_16;
+            this.查询表ToolStripMenuItem.Image = global::SQLUserControl.Properties.Resources.new_select_16;
             this.查询表ToolStripMenuItem.Name = "查询表ToolStripMenuItem";
             this.查询表ToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.查询表ToolStripMenuItem.Text = "查询表(&Z) Ctrl+Q";
@@ -183,7 +183,7 @@
             // 
             // toolStripButton2
             // 
-            this.toolStripButton2.Image = global::SQLUserControl.Resource.export_view_16;
+            this.toolStripButton2.Image = global::SQLUserControl.Properties.Resources.export_view_16;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(52, 22);

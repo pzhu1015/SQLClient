@@ -97,7 +97,7 @@
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Enabled = false;
-            this.toolStripButton1.Image = global::SQLUserControl.Resource.add_record_16;
+            this.toolStripButton1.Image = global::SQLUserControl.Properties.Resources.add_record_16;
             this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
@@ -108,7 +108,7 @@
             // 
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton2.Enabled = false;
-            this.toolStripButton2.Image = global::SQLUserControl.Resource.delete_record_16;
+            this.toolStripButton2.Image = global::SQLUserControl.Properties.Resources.delete_record_16;
             this.toolStripButton2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
@@ -119,7 +119,7 @@
             // 
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton3.Enabled = false;
-            this.toolStripButton3.Image = global::SQLUserControl.Resource.apply_change_16;
+            this.toolStripButton3.Image = global::SQLUserControl.Properties.Resources.apply_change_16;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
@@ -129,7 +129,7 @@
             // 
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton4.Enabled = false;
-            this.toolStripButton4.Image = global::SQLUserControl.Resource.cancle_change_16;
+            this.toolStripButton4.Image = global::SQLUserControl.Properties.Resources.cancle_change_16;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
@@ -138,7 +138,7 @@
             // toolStripButton5
             // 
             this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = global::SQLUserControl.Resource.refresh_16;
+            this.toolStripButton5.Image = global::SQLUserControl.Properties.Resources.refresh_16;
             this.toolStripButton5.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
@@ -148,7 +148,7 @@
             // toolStripButton6
             // 
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = global::SQLUserControl.Resource.stop_update_16;
+            this.toolStripButton6.Image = global::SQLUserControl.Properties.Resources.stop_update_16;
             this.toolStripButton6.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";

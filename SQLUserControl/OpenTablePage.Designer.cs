@@ -55,14 +55,14 @@
             // toolStripDropDownButton1
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripDropDownButton1.Image = global::SQLUserControl.Resource.menu_16;
+            this.toolStripDropDownButton1.Image = global::SQLUserControl.Properties.Resources.menu_16;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
             // 
             // toolStripButton1
             // 
-            this.toolStripButton1.Image = global::SQLUserControl.Resource.import_table_16;
+            this.toolStripButton1.Image = global::SQLUserControl.Properties.Resources.import_table_16;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(52, 22);
@@ -70,7 +70,7 @@
             // 
             // toolStripButton2
             // 
-            this.toolStripButton2.Image = global::SQLUserControl.Resource.export_table_16;
+            this.toolStripButton2.Image = global::SQLUserControl.Properties.Resources.export_table_16;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(52, 22);

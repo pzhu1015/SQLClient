@@ -8,6 +8,7 @@ using SQLUserControl;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Data;
+using SQLClient.Properties;
 
 namespace SQLClient
 {
@@ -154,7 +155,7 @@ namespace SQLClient
             this.tvMain.Nodes.Add(node);
             this.tsObjectBlank.Text = $"{this.tvMain.Nodes.Count}服务器";
             this.tsObjectOwner.Text = $"{info.Name} 用户: {info.User}";
-            this.tsObjectOwner.Image = info.CloseImage();
+            this.tsObjectOwner.Image = info.CloseImage;
         }
 
         /// <summary>
@@ -326,7 +327,7 @@ namespace SQLClient
                         tabPage.Text = $"{info.Name}@{info.DatabaseInfo.Name}({info.DatabaseInfo.ConnectInfo.Name}) - 表";
                         tabPage.Tooltip = tabPage.Text;
                         tabPage.MaxTabPageWidth = 200;
-                        tabPage.Image = Resource.design_table_16;
+                        tabPage.Image = Resources.design_table_16;
 
                         //new DesignTableTabPage
                         DesignTablePage designTablePage = new DesignTablePage();
@@ -393,7 +394,7 @@ namespace SQLClient
                         TabPageTypeInfo tpInfo = new TabPageTypeInfo(TabPageType.eOpenTable, info);
                         tpInfo.OpenTablePage = openTalePage;
                         tabPage.Tag = tpInfo;
-                        tabPage.Image = Resource.table_16;
+                        tabPage.Image = Resources.table_16;
                         tabPage.Controls.Add(openTalePage);
                         info.OpenTablePage = tabPage;
                         this.tcMain.TabPages.Add(tabPage);
@@ -450,7 +451,7 @@ namespace SQLClient
                         tpInfo.NewSelectPage = newSelectPage;
 
                         tabPage.Tag = tpInfo;
-                        tabPage.Image = Resource.select_16;
+                        tabPage.Image = Resources.select_16;
                         tabPage.Controls.Add(newSelectPage);
                         info.OpenSelectPage = tabPage;
                         this.tcMain.TabPages.Add(tabPage);
@@ -504,7 +505,7 @@ namespace SQLClient
                         TabPageTypeInfo tpInfo = new TabPageTypeInfo(TabPageType.eOpenView, info);
                         tpInfo.OpenViewPage = openViewPage;
                         tabPage.Tag = tpInfo;
-                        tabPage.Image = Resource.view_16;
+                        tabPage.Image = Resources.view_16;
                         tabPage.Controls.Add(openViewPage);
                         info.OpenViewPage = tabPage;
                         this.tcMain.TabPages.Add(tabPage);
@@ -535,10 +536,10 @@ namespace SQLClient
         {
             XtraTabPage tabPage = new XtraTabPage();
             tabPage.ShowCloseButton = DevExpress.Utils.DefaultBoolean.True;
-            tabPage.Text = $"{Resource.no_title}@{databaseInfo.Name}({databaseInfo.ConnectInfo.Name}) - 表";
+            tabPage.Text = $"{Resources.no_title}@{databaseInfo.Name}({databaseInfo.ConnectInfo.Name}) - 表";
             tabPage.Tooltip = tabPage.Text;
             tabPage.MaxTabPageWidth = 200;
-            tabPage.Image = Resource.design_table_16;
+            tabPage.Image = Resources.design_table_16;
 
             //new DesignTableTabPage
             DesignTablePage designTablePage = new DesignTablePage();
@@ -566,10 +567,10 @@ namespace SQLClient
         {
             XtraTabPage tabPage = new XtraTabPage();
             tabPage.ShowCloseButton = DevExpress.Utils.DefaultBoolean.True;
-            tabPage.Text = $"{Resource.no_title}@{databaseInfo.Name}({databaseInfo.ConnectInfo.Name}) - 查询";
+            tabPage.Text = $"{Resources.no_title}@{databaseInfo.Name}({databaseInfo.ConnectInfo.Name}) - 查询";
             tabPage.Tooltip = tabPage.Text;
             tabPage.MaxTabPageWidth = 200;
-            tabPage.Image = Resource.select_16;
+            tabPage.Image = Resources.select_16;
 
             //new NewSelectTabPage
             NewSelectPage newSelectPage = new NewSelectPage();
@@ -642,7 +643,7 @@ namespace SQLClient
                         {
                             this.tsObjectBlank.Text = $"{this.tvMain.Nodes.Count}服务器";
                             this.tsObjectOwner.Text = $"{connectInfo.Name} 用户: {connectInfo.User}";
-                            this.tsObjectOwner.Image = connectInfo.CloseImage();
+                            this.tsObjectOwner.Image = connectInfo.CloseImage;
                             return;
                         }
                         foreach (Control c in this.tpObject.Controls)
@@ -658,7 +659,7 @@ namespace SQLClient
                         }
                         this.tsObjectBlank.Text = $"{connectInfo.Databases.Count}数据据库";
                         this.tsObjectOwner.Text = $"{connectInfo.Name} 用户: {connectInfo.User}";
-                        this.tsObjectOwner.Image = connectInfo.OpenImage();
+                        this.tsObjectOwner.Image = connectInfo.OpenImage;
                         break;
                     }
                 case NodeType.eDatabase:
@@ -670,7 +671,7 @@ namespace SQLClient
                             ConnectInfo connectInfo = databaseInfo.ConnectInfo;
                             this.tsObjectBlank.Text = $"{connectInfo.Databases.Count}数据库";
                             this.tsObjectOwner.Text = $"{connectInfo.Name} 用户: {connectInfo.User} 数据库:{databaseInfo.Name}";
-                            this.tsObjectOwner.Image = connectInfo.OpenImage();
+                            this.tsObjectOwner.Image = connectInfo.OpenImage;
                             return;
                         }
                         nodeTypeInfo.TableList.UnSelectItem();
@@ -682,7 +683,7 @@ namespace SQLClient
                         //handle left status bar
                         this.tsObjectBlank.Text = $"{databaseInfo.Tables.Count}表({databaseInfo.Tables.Count}位于当前的组)";
                         this.tsObjectOwner.Text = $"{databaseInfo.ConnectInfo.Name} 用户:{databaseInfo.ConnectInfo.User} 数据库:{databaseInfo.Name}";
-                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage();
+                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage;
                         break;
                     }
                 case NodeType.eTableGroup:
@@ -699,7 +700,7 @@ namespace SQLClient
                         DatabaseInfo databaseInfo = dbNodeTypeInfo.DatabaseInfo;
                         this.tsObjectBlank.Text = $"{databaseInfo.Tables.Count}表({databaseInfo.Tables.Count}位于当前的组)";
                         this.tsObjectOwner.Text = $"{databaseInfo.ConnectInfo.Name} 用户:{databaseInfo.ConnectInfo.User} 数据库:{databaseInfo.Name}";
-                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage();
+                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage;
                         break;
                     }
                 case NodeType.eTable:
@@ -715,7 +716,7 @@ namespace SQLClient
                         DatabaseInfo databaseInfo = dbNodeTypeInfo.DatabaseInfo;
                         this.tsObjectBlank.Text = $"{databaseInfo.Tables.Count}表({databaseInfo.Tables.Count}位于当前的组)";
                         this.tsObjectOwner.Text = $"{databaseInfo.ConnectInfo.Name} 用户:{databaseInfo.ConnectInfo.User} 数据库:{databaseInfo.Name}";
-                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage();
+                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage;
                         break;
                     }
                 case NodeType.eViewGroup:
@@ -731,7 +732,7 @@ namespace SQLClient
                         DatabaseInfo databaseInfo = dbNodeTypeInfo.DatabaseInfo;
                         this.tsObjectBlank.Text = $"{databaseInfo.Views.Count}视图({databaseInfo.Views.Count}位于当前的组)";
                         this.tsObjectOwner.Text = $"{databaseInfo.ConnectInfo.Name} 用户:{databaseInfo.ConnectInfo.User} 数据库:{databaseInfo.Name}";
-                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage();
+                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage;
                         break;
                     }
                 case NodeType.eView:
@@ -747,7 +748,7 @@ namespace SQLClient
                         DatabaseInfo databaseInfo = dbNodeTypeInfo.DatabaseInfo;
                         this.tsObjectBlank.Text = $"{databaseInfo.Views.Count}视图({databaseInfo.Views.Count}位于当前的组)";
                         this.tsObjectOwner.Text = $"{databaseInfo.ConnectInfo.Name} 用户:{databaseInfo.ConnectInfo.User} 数据库:{databaseInfo.Name}";
-                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage();
+                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage;
                         break;
                     }
                 case NodeType.eSelectGroup:
@@ -763,7 +764,7 @@ namespace SQLClient
                         DatabaseInfo databaseInfo = dbNodeTypeInfo.DatabaseInfo;
                         this.tsObjectBlank.Text = $"{databaseInfo.Selects.Count}查询({databaseInfo.Selects.Count}位于当前的组)";
                         this.tsObjectOwner.Text = $"{databaseInfo.ConnectInfo.Name} 用户:{databaseInfo.ConnectInfo.User} 数据库:{databaseInfo.Name}";
-                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage();
+                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage;
 
                         break;
                     }
@@ -781,7 +782,7 @@ namespace SQLClient
                         DatabaseInfo databaseInfo = dbNodeTypeInfo.DatabaseInfo;
                         this.tsObjectBlank.Text = $"{databaseInfo.Selects.Count}查询({databaseInfo.Selects.Count}位于当前的组)";
                         this.tsObjectOwner.Text = $"{databaseInfo.ConnectInfo.Name} 用户:{databaseInfo.ConnectInfo.User} 数据库:{databaseInfo.Name}";
-                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage();
+                        this.tsObjectOwner.Image = databaseInfo.ConnectInfo.OpenImage;
 
                         break;
                     }
@@ -979,8 +980,8 @@ namespace SQLClient
                 foreach (DataRow dr in dt.Rows)
                 {
                     ConnectInfo info = ReflectionHelper.CreateInstance<ConnectInfo>(dr["assemblyName"].ToString(), dr["namespaceName"].ToString(), dr["className"].ToString());
-                    this.imgListTreeView.Images.Add(dr["className"].ToString() + "_close", info.CloseImage());
-                    this.imgListTreeView.Images.Add(dr["className"].ToString() + "_open", info.OpenImage());
+                    this.imgListTreeView.Images.Add(dr["className"].ToString() + "_close", info.CloseImage);
+                    this.imgListTreeView.Images.Add(dr["className"].ToString() + "_open", info.OpenImage);
                 }
                 this.spStatusBar.SplitterDistance = this.spStatusBar.Height - 25;
                 TabPageTypeInfo pageTypeInfo = new TabPageTypeInfo(TabPageType.eObject, null);
@@ -1022,8 +1023,8 @@ namespace SQLClient
                         dbInfo.CloseDatabase += DbInfo_CloseDatabase;
                         TreeNode dbNode = new TreeNode();
                         dbNode.Text = dbInfo.Name;
-                        dbNode.ImageKey = Resource.image_key_database_close;
-                        dbNode.SelectedImageKey = Resource.image_key_database_close;
+                        dbNode.ImageKey = Resources.image_key_database_close;
+                        dbNode.SelectedImageKey = Resources.image_key_database_close;
                         dbNode.Tag = new NodeTypeInfo(NodeType.eDatabase, dbNode, dbInfo);
                         dbInfo.Node = dbNode;
                         node.Nodes.Add(dbNode);
@@ -1034,7 +1035,7 @@ namespace SQLClient
                     node.Expand();
                     this.tsObjectBlank.Text = $"{info.Databases.Count}数据据库";
                     this.tsObjectOwner.Text = $"{info.Name} 用户: {info.User}";
-                    this.tsObjectOwner.Image = info.OpenImage();
+                    this.tsObjectOwner.Image = info.OpenImage;
                 }
                 catch (Exception ex)
                 {
@@ -1132,11 +1133,11 @@ namespace SQLClient
                     this.tpObject.Controls.Remove(nodeTypeInfo.ViewList);
                     this.tpObject.Controls.Remove(nodeTypeInfo.SelectList);
 
-                    node.ImageKey = Resource.image_key_database_close;
-                    node.SelectedImageKey = Resource.image_key_database_close;
+                    node.ImageKey = Resources.image_key_database_close;
+                    node.SelectedImageKey = Resources.image_key_database_close;
                     this.tsObjectBlank.Text = $"{info.ConnectInfo.Databases.Count}数据据库";
                     this.tsObjectOwner.Text = $"{info.ConnectInfo.Name} 用户: {info.ConnectInfo.User} 数据库: {info.Name}";
-                    this.tsObjectOwner.Image = info.ConnectInfo.CloseImage();
+                    this.tsObjectOwner.Image = info.ConnectInfo.CloseImage;
                 }
                 catch (Exception ex)
                 {
@@ -1163,9 +1164,9 @@ namespace SQLClient
                     //add table group node
                     TreeNode tgNode = new TreeNode();
                     NodeTypeInfo tgNodeTypeInfo = new NodeTypeInfo(NodeType.eTableGroup, tgNode, info);
-                    tgNode.Text = Resource.node_name_table;
-                    tgNode.ImageKey = Resource.image_key_table;
-                    tgNode.SelectedImageKey = Resource.image_key_table;
+                    tgNode.Text = Resources.node_name_table;
+                    tgNode.ImageKey = Resources.image_key_table;
+                    tgNode.SelectedImageKey = Resources.image_key_table;
                     tgNode.Tag = tgNodeTypeInfo;
                     node.Nodes.Add(tgNode);
 
@@ -1187,20 +1188,20 @@ namespace SQLClient
                     {
                         TreeNode tbNode = new TreeNode();
                         tbNode.Text = tbInfo.Name;
-                        tbNode.ImageKey = Resource.image_key_table;
-                        tbNode.SelectedImageKey = Resource.image_key_table;
+                        tbNode.ImageKey = Resources.image_key_table;
+                        tbNode.SelectedImageKey = Properties.Resources.image_key_table;
                         tbNode.Tag = new NodeTypeInfo(NodeType.eTable, tbNode, tbInfo);
                         tgNode.Nodes.Add(tbNode);
                         tbInfo.Node = tbNode;
-                        tgNodeTypeInfo.TableList.AddItem(tbInfo, Resource.image_key_table);
+                        tgNodeTypeInfo.TableList.AddItem(tbInfo, Properties.Resources.image_key_table);
                     }
 
                     //add view group node
                     TreeNode vgpNode = new TreeNode();
                     NodeTypeInfo vgNodeTypeInfo = new NodeTypeInfo(NodeType.eViewGroup, vgpNode, info);
-                    vgpNode.Text = Resource.node_name_view;
-                    vgpNode.ImageKey = Resource.image_key_view;
-                    vgpNode.SelectedImageKey = Resource.image_key_view;
+                    vgpNode.Text = Resources.node_name_view;
+                    vgpNode.ImageKey = Resources.image_key_view;
+                    vgpNode.SelectedImageKey = Resources.image_key_view;
                     vgpNode.Tag = vgNodeTypeInfo;
                     node.Nodes.Add(vgpNode);
 
@@ -1221,20 +1222,20 @@ namespace SQLClient
                     {
                         TreeNode vNode = new TreeNode();
                         vNode.Text = vInfo.Name;
-                        vNode.ImageKey = Resource.image_key_view;
-                        vNode.SelectedImageKey = Resource.image_key_view;
+                        vNode.ImageKey = Resources.image_key_view;
+                        vNode.SelectedImageKey = Resources.image_key_view;
                         vNode.Tag = new NodeTypeInfo(NodeType.eView, vNode, vInfo);
                         vInfo.Node = vNode;
                         vgpNode.Nodes.Add(vNode);
-                        vgNodeTypeInfo.ViewList.AddItem(vInfo, Resource.image_key_view);
+                        vgNodeTypeInfo.ViewList.AddItem(vInfo, Resources.image_key_view);
                     }
 
                     //add select group
                     TreeNode sgNode = new TreeNode();
                     NodeTypeInfo sgNodeTypeInfo = new NodeTypeInfo(NodeType.eSelectGroup, sgNode, info);
-                    sgNode.Text = Resource.node_name_select;
-                    sgNode.ImageKey = Resource.image_key_select;
-                    sgNode.SelectedImageKey = Resource.image_key_select;
+                    sgNode.Text = Resources.node_name_select;
+                    sgNode.ImageKey = Resources.image_key_select;
+                    sgNode.SelectedImageKey = Resources.image_key_select;
                     sgNode.Tag = sgNodeTypeInfo;
                     node.Nodes.Add(sgNode);
 
@@ -1255,16 +1256,16 @@ namespace SQLClient
                     {
                         TreeNode sNode = new TreeNode();
                         sNode.Text = sInfo.Name;
-                        sNode.ImageKey = Resource.image_key_select;
-                        sNode.SelectedImageKey = Resource.image_key_select;
+                        sNode.ImageKey = Resources.image_key_select;
+                        sNode.SelectedImageKey = Resources.image_key_select;
                         sNode.Tag = new NodeTypeInfo(NodeType.eSelect, sNode, sInfo);
                         sInfo.Node = sNode;
                         sgNode.Nodes.Add(sNode);
-                        sgNodeTypeInfo.SelectList.AddItem(sInfo, Resource.image_key_select);
+                        sgNodeTypeInfo.SelectList.AddItem(sInfo, Resources.image_key_select);
                     }
                     this.tvMain.EndUpdate();
-                    node.ImageKey = Resource.image_key_database_open;
-                    node.SelectedImageKey = Resource.image_key_database_open;
+                    node.ImageKey = Resources.image_key_database_open;
+                    node.SelectedImageKey = Resources.image_key_database_open;
                     node.Expand();
                     nodeTypeInfo.TableList = tgNodeTypeInfo.TableList;
                     nodeTypeInfo.ViewList = vgNodeTypeInfo.ViewList;
@@ -1277,7 +1278,7 @@ namespace SQLClient
                     nodeTypeInfo.SelectList.UnSelectItem();
                     this.tsObjectBlank.Text = $"{info.Tables.Count}表({info.Tables.Count}位于当前的组)";
                     this.tsObjectOwner.Text = $"{info.ConnectInfo.Name} 用户:{info.ConnectInfo.User} 数据库:{info.Name}";
-                    this.tsObjectOwner.Image = info.ConnectInfo.OpenImage();
+                    this.tsObjectOwner.Image = info.ConnectInfo.OpenImage;
                 }
                 catch (Exception ex)
                 {
@@ -1307,7 +1308,7 @@ namespace SQLClient
                     node.SelectedImageKey = info.ClassName + "_close";
                     this.tsObjectBlank.Text = $"{info.Databases.Count}数据据库";
                     this.tsObjectOwner.Text = $"{info.Name} 用户: {info.User}";
-                    this.tsObjectOwner.Image = info.CloseImage();
+                    this.tsObjectOwner.Image = info.CloseImage;
                 }
                 catch (Exception ex)
                 {

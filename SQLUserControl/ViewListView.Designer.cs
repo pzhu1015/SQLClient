@@ -57,7 +57,7 @@
             // 
             // tsbtnOpenView
             // 
-            this.tsbtnOpenView.Image = global::SQLUserControl.Resource.open_view_16;
+            this.tsbtnOpenView.Image = global::SQLUserControl.Properties.Resources.open_view_16;
             this.tsbtnOpenView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnOpenView.Name = "tsbtnOpenView";
             this.tsbtnOpenView.Size = new System.Drawing.Size(76, 22);
@@ -66,7 +66,7 @@
             // 
             // tsbtnDesignView
             // 
-            this.tsbtnDesignView.Image = global::SQLUserControl.Resource.design_view_16;
+            this.tsbtnDesignView.Image = global::SQLUserControl.Properties.Resources.design_view_16;
             this.tsbtnDesignView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDesignView.Name = "tsbtnDesignView";
             this.tsbtnDesignView.Size = new System.Drawing.Size(76, 22);
@@ -75,7 +75,7 @@
             // 
             // tsbtnNewView
             // 
-            this.tsbtnNewView.Image = global::SQLUserControl.Resource.new_view_16;
+            this.tsbtnNewView.Image = global::SQLUserControl.Properties.Resources.new_view_16;
             this.tsbtnNewView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnNewView.Name = "tsbtnNewView";
             this.tsbtnNewView.Size = new System.Drawing.Size(76, 22);
@@ -83,7 +83,7 @@
             // 
             // tsbtnDeleteView
             // 
-            this.tsbtnDeleteView.Image = global::SQLUserControl.Resource.delete_view_16;
+            this.tsbtnDeleteView.Image = global::SQLUserControl.Properties.Resources.delete_view_16;
             this.tsbtnDeleteView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDeleteView.Name = "tsbtnDeleteView";
             this.tsbtnDeleteView.Size = new System.Drawing.Size(76, 22);
@@ -91,7 +91,7 @@
             // 
             // tsbtnExportView
             // 
-            this.tsbtnExportView.Image = global::SQLUserControl.Resource.export_view_16;
+            this.tsbtnExportView.Image = global::SQLUserControl.Properties.Resources.export_view_16;
             this.tsbtnExportView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnExportView.Name = "tsbtnExportView";
             this.tsbtnExportView.Size = new System.Drawing.Size(76, 22);

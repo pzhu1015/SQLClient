@@ -34,74 +34,19 @@ namespace SQLDAL
         
         protected List<DatabaseInfo> databases = new List<DatabaseInfo>();
 
-        [Browsable(false)]
-        public List<DatabaseInfo> Databases
+        [Browsable(true)]
+        [Category("基本")]
+        [Description("当前数据库的驱动程序名称")]
+        public string DriverName
         {
             get
             {
-                return databases;
+                return driverName;
             }
 
             set
             {
-                databases = value;
-            }
-        }
-
-        [Browsable(false)]
-        public bool IsOpen
-        {
-            get
-            {
-                return isOpen;
-            }
-
-            set
-            {
-                isOpen = value;
-            }
-        }
-
-        [Browsable(false)]
-        public string Message
-        {
-            get
-            {
-                return message;
-            }
-
-            set
-            {
-                message = value;
-            }
-        }
-
-        [Browsable(false)]
-        [Description("连接字符串")]
-        public string ConnectionString
-        {
-            get
-            {
-                return connectionString;
-            }
-
-            set
-            {
-                connectionString = value;
-            }
-        }
-
-        [Browsable(false)]
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-
-            set
-            {
-                name = value;
+                driverName = value;
             }
         }
 
@@ -153,34 +98,6 @@ namespace SQLDAL
             }
         }
 
-        [Browsable(false)]
-        public string User
-        {
-            get
-            {
-                return user;
-            }
-
-            set
-            {
-                user = value;
-            }
-        }
-
-        [Browsable(false)]
-        public string Password
-        {
-            get
-            {
-                return password;
-            }
-
-            set
-            {
-                password = value;
-            }
-        }
-
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库查看表设计的脚本模版")]
@@ -215,6 +132,22 @@ namespace SQLDAL
 
         [Browsable(true)]
         [Category("脚本")]
+        [Description("当前数据库打开视图的脚本模版")]
+        public string OpenView
+        {
+            get
+            {
+                return openView;
+            }
+
+            set
+            {
+                openView = value;
+            }
+        }
+
+        [Browsable(true)]
+        [Category("脚本")]
         [Description("当前数据库支持的所有数据类型集合")]
         public string[] DataTypes
         {
@@ -229,19 +162,101 @@ namespace SQLDAL
             }
         }
 
-        [Browsable(true)]
-        [Category("脚本")]
-        [Description("当前数据库打开视图的脚本模版")]
-        public string OpenView
+        [Browsable(false)]
+        public List<DatabaseInfo> Databases
         {
             get
             {
-                return openView;
+                return databases;
             }
 
             set
             {
-                openView = value;
+                databases = value;
+            }
+        }
+
+        [Browsable(false)]
+        public bool IsOpen
+        {
+            get
+            {
+                return isOpen;
+            }
+
+            set
+            {
+                isOpen = value;
+            }
+        }
+
+        [Browsable(false)]
+        public string Message
+        {
+            get
+            {
+                return message;
+            }
+
+            set
+            {
+                message = value;
+            }
+        }
+
+        [Browsable(false)]
+        public string ConnectionString
+        {
+            get
+            {
+                return connectionString;
+            }
+
+            set
+            {
+                connectionString = value;
+            }
+        }
+
+        [Browsable(false)]
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        } 
+
+        [Browsable(false)]
+        public string User
+        {
+            get
+            {
+                return user;
+            }
+
+            set
+            {
+                user = value;
+            }
+        }
+
+        [Browsable(false)]
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+
+            set
+            {
+                password = value;
             }
         }
 
@@ -259,21 +274,11 @@ namespace SQLDAL
             }
         }
 
-        [Browsable(true)]
-        [Category("基本")]
-        [Description("当前数据库的驱动程序名称")]
-        public string DriverName
-        {
-            get
-            {
-                return driverName;
-            }
+        [Browsable(false)]
+        public abstract Image CloseImage { get; }
 
-            set
-            {
-                driverName = value;
-            }
-        }
+        [Browsable(false)]
+        public abstract Image OpenImage { get; }
 
         protected virtual void OnCloseConnect(CloseConnectEventArgs e)
         {
@@ -295,8 +300,6 @@ namespace SQLDAL
         public abstract void Create(string name);
         public abstract void Drop(string name);
         public abstract Form GetConnectForm();
-        public abstract Image CloseImage();
-        public abstract Image OpenImage();
         public abstract DatabaseInfo GetDatabaseInfo();
         public abstract DbConnection GetConnection(string database);
 
@@ -348,7 +351,7 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"INSERT INTO TB_CONNECTION VALUES('{info.Name}', '{info.User}', '{info.Password}', '{info.ConnectionString}', '{info.AssemblyName}', '{info.NamespaceName}', '{info.ClassName}')";
+                    command.CommandText = $"INSERT INTO TB_CONNECTION VALUES('{info.Name}', '{info.User}', '{info.Password}', '{info.ConnectionString}',  '{info.DriverName}')";
                     int ret = command.ExecuteNonQuery();
                     return true;
                 }
@@ -364,13 +367,15 @@ namespace SQLDAL
         {
             try
             {
-                DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString);
-                connection.Open();
-                DbCommand command = connection.CreateCommand();
-                command.CommandText = $"DELETE FROM TB_CONNECTION WHERE NAME='{name}'";
-                command.ExecuteNonQuery();
-                connection.Close();
-                return true;
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"DELETE FROM TB_CONNECTION WHERE NAME='{name}'";
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    return true;
+                }
             }
             catch (Exception ex)
             {
@@ -383,13 +388,15 @@ namespace SQLDAL
         {
             try
             {
-                DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString);
-                connection.Open();
-                DbCommand command = connection.CreateCommand();
-                command.CommandText = $"UPDATE TB_CONNECTION SET connectionString={info.connectionString}, user={info.user}, password={info.password} WHERE NAME='{info.name}'";
-                command.ExecuteNonQuery();
-                connection.Close();
-                return true;
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"UPDATE TB_CONNECTION SET connectionString={info.connectionString}, user={info.user}, password={info.password} WHERE NAME='{info.name}'";
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    return true;
+                }
             }
             catch (Exception ex)
             {
@@ -479,6 +486,26 @@ namespace SQLDAL
             {
                 LogHelper.Error(ex);
                 return null;
+            }
+        }
+
+        public static bool AddDriver(ConnectInfo info)
+        {
+            try
+            {
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"INSERT INTO TB_CONFIG (name, assemblyName, namespaceName, className) VALUES('{info.driverName}', '{info.assemblyName}', '{info.namespaceName}', '{info.className}')";
+                    int ret = command.ExecuteNonQuery();
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                LogHelper.Error(ex);
+                return false;
             }
         }
     }

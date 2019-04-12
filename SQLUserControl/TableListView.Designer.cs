@@ -59,7 +59,7 @@
             // 
             // tsbtnOpenTable
             // 
-            this.tsbtnOpenTable.Image = global::SQLUserControl.Resource.open_table_16;
+            this.tsbtnOpenTable.Image = global::SQLUserControl.Properties.Resources.open_table_16;
             this.tsbtnOpenTable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnOpenTable.Name = "tsbtnOpenTable";
             this.tsbtnOpenTable.Size = new System.Drawing.Size(64, 22);
@@ -68,7 +68,7 @@
             // 
             // tsbtnDesignTable
             // 
-            this.tsbtnDesignTable.Image = global::SQLUserControl.Resource.design_table_16;
+            this.tsbtnDesignTable.Image = global::SQLUserControl.Properties.Resources.design_table_16;
             this.tsbtnDesignTable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDesignTable.Name = "tsbtnDesignTable";
             this.tsbtnDesignTable.Size = new System.Drawing.Size(64, 22);
@@ -77,7 +77,7 @@
             // 
             // tsbtnNewTable
             // 
-            this.tsbtnNewTable.Image = global::SQLUserControl.Resource.new_table_16;
+            this.tsbtnNewTable.Image = global::SQLUserControl.Properties.Resources.new_table_16;
             this.tsbtnNewTable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnNewTable.Name = "tsbtnNewTable";
             this.tsbtnNewTable.Size = new System.Drawing.Size(64, 22);
@@ -86,7 +86,7 @@
             // 
             // tsbtnDeleteTable
             // 
-            this.tsbtnDeleteTable.Image = global::SQLUserControl.Resource.delete_table_16;
+            this.tsbtnDeleteTable.Image = global::SQLUserControl.Properties.Resources.delete_table_16;
             this.tsbtnDeleteTable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDeleteTable.Name = "tsbtnDeleteTable";
             this.tsbtnDeleteTable.Size = new System.Drawing.Size(64, 22);
@@ -94,7 +94,7 @@
             // 
             // tsbtnImportTable
             // 
-            this.tsbtnImportTable.Image = global::SQLUserControl.Resource.import_table_16;
+            this.tsbtnImportTable.Image = global::SQLUserControl.Properties.Resources.import_table_16;
             this.tsbtnImportTable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnImportTable.Name = "tsbtnImportTable";
             this.tsbtnImportTable.Size = new System.Drawing.Size(76, 22);
@@ -102,7 +102,7 @@
             // 
             // tsbtnExprotTable
             // 
-            this.tsbtnExprotTable.Image = global::SQLUserControl.Resource.export_table_16;
+            this.tsbtnExprotTable.Image = global::SQLUserControl.Properties.Resources.export_table_16;
             this.tsbtnExprotTable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnExprotTable.Name = "tsbtnExprotTable";
             this.tsbtnExprotTable.Size = new System.Drawing.Size(76, 22);

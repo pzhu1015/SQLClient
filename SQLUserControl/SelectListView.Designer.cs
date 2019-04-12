@@ -55,7 +55,7 @@
             // 
             // tsbtnOpenSelect
             // 
-            this.tsbtnOpenSelect.Image = global::SQLUserControl.Resource.open_select_16;
+            this.tsbtnOpenSelect.Image = global::SQLUserControl.Properties.Resources.open_select_16;
             this.tsbtnOpenSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnOpenSelect.Name = "tsbtnOpenSelect";
             this.tsbtnOpenSelect.Size = new System.Drawing.Size(76, 22);
@@ -64,7 +64,7 @@
             // 
             // tsbtnDesignSelect
             // 
-            this.tsbtnDesignSelect.Image = global::SQLUserControl.Resource.design_select_16;
+            this.tsbtnDesignSelect.Image = global::SQLUserControl.Properties.Resources.design_select_16;
             this.tsbtnDesignSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDesignSelect.Name = "tsbtnDesignSelect";
             this.tsbtnDesignSelect.Size = new System.Drawing.Size(76, 22);
@@ -72,7 +72,7 @@
             // 
             // tsbtnNewSelect
             // 
-            this.tsbtnNewSelect.Image = global::SQLUserControl.Resource.new_select_16;
+            this.tsbtnNewSelect.Image = global::SQLUserControl.Properties.Resources.new_select_16;
             this.tsbtnNewSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnNewSelect.Name = "tsbtnNewSelect";
             this.tsbtnNewSelect.Size = new System.Drawing.Size(76, 22);
@@ -81,7 +81,7 @@
             // 
             // tsbtnDeleteSelect
             // 
-            this.tsbtnDeleteSelect.Image = global::SQLUserControl.Resource.delete_select_16;
+            this.tsbtnDeleteSelect.Image = global::SQLUserControl.Properties.Resources.delete_select_16;
             this.tsbtnDeleteSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDeleteSelect.Name = "tsbtnDeleteSelect";
             this.tsbtnDeleteSelect.Size = new System.Drawing.Size(76, 22);

@@ -13,9 +13,12 @@ namespace SQLDAL
         void Drop(string name);
         DatabaseInfo AddDataBaseInfo(string name);
         Form GetConnectForm();
-        Image CloseImage();
-        Image OpenImage();
+        //Image CloseImage();
+        //Image OpenImage();
         DbConnection GetConnection(string database);
         DatabaseInfo GetDatabaseInfo();
+
+        Image CloseImage { get; }
+        Image OpenImage { get; }
     }
 }

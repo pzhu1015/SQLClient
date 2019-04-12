@@ -17,6 +17,16 @@ namespace OracleDAL
         {
         }
 
+        public override Image CloseImage
+        {
+            get { return Resources.oracle_close_16; }
+        }
+
+        public override Image OpenImage
+        {
+            get { return Resources.oracle_open_16; }
+        }
+
         public override void Drop(string name)
         {
             try
@@ -99,16 +109,6 @@ namespace OracleDAL
         public override Form GetConnectForm()
         {
             return new OracleConnectForm();
-        }
-
-        public override Image CloseImage()
-        {
-            return Resources.oracle_close_16;
-        }
-
-        public override Image OpenImage()
-        {
-            return Resources.oracle_open_16;
         }
 
         public override DbConnection GetConnection(string database)

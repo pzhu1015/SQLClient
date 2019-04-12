@@ -130,7 +130,7 @@
             // 
             this.tsbtnSetting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsbtnSetting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnSetting.Image = global::SQLUserControl.Resource.page_setting_16;
+            this.tsbtnSetting.Image = global::SQLUserControl.Properties.Resources.page_setting_16;
             this.tsbtnSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSetting.Name = "tsbtnSetting";
             this.tsbtnSetting.Size = new System.Drawing.Size(23, 22);
@@ -141,7 +141,7 @@
             // 
             this.tsbtnLastPage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsbtnLastPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnLastPage.Image = global::SQLUserControl.Resource.last_page_16;
+            this.tsbtnLastPage.Image = global::SQLUserControl.Properties.Resources.last_page_16;
             this.tsbtnLastPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnLastPage.Name = "tsbtnLastPage";
             this.tsbtnLastPage.Size = new System.Drawing.Size(23, 22);
@@ -152,7 +152,7 @@
             // 
             this.tsbtnNextPage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsbtnNextPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnNextPage.Image = global::SQLUserControl.Resource.next_page_16;
+            this.tsbtnNextPage.Image = global::SQLUserControl.Properties.Resources.next_page_16;
             this.tsbtnNextPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnNextPage.Name = "tsbtnNextPage";
             this.tsbtnNextPage.Size = new System.Drawing.Size(23, 22);
@@ -170,7 +170,7 @@
             // 
             this.tsbtnPrevPage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsbtnPrevPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnPrevPage.Image = global::SQLUserControl.Resource.prev_page_16;
+            this.tsbtnPrevPage.Image = global::SQLUserControl.Properties.Resources.prev_page_16;
             this.tsbtnPrevPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnPrevPage.Name = "tsbtnPrevPage";
             this.tsbtnPrevPage.Size = new System.Drawing.Size(23, 22);
@@ -181,7 +181,7 @@
             // 
             this.tsbtnFristPage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsbtnFristPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnFristPage.Image = global::SQLUserControl.Resource.first_page_16;
+            this.tsbtnFristPage.Image = global::SQLUserControl.Properties.Resources.first_page_16;
             this.tsbtnFristPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnFristPage.Name = "tsbtnFristPage";
             this.tsbtnFristPage.Size = new System.Drawing.Size(23, 22);
@@ -208,7 +208,7 @@
             // tsbtnAddRecord
             // 
             this.tsbtnAddRecord.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnAddRecord.Image = global::SQLUserControl.Resource.add_record_16;
+            this.tsbtnAddRecord.Image = global::SQLUserControl.Properties.Resources.add_record_16;
             this.tsbtnAddRecord.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnAddRecord.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAddRecord.Name = "tsbtnAddRecord";
@@ -218,7 +218,7 @@
             // tsbtnDeleteRecord
             // 
             this.tsbtnDeleteRecord.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnDeleteRecord.Image = global::SQLUserControl.Resource.delete_record_16;
+            this.tsbtnDeleteRecord.Image = global::SQLUserControl.Properties.Resources.delete_record_16;
             this.tsbtnDeleteRecord.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnDeleteRecord.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnDeleteRecord.Name = "tsbtnDeleteRecord";
@@ -228,7 +228,7 @@
             // tsbtnApplyChange
             // 
             this.tsbtnApplyChange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnApplyChange.Image = global::SQLUserControl.Resource.apply_change_16;
+            this.tsbtnApplyChange.Image = global::SQLUserControl.Properties.Resources.apply_change_16;
             this.tsbtnApplyChange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnApplyChange.Name = "tsbtnApplyChange";
             this.tsbtnApplyChange.Size = new System.Drawing.Size(23, 22);
@@ -237,7 +237,7 @@
             // tsbtnCancleChange
             // 
             this.tsbtnCancleChange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnCancleChange.Image = global::SQLUserControl.Resource.cancle_change_16;
+            this.tsbtnCancleChange.Image = global::SQLUserControl.Properties.Resources.cancle_change_16;
             this.tsbtnCancleChange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnCancleChange.Name = "tsbtnCancleChange";
             this.tsbtnCancleChange.Size = new System.Drawing.Size(23, 22);
@@ -246,7 +246,7 @@
             // tsbtnRefresh
             // 
             this.tsbtnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnRefresh.Image = global::SQLUserControl.Resource.refresh_16;
+            this.tsbtnRefresh.Image = global::SQLUserControl.Properties.Resources.refresh_16;
             this.tsbtnRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnRefresh.Name = "tsbtnRefresh";
@@ -256,7 +256,7 @@
             // tsbtnStop
             // 
             this.tsbtnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnStop.Image = global::SQLUserControl.Resource.stop_update_16;
+            this.tsbtnStop.Image = global::SQLUserControl.Properties.Resources.stop_update_16;
             this.tsbtnStop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbtnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnStop.Name = "tsbtnStop";
