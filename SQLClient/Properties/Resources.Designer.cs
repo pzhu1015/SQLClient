@@ -63,6 +63,16 @@ namespace SQLClient.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap add_datasource_16 {
+            get {
+                object obj = ResourceManager.GetObject("add_datasource_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap add_item_16 {
             get {
                 object obj = ResourceManager.GetObject("add_item_16", resourceCulture);

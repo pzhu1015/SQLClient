@@ -31,19 +31,19 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.accDataSource = new DevExpress.XtraBars.Navigation.AccordionControl();
+            this.btnUpLoad = new DevExpress.XtraEditors.SimpleButton();
             this.accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pg = new System.Windows.Forms.PropertyGrid();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txtConnectionString = new System.Windows.Forms.TextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.txtConnectName = new System.Windows.Forms.TextBox();
             this.separatorControl2 = new DevExpress.XtraEditors.SeparatorControl();
-            this.btnUpLoad = new DevExpress.XtraEditors.SimpleButton();
             this.separatorControl1 = new DevExpress.XtraEditors.SeparatorControl();
             this.btnAdvance = new DevExpress.XtraEditors.SimpleButton();
             this.btnOK = new DevExpress.XtraEditors.SimpleButton();
             this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -53,16 +53,18 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.accDataSource)).BeginInit();
+            this.accDataSource.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(10, 10);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainer1.Name = "splitContainer1";
@@ -74,18 +76,19 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.btnUpLoad);
             this.splitContainer1.Panel2.Controls.Add(this.separatorControl1);
             this.splitContainer1.Panel2.Controls.Add(this.btnAdvance);
             this.splitContainer1.Panel2.Controls.Add(this.btnOK);
             this.splitContainer1.Panel2.Controls.Add(this.btnCancel);
             this.splitContainer1.Size = new System.Drawing.Size(620, 504);
             this.splitContainer1.SplitterDistance = 448;
+            this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 21;
             // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             // 
@@ -101,11 +104,13 @@
             this.splitContainer2.Panel2.Controls.Add(this.separatorControl2);
             this.splitContainer2.Size = new System.Drawing.Size(620, 448);
             this.splitContainer2.SplitterDistance = 277;
+            this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
             // 
             // accDataSource
             // 
             this.accDataSource.AllowItemSelection = true;
+            this.accDataSource.Controls.Add(this.btnUpLoad);
             this.accDataSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.accDataSource.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.accordionControlElement1});
@@ -119,11 +124,35 @@
             this.accDataSource.Text = "accordionControl1";
             this.accDataSource.SelectedElementChanged += new DevExpress.XtraBars.Navigation.SelectedElementChangedEventHandler(this.accDataSource_SelectedElementChanged);
             // 
+            // btnUpLoad
+            // 
+            this.btnUpLoad.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnUpLoad.Image = global::SQLClient.Properties.Resources.add_datasource_16;
+            this.btnUpLoad.Location = new System.Drawing.Point(222, 10);
+            this.btnUpLoad.Name = "btnUpLoad";
+            this.btnUpLoad.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.btnUpLoad.Size = new System.Drawing.Size(26, 20);
+            this.btnUpLoad.TabIndex = 20;
+            this.btnUpLoad.ToolTip = "添加新的数据源";
+            this.btnUpLoad.Click += new System.EventHandler(this.btnUpLoad_Click);
+            // 
             // accordionControlElement1
             // 
             this.accordionControlElement1.Expanded = true;
+            this.accordionControlElement1.HeaderControl = this.btnUpLoad;
             this.accordionControlElement1.Name = "accordionControlElement1";
             this.accordionControlElement1.Text = "数据源";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.pg);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(18, 91);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(324, 357);
+            this.groupBox1.TabIndex = 20;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "驱动属性";
             // 
             // pg
             // 
@@ -131,7 +160,7 @@
             this.pg.Location = new System.Drawing.Point(3, 17);
             this.pg.Name = "pg";
             this.pg.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.pg.Size = new System.Drawing.Size(315, 337);
+            this.pg.Size = new System.Drawing.Size(318, 337);
             this.pg.TabIndex = 19;
             // 
             // groupBox3
@@ -140,7 +169,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(18, 51);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(321, 40);
+            this.groupBox3.Size = new System.Drawing.Size(324, 40);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "输入连接字符串";
@@ -150,8 +179,8 @@
             this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConnectionString.Location = new System.Drawing.Point(3, 17);
             this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(315, 21);
-            this.txtConnectionString.TabIndex = 4;
+            this.txtConnectionString.Size = new System.Drawing.Size(318, 21);
+            this.txtConnectionString.TabIndex = 1;
             // 
             // groupBox7
             // 
@@ -159,7 +188,7 @@
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox7.Location = new System.Drawing.Point(18, 0);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(321, 51);
+            this.groupBox7.Size = new System.Drawing.Size(324, 51);
             this.groupBox7.TabIndex = 18;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "连接名称";
@@ -169,8 +198,8 @@
             this.txtConnectName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConnectName.Location = new System.Drawing.Point(3, 17);
             this.txtConnectName.Name = "txtConnectName";
-            this.txtConnectName.Size = new System.Drawing.Size(315, 21);
-            this.txtConnectName.TabIndex = 4;
+            this.txtConnectName.Size = new System.Drawing.Size(318, 21);
+            this.txtConnectName.TabIndex = 0;
             this.txtConnectName.Text = "mysql_test";
             // 
             // separatorControl2
@@ -183,16 +212,6 @@
             this.separatorControl2.Padding = new System.Windows.Forms.Padding(8);
             this.separatorControl2.Size = new System.Drawing.Size(18, 448);
             this.separatorControl2.TabIndex = 16;
-            // 
-            // btnUpLoad
-            // 
-            this.btnUpLoad.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnUpLoad.Location = new System.Drawing.Point(37, 20);
-            this.btnUpLoad.Name = "btnUpLoad";
-            this.btnUpLoad.Size = new System.Drawing.Size(68, 20);
-            this.btnUpLoad.TabIndex = 20;
-            this.btnUpLoad.Text = "上传";
-            this.btnUpLoad.Click += new System.EventHandler(this.btnUpLoad_Click);
             // 
             // separatorControl1
             // 
@@ -208,7 +227,7 @@
             // 
             this.btnAdvance.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnAdvance.Enabled = false;
-            this.btnAdvance.Location = new System.Drawing.Point(185, 20);
+            this.btnAdvance.Location = new System.Drawing.Point(530, 21);
             this.btnAdvance.Name = "btnAdvance";
             this.btnAdvance.Size = new System.Drawing.Size(68, 20);
             this.btnAdvance.TabIndex = 14;
@@ -220,7 +239,7 @@
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
-            this.btnOK.Location = new System.Drawing.Point(525, 20);
+            this.btnOK.Location = new System.Drawing.Point(352, 21);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(68, 20);
             this.btnOK.TabIndex = 8;
@@ -230,22 +249,11 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(396, 20);
+            this.btnCancel.Location = new System.Drawing.Point(441, 21);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(68, 20);
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "取消";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.pg);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(18, 91);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(321, 357);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "驱动属性";
             // 
             // NewConnectionFrom
             // 
@@ -273,13 +281,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.accDataSource)).EndInit();
+            this.accDataSource.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

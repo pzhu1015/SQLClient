@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnDriverPath = new DevExpress.XtraEditors.ButtonEdit();
             this.btnDALPath = new DevExpress.XtraEditors.ButtonEdit();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,7 +44,7 @@
             this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
             this.txtClassName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.tipMessage = new System.Windows.Forms.ToolTip();
+            this.tipMessage = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.btnDriverPath.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnDALPath.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
@@ -206,7 +207,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "上传驱动";
+            this.Text = "添加新数据源";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UpLoadDriverForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.btnDriverPath.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnDALPath.Properties)).EndInit();
