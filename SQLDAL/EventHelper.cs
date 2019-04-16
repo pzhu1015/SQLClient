@@ -227,6 +227,58 @@ namespace SQLDAL
     }
     #endregion
 
+    #region Database Event
+    public delegate void CloseDatabaseEventHandler(object sender, CloseDatabaseEventArgs e);
+    public class CloseDatabaseEventArgs : EventArgs
+    {
+        private DatabaseInfo info;
+        public CloseDatabaseEventArgs(DatabaseInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+    }
+
+    public delegate void OpenDatabaseEventHandler(object sender, OpenDatabaseEventArgs e);
+    public class OpenDatabaseEventArgs : EventArgs
+    {
+        private DatabaseInfo info;
+        public OpenDatabaseEventArgs(DatabaseInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+    }
+    #endregion
+
     public delegate void ListViewShowMenuEventHandler(object sender, ListViewShowMenuEventArgs e);
     public class ListViewShowMenuEventArgs: EventArgs
     {

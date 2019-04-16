@@ -76,11 +76,6 @@ namespace AccessDAL
             throw new NotImplementedException();
         }
 
-        public override SqlStatementType GetStatementType(string statement, string first_word)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool ExecueNonQuery(string sql, out int count, out string error, out long cost)
         {
             throw new NotImplementedException();
@@ -99,6 +94,16 @@ namespace AccessDAL
         public override ViewInfo GetViewInfo()
         {
             return new AccessViewInfo();
+        }
+
+        public override bool Parse(string sql, out List<StatementObj> statements)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Format(string sql, out string formatSql)
+        {
+            throw new NotImplementedException();
         }
     }
 }

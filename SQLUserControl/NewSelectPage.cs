@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Linq;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using SQLDAL;
 using Helper;
 using ICSharpCode.TextEditor.Document;
 using DevExpress.XtraTab;
 using System.IO;
 using System.Reflection;
-using SQLParser;
 using System.Threading;
 using SQLUserControl.Properties;
+using System.Data;
 
 namespace SQLUserControl
 {
@@ -113,7 +107,7 @@ namespace SQLUserControl
 
         private void RunSql(object args)
         {
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
             string str = args as string;
             try
             {
@@ -127,54 +121,50 @@ namespace SQLUserControl
                             this.tcRslt.TabPages.RemoveAt(this.tcRslt.TabPages.Count - 1);
                         }
                         this.txtMsg.Clear();
-                        SQLParser.SQLParser parser = new SQLParser.SQLParser();
-                        parser.Parse(str);
-                        if (parser.IsComplete())
+                        List<StatementObj> statements;
+                        bool rslt = this.databaseInfo.Parse(str, out statements);
+                        if (!rslt)
                         {
-                            List<StatementObj> statements = parser.GetStatements();
-                            foreach (var statement in statements)
+                            this.txtMsg.AppendText($"[ERROR] {this.databaseInfo.Message}\r\n\r\n");
+                            return;
+                        }
+                        foreach (var statement in statements)
+                        {
+                            int count = 0;
+                            string error = "";
+                            Int64 cost = 0;
+                            if (statement.SqlType == SqlType.eMsg)
                             {
-                                string sql = statement.GetStatement();
-                                sql = sql.Remove(sql.Length - 1);
-                                string first_word = statement.GetFirstWord();
-                                SqlStatementType type = this.databaseInfo.GetStatementType(sql, first_word.ToUpper());
-                                bool rslt = false;
-                                int count = 0;
-                                string error = "";
-                                Int64 cost = 0;
-                                if (type == SqlStatementType.eMsg)
-                                {
-                                    rslt = this.databaseInfo.ExecueNonQuery(sql, out count, out error, out cost);
-                                }
-                                else
-                                {
-                                    DataTable table;
-                                    rslt = this.databaseInfo.ExecuteQuery(sql, out table, out count, out error, out cost);
-                                    if (rslt)
-                                    {
-                                        TabPage page = new TabPage();
-                                        page.Text = $"结果-{this.tcRslt.TabPages.Count}";
-                                        QueryRslt queryRslt = new QueryRslt();
-                                        queryRslt.Dock = DockStyle.Fill;
-                                        queryRslt.CurrentCellChange += QueryRslt_CurrentCellChange;
-                                        queryRslt.Cost = cost;
-                                        queryRslt.Statement = statement.GetStatement();
-                                        queryRslt.BindData(table);
-                                        page.Tag = queryRslt;
-                                        page.Controls.Add(queryRslt);
-                                        this.tcRslt.TabPages.Add(page);
-                                        this.tcRslt.SelectedTab = page;
-                                    }
-                                }
+                                rslt = this.databaseInfo.ExecueNonQuery(statement.SqlText, out count, out error, out cost);
+                            }
+                            else
+                            {
+                                DataTable table;
+                                rslt = this.databaseInfo.ExecuteQuery(statement.SqlText, out table, out count, out error, out cost);
                                 if (rslt)
                                 {
-                                    string success_msg = $"[SQL] {sql}\r\n 受影响的行:{count}, 时间: {cost / 1000.0}s\r\n\r\n";
-                                    this.txtMsg.AppendText(success_msg);
+                                    TabPage page = new TabPage();
+                                    page.Text = $"结果-{this.tcRslt.TabPages.Count}";
+                                    QueryRslt queryRslt = new QueryRslt();
+                                    queryRslt.Dock = DockStyle.Fill;
+                                    queryRslt.CurrentCellChange += QueryRslt_CurrentCellChange;
+                                    queryRslt.Cost = cost;
+                                    queryRslt.Statement = statement.SqlText;
+                                    queryRslt.BindData(table);
+                                    page.Tag = queryRslt;
+                                    page.Controls.Add(queryRslt);
+                                    this.tcRslt.TabPages.Add(page);
+                                    this.tcRslt.SelectedTab = page;
                                 }
-                                else
-                                {
-                                    this.txtMsg.AppendText($"[ERROR] {error}\r\n\r\n");
-                                }
+                            }
+                            if (rslt)
+                            {
+                                string success_msg = $"[SQL] {statement.SqlText}\r\n 受影响的行:{count}, 时间: {cost / 1000.0}s\r\n\r\n";
+                                this.txtMsg.AppendText(success_msg);
+                            }
+                            else
+                            {
+                                this.txtMsg.AppendText($"[ERROR] {error}\r\n\r\n");
                             }
                         }
                     }
@@ -327,8 +317,6 @@ namespace SQLUserControl
             {
                 this.DisableRun();
                 string str = this.txtMain.Text;
-                //AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(RunSql);
-                //ah.BeginInvoke(str, null, null);
                 Thread thread = new Thread(new ParameterizedThreadStart(RunSql));
                 thread.Start(str);
             }
@@ -344,8 +332,6 @@ namespace SQLUserControl
             {
                 this.DisableRun();
                 string str = this.txtMain.ActiveTextAreaControl.SelectionManager.SelectedText;
-                //AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(RunSql);
-                //ah.BeginInvoke(str, null, null);
                 Thread thread = new Thread(new ParameterizedThreadStart(RunSql));
                 thread.Start(str);
             }
@@ -357,8 +343,19 @@ namespace SQLUserControl
 
         private void tsbtnFormat_Click(object sender, EventArgs e)
         {
-            this.txtMain.Document.FoldingManager.UpdateFoldings(String.Empty, null);
-            this.txtMain.ActiveTextAreaControl.TextArea.Refresh();
+            try
+            {
+                string str = this.txtMain.Text;
+                string format_str;
+                this.databaseInfo.Format(str, out format_str);
+                this.txtMain.Text = format_str;
+                this.txtMain.Document.FoldingManager.UpdateFoldings(String.Empty, null);
+                this.txtMain.ActiveTextAreaControl.TextArea.Refresh();
+            }
+            catch(Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
         }
         #endregion
 

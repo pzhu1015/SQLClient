@@ -3,11 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.Odbc;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SQLDAL
@@ -252,7 +248,9 @@ namespace SQLDAL
             }
         }
         public abstract void AlterTable(string name, string script);
+
         public abstract void AlterView(string name, string script);
+
         public void AlterSelect(string selectName, string script)
         {
             try
@@ -274,8 +272,9 @@ namespace SQLDAL
                 LogHelper.Error(ex);
             }
         }
-        public abstract SqlStatementType GetStatementType(string statement, string first_word);
+
         public abstract bool ExecueNonQuery(string sql, out int count, out string error, out long cost);
+
         public abstract bool ExecuteQuery(string sql, out DataTable table, out int count, out string error, out long cost);
 
         public void RefreshTable()
@@ -428,55 +427,9 @@ namespace SQLDAL
 
         public abstract TableInfo GetTableInfo();
         public abstract ViewInfo GetViewInfo();
+        public abstract bool Parse(string sql, out List<StatementObj> statements);
+        public abstract bool Format(string sql, out string formatSql);
     }
 
-    public delegate void CloseDatabaseEventHandler(object sender, CloseDatabaseEventArgs e);
-    public class CloseDatabaseEventArgs : EventArgs
-    {
-        private DatabaseInfo info;
-        public CloseDatabaseEventArgs(DatabaseInfo info)
-            :
-            base()
-        {
-            this.info = info;
-        }
-
-        public DatabaseInfo Info
-        {
-            get
-            {
-                return info;
-            }
-
-            set
-            {
-                info = value;
-            }
-        }
-    }
-
-    public delegate void OpenDatabaseEventHandler(object sender, OpenDatabaseEventArgs e);
-    public class OpenDatabaseEventArgs: EventArgs
-    {
-        private DatabaseInfo info;
-        public OpenDatabaseEventArgs(DatabaseInfo info)
-            :
-            base()
-        {
-            this.info = info;
-        }
-
-        public DatabaseInfo Info
-        {
-            get
-            {
-                return info;
-            }
-
-            set
-            {
-                info = value;
-            }
-        }
-    }
+   
 }

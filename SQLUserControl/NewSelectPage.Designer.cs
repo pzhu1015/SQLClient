@@ -399,7 +399,7 @@
             this.toolStripSeparator3,
             this.tsmiSelectAll});
             this.txtMainMenu.Name = "txtMainMenu";
-            this.txtMainMenu.Size = new System.Drawing.Size(185, 220);
+            this.txtMainMenu.Size = new System.Drawing.Size(185, 198);
             // 
             // tsmiRunSelect
             // 

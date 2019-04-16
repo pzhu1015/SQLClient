@@ -1,22 +1,13 @@
-﻿using SQLParser;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SQLDAL
 {
-    public enum SqlStatementType
-    {
-        eTable,
-        eMsg
-    }
 
     public interface IDatabaseInfo
     {
-        
+       
         bool Open();
         bool Close();
         void Refresh();
@@ -48,10 +39,23 @@ namespace SQLDAL
         TableInfo GetTableInfo();
         ViewInfo GetViewInfo();
 
-        SqlStatementType GetStatementType(string statement, string first_word);
-
+        bool Format(string sql, out string formatSql);
+        bool Parse(string sql, out List<StatementObj> statements);
         bool ExecueNonQuery(string sql, out int count, out string error, out Int64 cost);
 
         bool ExecuteQuery(string sql, out DataTable table, out int count, out string error, out Int64 cost);
+    }
+
+    public enum SqlType
+    {
+        eTable,
+        eMsg
+    }
+
+
+    public class StatementObj
+    {
+        public SqlType SqlType;
+        public string SqlText;
     }
 }

@@ -171,10 +171,6 @@
       <Project>{eb9fd50b-500e-4f51-bcb8-3d866bb54b63}</Project>
       <Name>SQLDAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SQLParser\SQLParser.csproj">
-      <Project>{88592B88-E7C0-457B-9B2B-DC0610CAD503}</Project>
-      <Name>SQLParser</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

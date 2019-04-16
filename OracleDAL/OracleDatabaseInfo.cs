@@ -6,6 +6,7 @@ using System.Data.Common;
 using SQLDAL;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
+using gudusoft.gsqlparser;
 
 namespace OracleDAL
 {
@@ -104,28 +105,6 @@ namespace OracleDAL
             throw new NotImplementedException();
         }
 
-        public override SqlStatementType GetStatementType(string statement, string first_word)
-        {
-            if (first_word == "CREATE" ||
-                first_word == "ALTER" ||
-                first_word == "DELETE" ||
-                first_word == "UPDATE" ||
-                first_word == "INSERT" ||
-                first_word == "DROP" ||
-                first_word == "TRUNCATE")
-            {
-                return SqlStatementType.eMsg;
-            }
-            else if (first_word == "SELECT" || first_word == "SHOW")
-            {
-                return SqlStatementType.eTable;
-            }
-            else
-            {
-                return SqlStatementType.eMsg;
-            }
-        }
-
         public override bool ExecueNonQuery(string sql, out int count, out string error, out Int64 cost)
         {
             try
@@ -193,6 +172,68 @@ namespace OracleDAL
         public override ViewInfo GetViewInfo()
         {
             return new OracleViewInfo();
+        }
+
+        public override bool Parse(string sql, out List<StatementObj> statements)
+        {
+            statements = new List<StatementObj>();
+            try
+            {
+                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVOracle);
+                sqlparser.SqlText.Text = sql;
+                int ret = sqlparser.Parse();
+                if (ret != 0)
+                {
+                    this.message = sqlparser.ErrorMessages;
+                    return false;
+                }
+                foreach (var statement in sqlparser.SqlStatements)
+                {
+                    StatementObj obj = new StatementObj();
+                    obj.SqlText = statement.RawSqlText;
+                    switch (statement.SqlStatementType)
+                    {
+                        case TSqlStatementType.sstSelect:
+                            obj.SqlType = SqlType.eTable;
+                            break;
+                        default:
+                            obj.SqlType = SqlType.eMsg;
+                            break;
+                    }
+                    statements.Add(obj);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
+        }
+
+        public override bool Format(string sql, out string formatSql)
+        {
+            formatSql = sql;
+            try
+            {
+                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVOracle);
+                sqlparser.SqlText.Text = sql;
+                int ret = sqlparser.PrettyPrint();
+                if (ret != 0)
+                {
+                    this.message = sqlparser.ErrorMessages;
+                    return false;
+                }
+                formatSql = sqlparser.FormattedSqlText.Text;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
         }
     }
 }
