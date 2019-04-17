@@ -9,12 +9,10 @@ namespace SQLDAL
         bool Open();
         bool Close();
         bool Refresh();
-        void Create(string name);
+        bool Create(string name);
         void Drop(string name);
         DatabaseInfo AddDataBaseInfo(string name);
         Form GetConnectForm();
-        //Image CloseImage();
-        //Image OpenImage();
         DbConnection GetConnection(string database);
         DatabaseInfo GetDatabaseInfo();
 

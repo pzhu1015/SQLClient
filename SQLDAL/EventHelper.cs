@@ -279,6 +279,60 @@ namespace SQLDAL
     }
     #endregion
 
+    #region Connect Event
+    public delegate void CloseConnectEventHandler(object sender, CloseConnectEventArgs e);
+
+    public class CloseConnectEventArgs : EventArgs
+    {
+        private ConnectInfo info;
+        public CloseConnectEventArgs(ConnectInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+
+        public ConnectInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+    }
+
+    public delegate void OpenConnectEventHandler(object sender, OpenConnectEventArgs e);
+    public class OpenConnectEventArgs : EventArgs
+    {
+        private ConnectInfo info;
+        public OpenConnectEventArgs(ConnectInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+
+        public ConnectInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+    }
+
+    #endregion
+
     public delegate void ListViewShowMenuEventHandler(object sender, ListViewShowMenuEventArgs e);
     public class ListViewShowMenuEventArgs: EventArgs
     {

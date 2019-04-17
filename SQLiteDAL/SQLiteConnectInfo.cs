@@ -40,15 +40,18 @@ namespace SQLiteDAL
             }
         }
 
-        public override void Create(string name)
+        public override bool Create(string name)
         {
             try
             {
                 SQLiteConnection.CreateFile(name);
+                return true;
             }
             catch (Exception ex)
             {
-                LogHelper.Error(ex);;
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
             }
         }
 

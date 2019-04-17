@@ -1004,6 +1004,7 @@ namespace SQLClient
             }
             catch(Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 LogHelper.Error(ex);
             }
         }

@@ -7,6 +7,9 @@ using System.Data;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Drawing;
+using System.IO;
+using ADOX;
+using AccessDAL.Properties;
 
 namespace AccessDAL
 {
@@ -29,15 +32,19 @@ namespace AccessDAL
             }
         }
 
-        public override void Create(string name)
+        public override bool Create(string name)
         {
             try
             {
-                
+                Catalog catalog = new Catalog();
+                catalog.Create($"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={name};Jet OLEDB:Engine Type=5");
+                return true;
             }
             catch (Exception ex)
             {
-                LogHelper.Error(ex);;
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
             }
         }
 
@@ -57,7 +64,7 @@ namespace AccessDAL
             catch(Exception ex)
             {
                 this.message = ex.Message;
-                LogHelper.Error(ex);;
+                LogHelper.Error(ex);
                 return false;
             }
         }
@@ -69,17 +76,28 @@ namespace AccessDAL
 
         public override Image CloseImage
         {
-            get { throw new NotImplementedException(); }
+            get { return Resources.access_logo_16; }
         }
 
         public override Image OpenImage
         {
-            get { throw new NotImplementedException(); }
+            get { return Resources.access_logo_16; }
         }
 
         public override DbConnection GetConnection(string database)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DbConnection connection = new OleDbConnection(this.connectionString);
+                connection.Open();
+                return connection;
+            }
+            catch (Exception ex)
+            {
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return null;
+            }
         }
 
         public override Form GetConnectForm()

@@ -38,7 +38,7 @@ namespace SQLServerDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"SELECT [TABLE_NAME] FROM [{this.name}].[INFORMATION_SCHEMA].[TABLES]";
+                    command.CommandText = string.Format(this.connectInfo.LoadTable, this.name);
                     DbDataAdapter da = new SqlDataAdapter(command as SqlCommand);
                     da.Fill(ds);
                     return ds.Tables[0];
@@ -59,7 +59,7 @@ namespace SQLServerDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"SELECT [TABLE_NAME] FROM [{this.name}].[INFORMATION_SCHEMA].[VIEWS]";
+                    command.CommandText = string.Format(this.connectInfo.LoadView, this.name);
                     DbDataAdapter da = new SqlDataAdapter(command as SqlCommand);
                     da.Fill(ds);
                     return ds.Tables[0];

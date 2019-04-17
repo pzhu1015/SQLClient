@@ -33,10 +33,19 @@ namespace AccessDAL
         {
             try
             {
-                return null;
+                using (DbConnection connection = this.connectInfo.GetConnection(""))
+                {
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = this.connectInfo.LoadTable;
+                    DbDataAdapter da = new OleDbDataAdapter(command as OleDbCommand);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    return ds.Tables[0];
+                }
             }
             catch(Exception ex)
             {
+                this.message = ex.Message;
                 LogHelper.Error(ex);
                 return null;
             }
@@ -46,10 +55,19 @@ namespace AccessDAL
         {
             try
             {
-                return null;
+                using (DbConnection connection = this.connectInfo.GetConnection(""))
+                {
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = this.connectInfo.LoadView;
+                    DbDataAdapter da = new OleDbDataAdapter(command as OleDbCommand);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    return ds.Tables[0];
+                }
             }
             catch (Exception ex)
             {
+                this.message = ex.Message;
                 LogHelper.Error(ex);
                 return null;
             }

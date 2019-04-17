@@ -40,31 +40,17 @@ namespace SQLServerDAL
             }
         }
 
-        public override void Create(string name)
+        public override bool Create(string name)
         {
             try
             {
-                using (DbConnection connection = this.GetConnection(""))
-                {
-                    if (!this.isOpen)
-                    {
-                        return;
-                    }
-                    DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"CREATE DATABASE {name};";
-                    command.ExecuteNonQuery();
-                    if (this.databases != null)
-                    {
-                        DatabaseInfo info = new SQLServerDatabaseInfo();
-                        info.Name = name;
-                        info.ConnectInfo = this;
-                        this.databases.Add(info);
-                    }
-                }
+                return true;
             }
             catch(Exception ex)
             {
-                LogHelper.Error(ex);;
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
             }
         }
 

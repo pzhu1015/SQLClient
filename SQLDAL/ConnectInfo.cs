@@ -27,6 +27,8 @@ namespace SQLDAL
         protected string designTable;
         protected string openTable;
         protected string openView;
+        protected string loadTable;
+        protected string loadView;
         protected string[] dataTypes;
         protected string message;
         protected TreeNode node;
@@ -148,6 +150,38 @@ namespace SQLDAL
 
         [Browsable(true)]
         [Category("脚本")]
+        [Description("加载当前数据库中所有表的脚本模版")]
+        public string LoadTable
+        {
+            get
+            {
+                return loadTable;
+            }
+
+            set
+            {
+                loadTable = value;
+            }
+        }
+
+        [Browsable(true)]
+        [Category("脚本")]
+        [Description("加载当前数据库中所有视图的脚本模版")]
+        public string LoadView
+        {
+            get
+            {
+                return loadView;
+            }
+
+            set
+            {
+                loadView = value;
+            }
+        }
+
+        [Browsable(true)]
+        [Category("脚本")]
         [Description("当前数据库支持的所有数据类型集合")]
         public string[] DataTypes
         {
@@ -161,7 +195,7 @@ namespace SQLDAL
                 dataTypes = value;
             }
         }
-
+ 
         [Browsable(false)]
         public List<DatabaseInfo> Databases
         {
@@ -297,7 +331,7 @@ namespace SQLDAL
         }
 
         public abstract bool Open();
-        public abstract void Create(string name);
+        public abstract bool Create(string name);
         public abstract void Drop(string name);
         public abstract Form GetConnectForm();
         public abstract DatabaseInfo GetDatabaseInfo();
@@ -427,6 +461,8 @@ namespace SQLDAL
                         "tb_config.designTable, " +
                         "tb_config.openTable, " +
                         "tb_config.openView, " +
+                        "tb_config.loadTable, " +
+                        "tb_config.loadView, " +
                         "tb_config.dataTypes " +
                     "FROM " +
                         "tb_connection, " +
@@ -454,6 +490,8 @@ namespace SQLDAL
                         info.DesignTable = dr["designTable"].ToString();
                         info.OpenTable = dr["openTable"].ToString();
                         info.OpenView = dr["openView"].ToString();
+                        info.LoadTable = dr["loadTable"].ToString();
+                        info.LoadView = dr["loadView"].ToString();
                         info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
                         list.Add(info);
                     }
@@ -510,54 +548,5 @@ namespace SQLDAL
         }
     }
 
-    public delegate void CloseConnectEventHandler(object sender, CloseConnectEventArgs e);
-
-    public class CloseConnectEventArgs: EventArgs
-    {
-        private ConnectInfo info;
-        public CloseConnectEventArgs(ConnectInfo info)
-            :
-            base()
-        {
-            this.info = info;
-        }
-
-        public ConnectInfo Info
-        {
-            get
-            {
-                return info;
-            }
-
-            set
-            {
-                info = value;
-            }
-        }
-    }
-
-    public delegate void OpenConnectEventHandler(object sender, OpenConnectEventArgs e);
-    public class OpenConnectEventArgs:EventArgs
-    {
-        private ConnectInfo info;
-        public OpenConnectEventArgs(ConnectInfo info)
-            :
-            base()
-        {
-            this.info = info;
-        }
-
-        public ConnectInfo Info
-        {
-            get
-            {
-                return info;
-            }
-
-            set
-            {
-                info = value;
-            }
-        }
-    }
+    
 }

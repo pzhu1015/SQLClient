@@ -37,7 +37,7 @@ namespace SQLiteDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
+                    command.CommandText = this.connectInfo.LoadTable;
                     DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
                     da.Fill(ds);
                     return ds.Tables[0];
@@ -58,7 +58,7 @@ namespace SQLiteDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "SELECT name FROM sqlite_master WHERE type='view'";
+                    command.CommandText = this.connectInfo.LoadView;
                     DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
                     da.Fill(ds);
                     return ds.Tables[0];

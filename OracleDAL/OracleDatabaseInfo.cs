@@ -37,7 +37,7 @@ namespace OracleDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "select * from user_tables";
+                    command.CommandText = this.connectInfo.LoadTable;
                     DbDataAdapter da = new OracleDataAdapter(command as OracleCommand);
                     da.Fill(ds);
                     return ds.Tables[0];
@@ -58,7 +58,7 @@ namespace OracleDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "select * from user_views";
+                    command.CommandText = this.connectInfo.LoadView;
                     DbDataAdapter da = new OracleDataAdapter(command as OracleCommand);
                     da.Fill(ds);
                     return ds.Tables[0];

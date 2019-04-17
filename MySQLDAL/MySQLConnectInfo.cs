@@ -39,16 +39,12 @@ namespace MySQLDAL
             }
         }
 
-        public override void Create(string name)
+        public override bool Create(string name)
         {
             try
             {
                 using (DbConnection connection = this.GetConnection(""))
                 {
-                    if (!this.isOpen)
-                    {
-                        return;
-                    }
                     DbCommand command = connection.CreateCommand();
                     command.CommandText = $"CREATE DATABASE {name};";
                     command.ExecuteNonQuery();
@@ -59,12 +55,14 @@ namespace MySQLDAL
                         info.ConnectInfo = this;
                         this.databases.Add(info);
                     }
+                    return true;
                 }
             }
             catch(Exception ex)
             {
                 this.message = ex.Message;
-                LogHelper.Error(ex);;
+                LogHelper.Error(ex);
+                return false;
             }
         }
 

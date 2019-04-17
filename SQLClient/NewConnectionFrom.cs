@@ -63,6 +63,8 @@ namespace SQLClient
                     info.DesignTable = dr["designTable"].ToString();
                     info.OpenTable = dr["openTable"].ToString();
                     info.OpenView = dr["openView"].ToString();
+                    info.LoadTable = dr["loadTable"].ToString();
+                    info.LoadView = dr["loadView"].ToString();
                     info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
                     element.Text = info.DriverName;
                     element.Image = info.OpenImage;

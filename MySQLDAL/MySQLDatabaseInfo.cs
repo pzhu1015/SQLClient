@@ -39,7 +39,7 @@ namespace MySQLDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "SHOW FULL TABLES WHERE Table_type != 'VIEW'";
+                    command.CommandText = this.connectInfo.LoadTable;
                     DbDataAdapter da = new MySqlDataAdapter(command as MySqlCommand);
                     da.Fill(ds);
                     return ds.Tables[0];
@@ -60,7 +60,7 @@ namespace MySQLDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "SHOW FULL TABLES WHERE Table_type = 'VIEW'";
+                    command.CommandText = this.connectInfo.LoadView;
                     DbDataAdapter da = new MySqlDataAdapter(command as MySqlCommand);
                     da.Fill(ds);
                     return ds.Tables[0];
