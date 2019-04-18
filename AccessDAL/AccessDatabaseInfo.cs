@@ -5,6 +5,8 @@ using System.Data;
 using System.Data.Common;
 using SQLDAL;
 using System.Data.OleDb;
+using System.Diagnostics;
+using gudusoft.gsqlparser;
 
 namespace AccessDAL
 {
@@ -35,12 +37,8 @@ namespace AccessDAL
             {
                 using (DbConnection connection = this.connectInfo.GetConnection(""))
                 {
-                    DbCommand command = connection.CreateCommand();
-                    command.CommandText = this.connectInfo.LoadTable;
-                    DbDataAdapter da = new OleDbDataAdapter(command as OleDbCommand);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    return ds.Tables[0];
+                    DataTable dt = (connection as OleDbConnection).GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                    return dt;
                 }
             }
             catch(Exception ex)
@@ -55,15 +53,7 @@ namespace AccessDAL
         {
             try
             {
-                using (DbConnection connection = this.connectInfo.GetConnection(""))
-                {
-                    DbCommand command = connection.CreateCommand();
-                    command.CommandText = this.connectInfo.LoadView;
-                    DbDataAdapter da = new OleDbDataAdapter(command as OleDbCommand);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    return ds.Tables[0];
-                }
+                return new DataTable();
             }
             catch (Exception ex)
             {
@@ -96,12 +86,62 @@ namespace AccessDAL
 
         public override bool ExecueNonQuery(string sql, out int count, out string error, out long cost)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (DbConnection connection = this.connectInfo.GetConnection(this.name))
+                {
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = sql;
+                    Stopwatch watch = new Stopwatch();
+                    watch.Start();
+                    count = command.ExecuteNonQuery();
+                    watch.Stop();
+                    cost = watch.ElapsedMilliseconds;
+                    error = "";
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                count = 0;
+                error = ex.Message;
+                cost = 0;
+                return false;
+            }
         }
 
         public override bool ExecuteQuery(string sql, out DataTable table, out int count, out string error, out long cost)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (DbConnection connection = this.connectInfo.GetConnection(this.name))
+                {
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = sql;
+                    DataSet ds = new DataSet();
+                    Stopwatch watch = new Stopwatch();
+                    watch.Start();
+                    DbDataAdapter da = new OleDbDataAdapter(command as OleDbCommand);
+                    da.Fill(ds);
+                    table = ds.Tables[0];
+                    watch.Stop();
+                    count = table.Rows.Count;
+                    cost = watch.ElapsedMilliseconds;
+                    error = "";
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                table = null;
+                count = 0;
+                cost = 0;
+                error = ex.Message;
+                return false;
+            }
+            
         }
 
         public override TableInfo GetTableInfo()
@@ -116,12 +156,64 @@ namespace AccessDAL
 
         public override bool Parse(string sql, out List<StatementObj> statements)
         {
-            throw new NotImplementedException();
+            statements = new List<StatementObj>();
+            try
+            {
+                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVAccess);
+                sqlparser.SqlText.Text = sql;
+                int ret = sqlparser.Parse();
+                if (ret != 0)
+                {
+                    this.message = sqlparser.ErrorMessages;
+                    return false;
+                }
+                foreach (var statement in sqlparser.SqlStatements)
+                {
+                    StatementObj obj = new StatementObj();
+                    obj.SqlText = statement.RawSqlText;
+                    switch (statement.SqlStatementType)
+                    {
+                        case TSqlStatementType.sstSelect:
+                            obj.SqlType = SqlType.eTable;
+                            break;
+                        default:
+                            obj.SqlType = SqlType.eMsg;
+                            break;
+                    }
+                    statements.Add(obj);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
         }
 
         public override bool Format(string sql, out string formatSql)
         {
-            throw new NotImplementedException();
+            formatSql = sql;
+            try
+            {
+                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVAccess);
+                sqlparser.SqlText.Text = sql;
+                int ret = sqlparser.PrettyPrint();
+                if (ret != 0)
+                {
+                    this.message = sqlparser.ErrorMessages;
+                    return false;
+                }
+                formatSql = sqlparser.FormattedSqlText.Text;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
         }
     }
 }

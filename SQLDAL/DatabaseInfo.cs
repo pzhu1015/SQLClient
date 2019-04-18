@@ -350,18 +350,30 @@ namespace SQLDAL
                 }
 
                 DataTable dt = this.LoadTable();
+                if (dt == null)
+                {
+                    return false;
+                }
                 foreach (DataRow dr in dt.Rows)
                 {
                     this.AddTableInfo(dr[0].ToString());
                 }
 
                 dt = this.LoadView();
+                if (dt == null)
+                {
+                    return false;
+                }
                 foreach (DataRow dr in dt.Rows)
                 {
                     this.AddViewInfo(dr[0].ToString());
                 }
 
                 dt = this.LoadSelect();
+                if (dt == null)
+                {
+                    return false;
+                }
                 foreach (DataRow dr in dt.Rows)
                 {
                     this.AddSelectInfo(dr[0].ToString());

@@ -51,15 +51,19 @@ namespace AccessDAL
         public override bool Open()
         {
             try
-            {   
-                if (this.databases == null)
+            {
+                using (DbConnection connection = this.GetConnection(""))
                 {
-                    this.databases = new List<DatabaseInfo>();
-                }
+                    if (connection == null)
+                    {
+                        return false;
+                    }
 
-                this.AddDataBaseInfo("main");
-                this.isOpen = true;
-                return true;
+                    this.AddDataBaseInfo("main");
+                    this.isOpen = true;
+                    this.OnOpenConnect(new OpenConnectEventArgs(this));
+                    return true;
+                }
             }
             catch(Exception ex)
             {
@@ -76,12 +80,12 @@ namespace AccessDAL
 
         public override Image CloseImage
         {
-            get { return Resources.access_logo_16; }
+            get { return Resources.access_close_16; }
         }
 
         public override Image OpenImage
         {
-            get { return Resources.access_logo_16; }
+            get { return Resources.access_open_16; }
         }
 
         public override DbConnection GetConnection(string database)

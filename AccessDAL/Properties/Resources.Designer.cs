@@ -63,10 +63,57 @@ namespace AccessDAL.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap access_logo_16 {
+        internal static System.Drawing.Bitmap access_close_16 {
             get {
-                object obj = ResourceManager.GetObject("access_logo_16", resourceCulture);
+                object obj = ResourceManager.GetObject("access_close_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap access_log {
+            get {
+                object obj = ResourceManager.GetObject("access_log", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap access_open_16 {
+            get {
+                object obj = ResourceManager.GetObject("access_open_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 连接成功 的本地化字符串。
+        /// </summary>
+        internal static string connect_success {
+            get {
+                return ResourceManager.GetString("connect_success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 错误 的本地化字符串。
+        /// </summary>
+        internal static string error {
+            get {
+                return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 提示 的本地化字符串。
+        /// </summary>
+        internal static string prompt {
+            get {
+                return ResourceManager.GetString("prompt", resourceCulture);
             }
         }
     }

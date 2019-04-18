@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="gudusoft.gsqlparser">
+      <HintPath>..\Helper\lib\gudusoft.gsqlparser.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -99,7 +102,13 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\access_logo_16.png" />
+    <None Include="Resources\access_open_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\access_close_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\access_log.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

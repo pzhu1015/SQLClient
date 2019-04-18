@@ -36,7 +36,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pg = new System.Windows.Forms.PropertyGrid();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtConnectionString = new System.Windows.Forms.TextBox();
+            this.txtConnectionString = new DevExpress.XtraEditors.ButtonEdit();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.txtConnectName = new System.Windows.Forms.TextBox();
             this.separatorControl2 = new DevExpress.XtraEditors.SeparatorControl();
@@ -56,6 +56,7 @@
             this.accDataSource.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtConnectionString.Properties)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
@@ -179,8 +180,12 @@
             this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConnectionString.Location = new System.Drawing.Point(3, 17);
             this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(318, 21);
-            this.txtConnectionString.TabIndex = 1;
+            this.txtConnectionString.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
+            this.txtConnectionString.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.txtConnectionString.Size = new System.Drawing.Size(318, 20);
+            this.txtConnectionString.TabIndex = 0;
+            this.txtConnectionString.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtConnectionString_ButtonClick);
             // 
             // groupBox7
             // 
@@ -225,21 +230,17 @@
             // 
             // btnAdvance
             // 
-            this.btnAdvance.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnAdvance.Enabled = false;
-            this.btnAdvance.Location = new System.Drawing.Point(530, 21);
+            this.btnAdvance.Location = new System.Drawing.Point(0, 0);
             this.btnAdvance.Name = "btnAdvance";
-            this.btnAdvance.Size = new System.Drawing.Size(68, 20);
-            this.btnAdvance.TabIndex = 14;
-            this.btnAdvance.Text = "高级";
-            this.btnAdvance.Click += new System.EventHandler(this.btnAdvance_Click);
+            this.btnAdvance.Size = new System.Drawing.Size(75, 23);
+            this.btnAdvance.TabIndex = 16;
             // 
             // btnOK
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
-            this.btnOK.Location = new System.Drawing.Point(352, 21);
+            this.btnOK.Location = new System.Drawing.Point(527, 23);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(68, 20);
             this.btnOK.TabIndex = 8;
@@ -249,7 +250,7 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(441, 21);
+            this.btnCancel.Location = new System.Drawing.Point(441, 23);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(68, 20);
             this.btnCancel.TabIndex = 9;
@@ -284,7 +285,7 @@
             this.accDataSource.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtConnectionString.Properties)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).EndInit();
@@ -294,7 +295,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox txtConnectionString;
         private System.Windows.Forms.GroupBox groupBox3;
         private DevExpress.XtraEditors.SimpleButton btnCancel;
         private DevExpress.XtraEditors.SimpleButton btnOK;
@@ -310,5 +310,6 @@
         private System.Windows.Forms.PropertyGrid pg;
         private DevExpress.XtraEditors.SimpleButton btnUpLoad;
         private System.Windows.Forms.GroupBox groupBox1;
+        private DevExpress.XtraEditors.ButtonEdit txtConnectionString;
     }
 }

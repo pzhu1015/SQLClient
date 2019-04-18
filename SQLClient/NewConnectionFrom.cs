@@ -93,30 +93,6 @@ namespace SQLClient
             }
         }
 
-        private void btnAdvance_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (this.accDataSource.SelectedElement == null) return;
-                ConnectInfo info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
-                Form form = info.GetConnectForm();
-                IConnectionForm connInfo = form as IConnectionForm;
-                connInfo.LoadConnectionInfo(info);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    info.ConnectionString = connInfo.ConnectionString;
-                    info.User = connInfo.User;
-                    info.Password = connInfo.Password;
-                    this.connectionInfo = info;
-                    this.txtConnectionString.Text = connInfo.ConnectionString;
-                }
-            }
-            catch(Exception ex)
-            {
-                LogHelper.Error(ex);
-            }
-        }
-
         private void accDataSource_SelectedElementChanged(object sender, SelectedElementChangedEventArgs e)
         {
             if (this.accDataSource.SelectedElement != null)
@@ -152,6 +128,30 @@ namespace SQLClient
                     element.Tag = form.ConnectInfo;
                     this.accDataSource.Elements[0].Elements.Add(element);
                 }
+            }
+        }
+
+        private void txtConnectionString_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            try
+            {
+                if (this.accDataSource.SelectedElement == null) return;
+                ConnectInfo info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
+                Form form = info.GetConnectForm();
+                IConnectionForm connInfo = form as IConnectionForm;
+                connInfo.LoadConnectionInfo(info);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    info.ConnectionString = connInfo.ConnectionString;
+                    info.User = connInfo.User;
+                    info.Password = connInfo.Password;
+                    this.connectionInfo = info;
+                    this.txtConnectionString.Text = connInfo.ConnectionString;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
             }
         }
     }
