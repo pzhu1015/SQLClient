@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Threading;
 using SQLUserControl.Properties;
 using System.Data;
+//using ICSharpCode.TextEditor;
 
 namespace SQLUserControl
 {
