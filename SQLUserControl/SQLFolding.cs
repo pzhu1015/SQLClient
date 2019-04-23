@@ -10,29 +10,33 @@ namespace SQLUserControl
     {
         public class SQLFoldStart
         {
-            private int line = 0;
-            private int column = 0;
-            private string foldText = string.Empty;
+            private int startLine = 0;
+            private int startColumn = 0;
+            private string foldText;
 
-            public SQLFoldStart(int line, int column)
-            {
-                this.line = line;
-                this.column = column;
-            }
-
-            public int Line
+            public int StartLine
             {
                 get
                 {
-                    return line;
+                    return startLine;
+                }
+
+                set
+                {
+                    startLine = value;
                 }
             }
 
-            public int Column
+            public int StartColumn
             {
                 get
                 {
-                    return column;
+                    return startColumn;
+                }
+
+                set
+                {
+                    startColumn = value;
                 }
             }
 
@@ -48,60 +52,63 @@ namespace SQLUserControl
                     foldText = value;
                 }
             }
+
+            public SQLFoldStart(int startLine, int startColumn, string text, string foldText)
+            {
+                this.startLine = startLine;
+                this.startColumn = startColumn + text.Length;
+                this.foldText = foldText;
+            }
         }
 
         public List<FoldMarker> GenerateFoldMarkers(IDocument document, string fileName, object parseInformation)
         {
             List<FoldMarker> list = new List<FoldMarker>();
-            //stack 先进先出
             var buckets = new Stack<SQLFoldStart>();
             var caseEnd = new Stack<SQLFoldStart>();
-            // Create foldmarkers for the whole document, enumerate through every line.
+            var comments = new Stack<SQLFoldStart>();
             for (int i = 0; i < document.TotalNumberOfLines; i++)
             {
-                // Get the text of current line.
                 string text = document.GetText(document.GetLineSegment(i));
                 for (int j = 0; j < text.Length; j++)
                 {
                     if (text[j] == '(')
                     {
-                        buckets.Push(new SQLFoldStart(i, j + 1));
-                    }
-                    else if (text.Substring(j).StartsWith("CASE", true, null))
-                    {
-                        caseEnd.Push(new SQLFoldStart(i, j + 5));
+                        buckets.Push(new SQLFoldStart(i, j, "(", "..."));
                     }
                     else if (text[j] == ')')
                     {
                         if (buckets.Count > 0)
                         {
                             SQLFoldStart fold = buckets.Pop();
-                            list.Add(new FoldMarker(document, fold.Line, fold.Column, i, j, FoldType.TypeBody, "..."));
+                            list.Add(new FoldMarker(document, fold.StartLine, fold.StartColumn, i, j, FoldType.TypeBody, fold.FoldText));
                         }
+                    }
+                    else if (text.Substring(j).StartsWith("CASE", true, null))
+                    {
+                        caseEnd.Push(new SQLFoldStart(i, j, "CASE", "..."));
                     }
                     else if (text.Substring(j).StartsWith("END", true, null))
                     {
                         if (caseEnd.Count > 0)
                         {
                             SQLFoldStart fold = caseEnd.Pop();
-                            list.Add(new FoldMarker(document, fold.Line, fold.Column, i, j, FoldType.TypeBody, "..."));
+                            list.Add(new FoldMarker(document, fold.StartLine, fold.StartColumn, i, j, FoldType.TypeBody, fold.FoldText));
+                        }
+                    }
+                    else if (text.Substring(j).StartsWith("/*", true, null))
+                    {
+                        caseEnd.Push(new SQLFoldStart(i, j, "/*", "..."));
+                    }
+                    else if (text.Substring(j).StartsWith("*/", true, null))
+                    {
+                        if (caseEnd.Count > 0)
+                        {
+                            SQLFoldStart fold = caseEnd.Pop();
+                            list.Add(new FoldMarker(document, fold.StartLine, fold.StartColumn, i, j, FoldType.TypeBody, fold.FoldText));
                         }
                     }
                 }
-                /*
-                if (text.Trim().StartsWith("(")) // Look for method starts
-                {
-                    startLines.Push(i);
-                }
-                if (text.Trim().StartsWith(")")) // Look for method endings
-                {
-                    if (startLines.Count > 0)
-                    {
-                        int start = startLines.Pop();
-                        list.Add(new FoldMarker(document, start, document.GetLineSegment(start).Length, i, 57, FoldType.TypeBody, "...)"));
-                    }
-                }
-                */
             }
 
             return list;

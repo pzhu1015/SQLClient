@@ -19,12 +19,27 @@ namespace SQLUserControl
         private string statement;
         private Int64 rowIndex;
         private Int64 count;
+        private TextBox txtEdit;
         public QueryRslt()
         {
             InitializeComponent();
-            Type type = this.dgv.GetType();
-            PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(this.dgv, true, null);
+            
+        }
+
+        private void txtEdit_Leave(object sender, EventArgs e)
+        {
+            DataGridViewCell crtCell = (sender as TextBox).Tag as DataGridViewCell;
+            string str = (sender as TextBox).Text;
+            if (crtCell.Value == DBNull.Value && string.IsNullOrEmpty(str))
+            {
+                crtCell.Value = null;
+            }
+            else
+            {
+                crtCell.Value = str;
+            }
+            this.txtEdit.Width = 0;
+            this.txtEdit.Visible = false;
         }
 
         public string Statement
@@ -93,6 +108,10 @@ namespace SQLUserControl
             {
                 this.dgv.DataSource = dt;
                 this.count = dt.Rows.Count;
+                for (int i = 0; i < this.dgv.Columns.Count; i++)
+                {
+                    this.dgv.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
             }
         }
 
@@ -133,6 +152,46 @@ namespace SQLUserControl
             {
                 LogHelper.Error(ex);
             }
+        }
+        private void DisableEditControl()
+        {
+            this.txtEdit.Visible = false;
+        }
+
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                //disable other
+                this.DisableEditControl();
+                this.txtEdit.Tag = this.dgv.CurrentCell;
+                Rectangle rec = this.dgv.GetCellDisplayRectangle(this.dgv.CurrentCell.ColumnIndex, this.dgv.CurrentCell.RowIndex, true);
+                this.txtEdit.Left = rec.Left;
+                this.txtEdit.Top = rec.Top;
+                this.txtEdit.Width = rec.Width;
+                this.txtEdit.Text = this.dgv.CurrentCell.Value != DBNull.Value ? this.dgv.CurrentCell.Value.ToString() : "";
+                this.txtEdit.BringToFront();
+                this.txtEdit.Visible = true;
+                this.txtEdit.Focus();
+                this.txtEdit.SelectionStart = this.txtEdit.Text.Length;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
+        private void QueryRslt_Load(object sender, EventArgs e)
+        {
+            Type type = this.dgv.GetType();
+            PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(this.dgv, true, null);
+
+            this.txtEdit = new TextBox();
+            this.txtEdit.Visible = false;
+            this.txtEdit.Width = 0;
+            this.txtEdit.Leave += txtEdit_Leave;
+            this.dgv.Controls.Add(this.txtEdit);
         }
     }
 }

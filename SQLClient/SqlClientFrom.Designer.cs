@@ -50,6 +50,10 @@
             this.tsmiOption = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDropDownHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbtnConnect = new System.Windows.Forms.ToolStripButton();
             this.tsbtnUser = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -158,10 +162,7 @@
             this.tsmiExprotSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiRefreshSelect = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsdropUser = new System.Windows.Forms.ToolStripDropDownButton();
             ((System.ComponentModel.ISupportInitialize)(this.tcMain)).BeginInit();
             this.tcMain.SuspendLayout();
             this.tsSystemMain.SuspendLayout();
@@ -202,7 +203,7 @@
             this.tvMain.Name = "tvMain";
             this.tvMain.SelectedImageIndex = 0;
             this.tvMain.ShowLines = false;
-            this.tvMain.Size = new System.Drawing.Size(260, 400);
+            this.tvMain.Size = new System.Drawing.Size(262, 403);
             this.tvMain.TabIndex = 0;
             this.tvMain.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMain_NodeMouseDoubleClick);
             this.tvMain.Leave += new System.EventHandler(this.tvMain_Leave);
@@ -230,7 +231,7 @@
             this.tcMain.Margin = new System.Windows.Forms.Padding(0);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedTabPage = this.tpObject;
-            this.tcMain.Size = new System.Drawing.Size(862, 400);
+            this.tcMain.Size = new System.Drawing.Size(717, 403);
             this.tcMain.TabIndex = 0;
             this.tcMain.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.tpObject});
@@ -244,7 +245,7 @@
             this.tpObject.Margin = new System.Windows.Forms.Padding(0);
             this.tpObject.Name = "tpObject";
             this.tpObject.ShowCloseButton = DevExpress.Utils.DefaultBoolean.False;
-            this.tpObject.Size = new System.Drawing.Size(856, 371);
+            this.tpObject.Size = new System.Drawing.Size(711, 374);
             this.tpObject.Text = "对象";
             // 
             // imgListListView
@@ -266,11 +267,12 @@
             this.tsmiStore,
             this.tsmiTool,
             this.tsmiWindow,
-            this.tsmiDropDownHelp});
+            this.tsmiDropDownHelp,
+            this.tsdropUser});
             this.tsSystemMain.Location = new System.Drawing.Point(0, 0);
             this.tsSystemMain.Name = "tsSystemMain";
             this.tsSystemMain.Padding = new System.Windows.Forms.Padding(0);
-            this.tsSystemMain.Size = new System.Drawing.Size(1125, 25);
+            this.tsSystemMain.Size = new System.Drawing.Size(982, 25);
             this.tsSystemMain.TabIndex = 10;
             this.tsSystemMain.Text = "toolStrip1";
             // 
@@ -351,13 +353,13 @@
             // 
             this.tsmiCommand.Image = global::SQLClient.Properties.Resources.command_line_16;
             this.tsmiCommand.Name = "tsmiCommand";
-            this.tsmiCommand.Size = new System.Drawing.Size(152, 22);
+            this.tsmiCommand.Size = new System.Drawing.Size(124, 22);
             this.tsmiCommand.Text = "命令界面";
             // 
             // tsmiOption
             // 
             this.tsmiOption.Name = "tsmiOption";
-            this.tsmiOption.Size = new System.Drawing.Size(152, 22);
+            this.tsmiOption.Size = new System.Drawing.Size(124, 22);
             this.tsmiOption.Text = "选项";
             // 
             // tsmiWindow
@@ -376,6 +378,29 @@
             this.tsmiDropDownHelp.Name = "tsmiDropDownHelp";
             this.tsmiDropDownHelp.Size = new System.Drawing.Size(44, 25);
             this.tsmiDropDownHelp.Text = "帮助";
+            // 
+            // tsmiHelp
+            // 
+            this.tsmiHelp.Name = "tsmiHelp";
+            this.tsmiHelp.Size = new System.Drawing.Size(124, 22);
+            this.tsmiHelp.Text = "帮助";
+            // 
+            // tsmiCheckUpdate
+            // 
+            this.tsmiCheckUpdate.Name = "tsmiCheckUpdate";
+            this.tsmiCheckUpdate.Size = new System.Drawing.Size(124, 22);
+            this.tsmiCheckUpdate.Text = "检查更新";
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(121, 6);
+            // 
+            // tsmiAbout
+            // 
+            this.tsmiAbout.Name = "tsmiAbout";
+            this.tsmiAbout.Size = new System.Drawing.Size(124, 22);
+            this.tsmiAbout.Text = "关于";
             // 
             // tsbtnConnect
             // 
@@ -459,7 +484,7 @@
             this.msMain.Location = new System.Drawing.Point(0, 25);
             this.msMain.Name = "msMain";
             this.msMain.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.msMain.Size = new System.Drawing.Size(1125, 80);
+            this.msMain.Size = new System.Drawing.Size(982, 80);
             this.msMain.TabIndex = 16;
             this.msMain.Text = "menuStrip1";
             // 
@@ -476,10 +501,10 @@
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripSeparator14});
-            this.tsObject.Location = new System.Drawing.Point(0, 98);
+            this.tsObject.Location = new System.Drawing.Point(0, 95);
             this.tsObject.Name = "tsObject";
             this.tsObject.Padding = new System.Windows.Forms.Padding(0);
-            this.tsObject.Size = new System.Drawing.Size(1125, 25);
+            this.tsObject.Size = new System.Drawing.Size(982, 25);
             this.tsObject.TabIndex = 32;
             this.tsObject.Text = "toolStrip1";
             // 
@@ -541,10 +566,10 @@
             this.tsIndexs,
             this.tsPrimaryKeys,
             this.tsTriggers});
-            this.tsDesignTable.Location = new System.Drawing.Point(0, 73);
+            this.tsDesignTable.Location = new System.Drawing.Point(0, 70);
             this.tsDesignTable.Name = "tsDesignTable";
             this.tsDesignTable.Padding = new System.Windows.Forms.Padding(0);
-            this.tsDesignTable.Size = new System.Drawing.Size(1125, 25);
+            this.tsDesignTable.Size = new System.Drawing.Size(982, 25);
             this.tsDesignTable.TabIndex = 33;
             this.tsDesignTable.Text = "toolStrip1";
             // 
@@ -605,10 +630,10 @@
             this.toolStripSeparator7,
             this.toolStripLabel5,
             this.toolStripSeparator10});
-            this.tsNewSelect.Location = new System.Drawing.Point(0, 48);
+            this.tsNewSelect.Location = new System.Drawing.Point(0, 45);
             this.tsNewSelect.Name = "tsNewSelect";
             this.tsNewSelect.Padding = new System.Windows.Forms.Padding(0);
-            this.tsNewSelect.Size = new System.Drawing.Size(1125, 25);
+            this.tsNewSelect.Size = new System.Drawing.Size(982, 25);
             this.tsNewSelect.TabIndex = 31;
             this.tsNewSelect.Text = "toolStrip1";
             // 
@@ -692,10 +717,10 @@
             this.tsOpenTableWarn,
             this.toolStripSeparator11});
             this.tsOpenTable.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.tsOpenTable.Location = new System.Drawing.Point(0, 23);
+            this.tsOpenTable.Location = new System.Drawing.Point(0, 20);
             this.tsOpenTable.Name = "tsOpenTable";
             this.tsOpenTable.Padding = new System.Windows.Forms.Padding(0);
-            this.tsOpenTable.Size = new System.Drawing.Size(1125, 25);
+            this.tsOpenTable.Size = new System.Drawing.Size(982, 25);
             this.tsOpenTable.TabIndex = 29;
             this.tsOpenTable.Text = "toolStrip1";
             // 
@@ -768,8 +793,8 @@
             this.spStatusBar.Panel2.Controls.Add(this.tsNewSelect);
             this.spStatusBar.Panel2.Controls.Add(this.tsDesignTable);
             this.spStatusBar.Panel2.Controls.Add(this.tsObject);
-            this.spStatusBar.Size = new System.Drawing.Size(1125, 524);
-            this.spStatusBar.SplitterDistance = 400;
+            this.spStatusBar.Size = new System.Drawing.Size(982, 524);
+            this.spStatusBar.SplitterDistance = 403;
             this.spStatusBar.SplitterWidth = 1;
             this.spStatusBar.TabIndex = 32;
             // 
@@ -788,8 +813,8 @@
             // spMain.Panel2
             // 
             this.spMain.Panel2.Controls.Add(this.tcMain);
-            this.spMain.Size = new System.Drawing.Size(1125, 400);
-            this.spMain.SplitterDistance = 260;
+            this.spMain.Size = new System.Drawing.Size(982, 403);
+            this.spMain.SplitterDistance = 262;
             this.spMain.SplitterWidth = 3;
             this.spMain.TabIndex = 5;
             this.spMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.spMain_SplitterMoved);
@@ -1275,34 +1300,21 @@
             this.tsmiRefreshSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiRefreshSelect.Text = "刷新";
             // 
-            // tsmiHelp
+            // tsdropUser
             // 
-            this.tsmiHelp.Name = "tsmiHelp";
-            this.tsmiHelp.Size = new System.Drawing.Size(152, 22);
-            this.tsmiHelp.Text = "帮助";
-            // 
-            // tsmiCheckUpdate
-            // 
-            this.tsmiCheckUpdate.Name = "tsmiCheckUpdate";
-            this.tsmiCheckUpdate.Size = new System.Drawing.Size(152, 22);
-            this.tsmiCheckUpdate.Text = "检查更新";
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
-            // 
-            // tsmiAbout
-            // 
-            this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(152, 22);
-            this.tsmiAbout.Text = "关于";
+            this.tsdropUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsdropUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsdropUser.Image = ((System.Drawing.Image)(resources.GetObject("tsdropUser.Image")));
+            this.tsdropUser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsdropUser.Name = "tsdropUser";
+            this.tsdropUser.Size = new System.Drawing.Size(81, 22);
+            this.tsdropUser.Text = "pengzhihu";
             // 
             // SqlClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1125, 629);
+            this.ClientSize = new System.Drawing.Size(982, 629);
             this.Controls.Add(this.spStatusBar);
             this.Controls.Add(this.msMain);
             this.Controls.Add(this.tsSystemMain);
@@ -1482,6 +1494,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiCheckUpdate;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
+        private System.Windows.Forms.ToolStripDropDownButton tsdropUser;
     }
 }
 

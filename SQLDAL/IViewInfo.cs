@@ -9,8 +9,5 @@ namespace SQLDAL
 {
     public interface IViewInfo
     {
-        void Close();
-        bool Open(Int64 start, Int64 pageSize, out DataTable datatable, out string statement);
-        void Design();
     }
 }

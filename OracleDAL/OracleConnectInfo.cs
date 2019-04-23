@@ -8,6 +8,8 @@ using Oracle.ManagedDataAccess.Client;
 using System.Windows.Forms;
 using System.Drawing;
 using OracleDAL.Properties;
+using System.Diagnostics;
+using gudusoft.gsqlparser;
 
 namespace OracleDAL
 {
@@ -25,6 +27,42 @@ namespace OracleDAL
         public override Image OpenImage
         {
             get { return Resources.oracle_open_16; }
+        }
+        
+        public override Form ConnectForm
+        {
+            get { return new OracleConnectForm(); }
+        }
+
+        public override DbConnection GetConnection(string database)
+        {
+            try
+            {
+                DbConnection connection = new OracleConnection(this.connectionString);
+                connection.Open();
+                return connection;
+            }
+            catch (Exception ex)
+            {
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return null;
+            }
+        }
+
+        public override DbDataAdapter GetDataAdapter(DbCommand command)
+        {
+            return new OracleDataAdapter(command as OracleCommand);
+        }
+
+        public override string GetLoadTableScript(string database)
+        {
+            return this.loadTableScript;
+        }
+
+        public override string GetLoadViewScript(string database)
+        {
+            return this.loadViewScript;
         }
 
         public override void Drop(string name)
@@ -87,29 +125,152 @@ namespace OracleDAL
             }
         }
 
-        public override DatabaseInfo GetDatabaseInfo()
+        public override bool Parse(string sql, out List<StatementObj> statements)
         {
-            return new OracleDatabaseInfo();
-        }
-
-        public override Form GetConnectForm()
-        {
-            return new OracleConnectForm();
-        }
-
-        public override DbConnection GetConnection(string database)
-        {
+            statements = new List<StatementObj>();
             try
             {
-                DbConnection connection = new OracleConnection(this.connectionString);
-                connection.Open();
-                return connection;
+                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVOracle);
+                sqlparser.SqlText.Text = sql;
+                int ret = sqlparser.Parse();
+                if (ret != 0)
+                {
+                    this.message = sqlparser.ErrorMessages;
+                    return false;
+                }
+                foreach (var statement in sqlparser.SqlStatements)
+                {
+                    StatementObj obj = new StatementObj();
+                    obj.SqlText = statement.RawSqlText;
+                    switch (statement.SqlStatementType)
+                    {
+                        case TSqlStatementType.sstSelect:
+                            obj.SqlType = SqlType.eTable;
+                            break;
+                        default:
+                            obj.SqlType = SqlType.eMsg;
+                            break;
+                    }
+                    statements.Add(obj);
+                }
+                return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.message = ex.Message;
                 LogHelper.Error(ex);
-                return null;
+                return false;
+            }
+        }
+
+        public override bool Format(string sql, out string formatSql)
+        {
+            formatSql = sql;
+            try
+            {
+                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVOracle);
+                sqlparser.SqlText.Text = sql;
+                int ret = sqlparser.PrettyPrint();
+                if (ret != 0)
+                {
+                    this.message = sqlparser.ErrorMessages;
+                    return false;
+                }
+                formatSql = sqlparser.FormattedSqlText.Text;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
+        }
+
+        public override bool DesignTable(string database, string tablename, out DataTable table)
+        {
+            try
+            {
+                using (DbConnection connection = this.GetConnection(database))
+                {
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = string.Format(this.DesignTableScript, tablename);
+                    DbDataAdapter da = new OracleDataAdapter(command as OracleCommand);
+                    da.Fill(ds);
+                    table = ds.Tables[0];
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                table = null;
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
+        }
+
+        public override bool OpenTable(string database, string tablename, Int64 start, Int64 pageSize, out DataTable datatable, out string statement)
+        {
+            try
+            {
+                using (DbConnection connection = this.GetConnection(database))
+                {
+                    statement = string.Format(this.OpenTableScript, tablename, tablename, pageSize, start);
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = statement;
+                    DbDataAdapter da = new OracleDataAdapter(command as OracleCommand);
+                    da.Fill(ds);
+                    ds.Tables[0].Columns.RemoveAt(ds.Tables[0].Columns.Count - 1);
+                    ds.Tables[0].Columns.RemoveAt(ds.Tables[0].Columns.Count - 1);
+                    datatable = ds.Tables[0];
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                datatable = null;
+                statement = "";
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
+        }
+
+        public override bool DesignView(string database, string viewname, out DataTable table)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool OpenView(string database, string viewname, Int64 start, Int64 pageSize, out DataTable datatable, out string statement)
+        {
+            try
+            {
+                using (DbConnection connection = this.GetConnection(database))
+                {
+                    statement = string.Format(this.OpenViewScript, viewname, viewname, pageSize, start);
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = statement;
+                    DbDataAdapter da = new OracleDataAdapter(command as OracleCommand);
+                    da.Fill(ds);
+                    this.isOpen = true;
+                    datatable = ds.Tables[0];
+                    ds.Tables[0].Columns.RemoveAt(ds.Tables[0].Columns.Count - 1);
+                    ds.Tables[0].Columns.RemoveAt(ds.Tables[0].Columns.Count - 1);
+                    return true;
+                }
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                datatable = null;
+                statement = "";
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
             }
         }
     }

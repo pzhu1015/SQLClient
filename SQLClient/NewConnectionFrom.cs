@@ -60,11 +60,11 @@ namespace SQLClient
                     info.AssemblyName = dr["assemblyName"].ToString();
                     info.ClassName = dr["className"].ToString();
                     info.NamespaceName = dr["namespaceName"].ToString();
-                    info.DesignTable = dr["designTable"].ToString();
-                    info.OpenTable = dr["openTable"].ToString();
-                    info.OpenView = dr["openView"].ToString();
-                    info.LoadTable = dr["loadTable"].ToString();
-                    info.LoadView = dr["loadView"].ToString();
+                    info.DesignTableScript = dr["designTable"].ToString();
+                    info.OpenTableScript = dr["openTable"].ToString();
+                    info.OpenViewScript = dr["openView"].ToString();
+                    info.LoadTableScript = dr["loadTable"].ToString();
+                    info.LoadViewScript = dr["loadView"].ToString();
                     info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
                     element.Text = info.DriverName;
                     element.Image = info.OpenImage;
@@ -137,7 +137,7 @@ namespace SQLClient
             {
                 if (this.accDataSource.SelectedElement == null) return;
                 ConnectInfo info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
-                Form form = info.GetConnectForm();
+                Form form = info.ConnectForm;
                 IConnectionForm connInfo = form as IConnectionForm;
                 connInfo.LoadConnectionInfo(info);
                 if (form.ShowDialog() == DialogResult.OK)

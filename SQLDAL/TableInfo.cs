@@ -4,17 +4,17 @@ using System.Windows.Forms;
 
 namespace SQLDAL
 {
-    public abstract class TableInfo : ITableInfo
+    public sealed class TableInfo : ITableInfo
     {
-        protected string name;
-        protected string message;
-        protected bool isOpen = false;
-        protected bool isDesign = false;
-        protected DatabaseInfo databaseInfo;
-        protected TreeNode node;
-        protected ListViewItem item;
-        protected object openTablePage;
-        protected object designTablePage;
+        private string name;
+        private string message;
+        private bool isOpen = false;
+        private bool isDesign = false;
+        private DatabaseInfo databaseInfo;
+        private TreeNode node;
+        private ListViewItem item;
+        private object openTablePage;
+        private object designTablePage;
 
         public string Name
         {
@@ -133,8 +133,28 @@ namespace SQLDAL
             }
         }
 
-        public abstract bool Open(Int64 start, Int64 pageSize, out DataTable datatable, out string statement);
-        public abstract bool Design(out DataTable table);
+        public bool Open(Int64 start, Int64 pageSize, out DataTable datatable, out string statement)
+        {
+            bool rslt = this.databaseInfo.ConnectInfo.OpenTable(this.databaseInfo.Name, this.name, start, pageSize, out datatable, out statement);
+            if (!rslt)
+            {
+                this.message = this.databaseInfo.ConnectInfo.Message;
+                return false;
+            }
+            this.isOpen = true;
+            return true;
+        }
+        public bool Design(out DataTable table)
+        {
+            bool rslt = this.databaseInfo.ConnectInfo.DesignTable(this.databaseInfo.Name, this.name, out table);
+            if (!rslt)
+            {
+                this.message = this.databaseInfo.ConnectInfo.Message;
+                return false;
+            }
+            this.isDesign = true;
+            return true;
+        }
         public void Close()
         {
             this.isOpen = false;

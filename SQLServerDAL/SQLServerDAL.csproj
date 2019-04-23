@@ -58,9 +58,6 @@
     <Compile Include="SQLServerConnectForm.Designer.cs">
       <DependentUpon>SQLServerConnectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SQLServerDatabaseInfo.cs" />
-    <Compile Include="SQLServerTableInfo.cs" />
-    <Compile Include="SQLServerViewInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

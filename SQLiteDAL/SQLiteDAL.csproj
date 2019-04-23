@@ -62,9 +62,6 @@
       <DependentUpon>SQLiteConnectForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SQLiteConnectInfo.cs" />
-    <Compile Include="SQLiteDatabaseInfo.cs" />
-    <Compile Include="SQLiteTableInfo.cs" />
-    <Compile Include="SQLiteViewInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

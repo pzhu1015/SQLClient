@@ -35,27 +35,10 @@ namespace SQLDAL
         DataTable LoadTable();
         DataTable LoadView();
         DataTable LoadSelect();
-
-        TableInfo GetTableInfo();
-        ViewInfo GetViewInfo();
-
-        bool Format(string sql, out string formatSql);
-        bool Parse(string sql, out List<StatementObj> statements);
-        bool ExecueNonQuery(string sql, out int count, out string error, out Int64 cost);
-
-        bool ExecuteQuery(string sql, out DataTable table, out int count, out string error, out Int64 cost);
-    }
-
-    public enum SqlType
-    {
-        eTable,
-        eMsg
-    }
-
-
-    public class StatementObj
-    {
-        public SqlType SqlType;
-        public string SqlText;
+        
+        void CloseTable();
+        void CloseDesignTable();
+        bool OpenTable(Int64 start, Int64 pageSize, out DataTable datatable, out string statement);
+        bool DesignTable(out DataTable table);
     }
 }

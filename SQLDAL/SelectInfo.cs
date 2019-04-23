@@ -7,15 +7,15 @@ using System.Windows.Forms;
 
 namespace SQLDAL
 {
-    public class SelectInfo : ISelectInfo
+    public sealed class SelectInfo : ISelectInfo
     {
-        protected string name;
-        protected string message;
-        protected bool isOpen = false;
-        protected DatabaseInfo databaseInfo;
-        protected TreeNode node;
-        protected ListViewItem item;
-        protected object openSelectPage;
+        private string name;
+        private string message;
+        private bool isOpen = false;
+        private DatabaseInfo databaseInfo;
+        private TreeNode node;
+        private ListViewItem item;
+        private object openSelectPage;
 
         public string Name
         {

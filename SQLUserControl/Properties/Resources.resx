@@ -334,4 +334,28 @@
   <data name="VIEW_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\VIEW_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FieldComments" xml:space="preserve">
+    <value>FIELDCOMMENTS</value>
+  </data>
+  <data name="FieldDefault" xml:space="preserve">
+    <value>FIELDDEFAULT</value>
+  </data>
+  <data name="FieldIsNull" xml:space="preserve">
+    <value>FIELDISNULL</value>
+  </data>
+  <data name="FieldIsPrimayrKey" xml:space="preserve">
+    <value>FIELDPRIMARYKEY</value>
+  </data>
+  <data name="FieldLength" xml:space="preserve">
+    <value>FIELDLENGTH</value>
+  </data>
+  <data name="FieldName" xml:space="preserve">
+    <value>FIELDNAME</value>
+  </data>
+  <data name="FieldScale" xml:space="preserve">
+    <value>FIELDSCALE</value>
+  </data>
+  <data name="FieldType" xml:space="preserve">
+    <value>FIELDTYPE</value>
+  </data>
 </root>

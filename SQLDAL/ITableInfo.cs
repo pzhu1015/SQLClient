@@ -9,9 +9,5 @@ namespace SQLDAL
 {
     public interface ITableInfo
     {
-        void Close();
-        void CloseDesign();
-        bool Open(Int64 start, Int64 pageSize, out DataTable datatable, out string statement);
-        bool Design(out DataTable table);
     }
 }

@@ -8,14 +8,15 @@ using Helper;
 using System.Data;
 using DevExpress.XtraTab;
 using SQLUserControl.Properties;
+using System.Text;
 
 namespace SQLUserControl
 {
     public partial class DesignTablePage : DevExpress.XtraEditors.XtraUserControl
     {
         public event ChangeStatusBarEventHandler ChangeStatusBar;
-        public NewTableEventHandler NewTable;
-        private int rowCount;
+        public event NewTableEventHandler NewTable;
+        private DataTable designTable = new DataTable();
         private TableInfo tableInfo;
         private DatabaseInfo databaseInfo;
         private XtraTabPage page;
@@ -26,28 +27,9 @@ namespace SQLUserControl
         {
             InitializeComponent();
 
-            this.dgvFields.MouseWheel += dgvFields_MouseWheel;
-
-            Type type = this.dgvFields.GetType();
-            PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(this.dgvFields, true, null);
-            type = this.dgvIndexs.GetType();
-            pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(this.dgvIndexs, true, null);
-
-            this.cmbDataTypes.Visible = false;
-            this.cmbDataTypes.Width = 0;
-            this.cmbDataTypes.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbDataTypes.SelectionChangeCommitted += CmbDataTypes_SelectionChangeCommitted;
-            this.cmbDataTypes.Leave += CmbDataTypes_Leave;
-            this.dgvFields.Controls.Add(this.cmbDataTypes);
-            
-            this.txtEdit.Visible = false;
-            this.txtEdit.Width = 0;
-            this.txtEdit.Leave += TxtEdit_Leave;
-            this.dgvFields.Controls.Add(this.txtEdit);
-
-            this.dgvFields.AutoGenerateColumns = false;
+            this.SetBufferedControl();
+            this.InitEditControl();
+            this.InitEmptyDesignTable();
         }
 
         public DatabaseInfo DatabaseInfo
@@ -105,6 +87,42 @@ namespace SQLUserControl
             }
         }
 
+        private void InitEditControl()
+        {
+            //data types
+            this.cmbDataTypes.Visible = false;
+            this.cmbDataTypes.Width = 0;
+            this.cmbDataTypes.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.cmbDataTypes.SelectionChangeCommitted += CmbDataTypes_SelectionChangeCommitted;
+            this.cmbDataTypes.Leave += CmbDataTypes_Leave;
+            this.dgvFields.Controls.Add(this.cmbDataTypes);
+
+            //text edit
+            this.txtEdit.Visible = false;
+            this.txtEdit.Width = 0;
+            this.txtEdit.Leave += TxtEdit_Leave;
+
+            //date edit
+            //TODO
+
+            //Binary edit
+            //TODO
+
+            this.dgvFields.Controls.Add(this.txtEdit);
+            this.dgvFields.MouseWheel += dgvFields_MouseWheel;
+            this.dgvFields.AutoGenerateColumns = false;
+        }
+
+        private void SetBufferedControl()
+        {
+            Type type = this.dgvFields.GetType();
+            PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(this.dgvFields, true, null);
+            type = this.dgvIndexs.GetType();
+            pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(this.dgvIndexs, true, null);
+        }
+
         private Bitmap GetBlank()
         {
             Bitmap NewBmp = new Bitmap(80, 22);
@@ -133,15 +151,26 @@ namespace SQLUserControl
 
         public void SetStatusBar()
         {
-            this.OnChangeStatusBar(new ChangeStatusBarEventArgs(this.rowCount));
+            this.OnChangeStatusBar(new ChangeStatusBarEventArgs(this.designTable.Rows.Count));
+        }
+
+        private void InitEmptyDesignTable()
+        {
+            //FIELDNAME, FIELDTYPE, FIELDLENGTH, FIELDSCALE, FIELDISNULL, FIELDPRIMARYKE, FIELDDEFAULT, FIELDCOMMENTS
+            this.designTable.Columns.Add(Resources.FieldName);
+            this.designTable.Columns.Add(Resources.FieldType);
+            this.designTable.Columns.Add(Resources.FieldLength);
+            this.designTable.Columns.Add(Resources.FieldScale);
+            this.designTable.Columns.Add(Resources.FieldIsNull);
+            this.designTable.Columns.Add(Resources.FieldIsPrimayrKey);
+            this.designTable.Columns.Add(Resources.FieldDefault);
+            this.designTable.Columns.Add(Resources.FieldComments);
         }
 
         public void BindData()
         {
-            DataTable dt;
-            this.tableInfo.Design(out dt);
-            this.dgvFields.DataSource = dt;
-            this.rowCount = dt.Rows.Count;
+            this.tableInfo.Design(out this.designTable);
+            this.dgvFields.DataSource = this.designTable;
             this.SetStatusBar();
         }
 
@@ -322,7 +351,13 @@ namespace SQLUserControl
                 else if (idx == 5)
                 {
                     this.DisableEditControl();
-                    this.dgvFields.CurrentCell.Value = !Convert.ToBoolean(this.dgvFields.CurrentCell.Value);
+                    bool isPrimaryKey = !Convert.ToBoolean(this.dgvFields.CurrentCell.Value);
+                    this.dgvFields.CurrentCell.Value = isPrimaryKey;
+                    if (isPrimaryKey)
+                    {
+                        this.DisableEditControl();
+                        this.dgvFields.CurrentRow.Cells[idx - 1].Value = isPrimaryKey;
+                    }
                 }
                 else
                 {
@@ -374,12 +409,31 @@ namespace SQLUserControl
         #endregion
 
         #region ToolBar Event
+
+        private DataRow GetNewRow()
+        {
+            DataRow dr = this.designTable.NewRow();
+            dr[Resources.FieldName] = "";
+            dr[Resources.FieldType] = "";
+            dr[Resources.FieldLength] = 0;
+            dr[Resources.FieldScale] = 0;
+            dr[Resources.FieldIsNull] = false;
+            dr[Resources.FieldIsPrimayrKey] = false;
+            dr[Resources.FieldDefault] = null;
+            dr[Resources.FieldComments] = null;
+            return dr;
+        }
         private void tsbtnAddField_Click(object sender, EventArgs e)
         {
             try
             {
                 this.DisableEditControl();
-                this.dgvFields.Rows.Add(new DataGridViewRow());
+                this.designTable.Rows.Add(this.GetNewRow());
+                this.dgvFields.DataSource = this.designTable;
+                if (this.tableInfo != null)
+                {
+                    //TODO add field
+                }
                 this.SetStatusBar();
             }
             catch(Exception ex)
@@ -388,6 +442,8 @@ namespace SQLUserControl
             }
         }
 
+
+
         private void tsbtnInsertFields_Click(object sender, EventArgs e)
         {
             try
@@ -395,7 +451,12 @@ namespace SQLUserControl
                 this.DisableEditControl();
                 if (this.dgvFields.CurrentRow != null)
                 {
-                    this.dgvFields.Rows.Insert(this.dgvFields.CurrentRow.Index + 1, new DataGridViewRow());
+                    this.designTable.Rows.InsertAt(this.GetNewRow(), this.dgvFields.CurrentRow.Index);
+                    this.dgvFields.DataSource = this.designTable;
+                    if (this.tableInfo != null)
+                    {
+                        //TODO insert field
+                    }
                     this.SetStatusBar();
                 }
             }
@@ -412,7 +473,12 @@ namespace SQLUserControl
                 this.DisableEditControl();
                 if (this.dgvFields.CurrentRow != null)
                 {
-                    this.dgvFields.Rows.RemoveAt(this.dgvFields.CurrentRow.Index);
+                    this.designTable.Rows.RemoveAt(this.dgvFields.CurrentRow.Index);
+                    this.dgvFields.DataSource = this.designTable;
+                    if (this.tableInfo != null)
+                    {
+                        //TODO delete field
+                    }
                     this.SetStatusBar();
                 }
             }
@@ -428,7 +494,12 @@ namespace SQLUserControl
             {
                 if (this.dgvFields.CurrentRow != null)
                 {
-                    this.dgvFields.Rows[this.dgvFields.CurrentRow.Index].Cells[5].Value = !(Convert.ToBoolean(this.dgvFields.Rows[this.dgvFields.CurrentRow.Index].Cells[5].Value));
+                    this.designTable.Rows[this.dgvFields.CurrentRow.Index][Resources.FieldIsPrimayrKey] = !(Convert.ToBoolean(this.designTable.Rows[this.dgvFields.CurrentRow.Index]["FIELDPRIMARYKE"]));
+                    this.dgvFields.DataSource = this.designTable;
+                    if (this.tableInfo != null)
+                    {
+                        //TODO alter primary key
+                    }
                 }
             }
             catch(Exception ex)
@@ -445,9 +516,16 @@ namespace SQLUserControl
                 if (this.dgvFields.CurrentRow != null && this.dgvFields.CurrentRow.Index > 0)
                 {
                     int index = this.dgvFields.CurrentRow.Index;
-                    DataGridViewRow pre_row = this.dgvFields.Rows[index - 1];
-                    this.dgvFields.Rows.RemoveAt(index - 1);
-                    this.dgvFields.Rows.Insert(index, pre_row);
+                    DataRow pre_row = this.designTable.NewRow();
+                    pre_row.ItemArray = this.designTable.Rows[index - 1].ItemArray;
+                    this.designTable.Rows.RemoveAt(index - 1);
+                    this.designTable.Rows.InsertAt(pre_row, index);
+                    this.designTable.AcceptChanges();
+                    this.dgvFields.DataSource = this.designTable;
+                    if (this.tableInfo != null)
+                    {
+                        //TODO alter field index
+                    }
                 }
             }
             catch(Exception ex)
@@ -465,10 +543,17 @@ namespace SQLUserControl
                 {
                     DataGridViewCell crt_cell = this.dgvFields.CurrentCell;
                     int index = this.dgvFields.CurrentRow.Index;
-                    DataGridViewRow crt_row = this.dgvFields.Rows[index];
-                    this.dgvFields.Rows.RemoveAt(index);
-                    this.dgvFields.Rows.Insert(index + 1, crt_row);
+                    DataRow crt_row = this.designTable.NewRow();
+                    crt_row.ItemArray = this.designTable.Rows[index].ItemArray;
+                    this.designTable.Rows.RemoveAt(index);
+                    this.designTable.Rows.InsertAt(crt_row, index + 1);
+                    this.designTable.AcceptChanges();
+                    this.dgvFields.DataSource = this.designTable;
                     this.dgvFields.CurrentCell = crt_cell;
+                    if (this.tableInfo != null)
+                    {
+                        //TODO alter field index
+                    }
                 }
             }
             catch(Exception ex)
@@ -502,53 +587,59 @@ namespace SQLUserControl
                     SaveForm saveForm = new SaveForm();
                     if (saveForm.ShowDialog() == DialogResult.OK)
                     {
-                        //generate create table script
-                        string primarykey = "";
-                        string str = $"CREATE TABLE {saveForm.SaveName}\n(\n";
-                        foreach (DataGridViewRow row in this.dgvFields.Rows)
+                        StringBuilder tb = new StringBuilder();
+                        tb.Append($"CREATE TABLE {saveForm.SaveName} \n(\n");
+                        StringBuilder pk = new StringBuilder();
+                        foreach(DataRow dr in this.designTable.Rows)
                         {
-                            str += $" {row.Cells[0].Value.ToString()}";
-                            str += $" {row.Cells[1].Value.ToString()}";
-                            if (row.Cells[2].Value != null && row.Cells[2].Value.ToString() != "0")
+                            tb.Append($" {dr[Resources.FieldName]} {dr[Resources.FieldType]}");
+                            if (dr[Resources.FieldLength].ToString() != "0")
                             {
-                                str += $"({row.Cells[2].Value.ToString()}";
-                                if (row.Cells[3].Value != null && row.Cells[3].Value.ToString() != "0")
+                                tb.Append($" ({dr[Resources.FieldLength]}");
+                                if (dr[Resources.FieldScale].ToString() != "0")
                                 {
-                                    str += $",{row.Cells[3].Value.ToString()}";
+                                    tb.Append($",{dr[Resources.FieldScale]}");
                                 }
-                                str += ")";
+                                tb.Append(")");
                             }
-                            if (row.Cells[4].Value != null && Convert.ToBoolean(row.Cells[4].Value))
+                            if (Convert.ToBoolean(dr[Resources.FieldIsNull]))
                             {
-                                str += $" NOT NULL";
+                                tb.Append(" NOT NULL");
                             }
-                            if (row.Cells[5].Value != null && Convert.ToBoolean(row.Cells[5].Value))
+                            if (Convert.ToBoolean(dr[Resources.FieldIsPrimayrKey]))
                             {
-                                if (primarykey == "")
+                                if (pk.Length == 0)
                                 {
-                                    primarykey += "PRIMARY KEY(";
+                                    pk.Append("PRIMARY KEY(");
                                 }
-                                primarykey += $"{row.Cells[0].Value.ToString()},";
+                                pk.Append($"{dr[Resources.FieldName]},");
                             }
-                            if (row.Cells[6].Value != null)
+                            if (dr[Resources.FieldDefault].ToString() != "")
                             {
-                                str += $" DEFAULT '{row.Cells[6].Value.ToString()}'";
+                                tb.Append($" DEFAULT {dr[Resources.FieldDefault]}");
                             }
                             else
                             {
-                                str += $" DEFAULT NULL";
+                                if (!Convert.ToBoolean(dr[Resources.FieldIsPrimayrKey]) && !Convert.ToBoolean(dr[Resources.FieldIsNull]))
+                                {
+                                    tb.Append(" DEFAULT NULL");
+                                }
                             }
-                            str += ",\n";
+                            tb.Append(",\n");
                         }
-                        if (primarykey != "")
+                        if (pk.Length != 0)
                         {
-                            primarykey = primarykey.Remove(primarykey.Length - 1);
-                            primarykey += "),\n";
-                            str += primarykey;
+                            pk.Remove(pk.Length - 1, 1);
+                            pk.Append(")\n");
+                            tb.Append(pk);
+                            tb.Append(")\n");
                         }
-                        str = str.Remove(str.Length - 2);
-                        str += "\n)";
-                        this.tableInfo = this.databaseInfo.CreateTable(saveForm.SaveName, str);
+                        else
+                        {
+                            tb.Remove(tb.Length - 2, 2);
+                            tb.Append(")\n");
+                        }
+                        this.tableInfo = this.databaseInfo.CreateTable(saveForm.SaveName, tb.ToString());
                         if (this.tableInfo != null)
                         {
                             this.tableInfo.IsDesign = true;
@@ -586,5 +677,15 @@ namespace SQLUserControl
         }
 
         #endregion
+
+        private void tsbtnSaveAs_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DesignTablePage_Load(object sender, EventArgs e)
+        {
+           
+        }
     }
 }

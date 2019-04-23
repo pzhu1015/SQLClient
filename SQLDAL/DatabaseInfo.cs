@@ -8,20 +8,20 @@ using System.Windows.Forms;
 
 namespace SQLDAL
 {
-    public abstract class DatabaseInfo : IDatabaseInfo
+    public sealed class DatabaseInfo : IDatabaseInfo
     {
         public event CloseDatabaseEventHandler CloseDatabase;
         public event OpenDatabaseEventHandler OpenDatabase;
-        protected TreeNode node;
-        protected string name;
-        protected string message;
-        protected bool isOpen = false;
-        protected ConnectInfo connectInfo;
-        protected List<TableInfo> tables = new List<TableInfo>();
-        protected List<ViewInfo> views = new List<ViewInfo>();
-        protected List<SelectInfo> selects = new List<SelectInfo>();
-        protected List<object> newSelectPages = new List<object>();
-        protected List<object> newTablePages = new List<object>();
+        private TreeNode node;
+        private string name;
+        private string message;
+        private bool isOpen = false;
+        private ConnectInfo connectInfo;
+        private List<TableInfo> tables = new List<TableInfo>();
+        private List<ViewInfo> views = new List<ViewInfo>();
+        private List<SelectInfo> selects = new List<SelectInfo>();
+        private List<object> newSelectPages = new List<object>();
+        private List<object> newTablePages = new List<object>();
 
         public string Name
         {
@@ -153,7 +153,7 @@ namespace SQLDAL
             }
         }
 
-        protected virtual void OnCloseDatabase(CloseDatabaseEventArgs e)
+        private void OnCloseDatabase(CloseDatabaseEventArgs e)
         {
             if (this.CloseDatabase != null)
             {
@@ -161,7 +161,7 @@ namespace SQLDAL
             }
         }
 
-        protected virtual void OnOpenDatabase(OpenDatabaseEventArgs e)
+        private void OnOpenDatabase(OpenDatabaseEventArgs e)
         {
             if (this.OpenDatabase != null)
             {
@@ -169,16 +169,9 @@ namespace SQLDAL
             }
         }
 
-        public abstract void DropTable(string name);
-        public abstract void DropView(string name);
-        public void DropSelect(string name)
-        {
-
-        }
-
         public TableInfo AddTableInfo(string name)
         {
-            TableInfo info = this.GetTableInfo();
+            TableInfo info = new TableInfo();
             info.Name = name;
             info.DatabaseInfo = this;
             this.tables.Add(info);
@@ -186,7 +179,7 @@ namespace SQLDAL
         }
         public ViewInfo AddViewInfo(string name)
         {
-            ViewInfo info = this.GetViewInfo();
+            ViewInfo info = new ViewInfo();
             info.Name = name;
             info.DatabaseInfo = this;
             this.views.Add(info);
@@ -200,8 +193,24 @@ namespace SQLDAL
             this.selects.Add(info);
             return info;
         }
-        public abstract TableInfo CreateTable(string name, string script);
-        public abstract ViewInfo CreateView(string name, string script);
+        public TableInfo CreateTable(string name, string script)
+        {
+            try
+            {
+                using (DbConnection connection = this.connectInfo.GetConnection(this.name))
+                {
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = script;
+                    command.ExecuteNonQuery();
+                    return this.AddTableInfo(name);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                return null;
+            }
+        }
         public SelectInfo CreateSelect(string selectName, string script)
         {
             try
@@ -224,8 +233,49 @@ namespace SQLDAL
                 return null;
             }
         }
-        public abstract DataTable LoadTable();
-        public abstract DataTable LoadView();
+
+        public DataTable LoadTable()
+        {
+            try
+            {
+                using (DbConnection connection = this.connectInfo.GetConnection(this.name))
+                {
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = this.connectInfo.GetLoadTableScript(this.name);
+                    DbDataAdapter da = this.connectInfo.GetDataAdapter(command);
+                    da.Fill(ds);
+                    return ds.Tables[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                return null;
+            }
+        }
+
+        public DataTable LoadView()
+        {
+            try
+            {
+                using (DbConnection connection = this.connectInfo.GetConnection(this.name))
+                {
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = this.connectInfo.GetLoadViewScript(this.name);
+                    DbDataAdapter da = this.connectInfo.GetDataAdapter(command);
+                    da.Fill(ds);
+                    return ds.Tables[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                return null;
+            }
+        }
+
         public DataTable LoadSelect()
         {
             try
@@ -247,9 +297,6 @@ namespace SQLDAL
                 return null;
             }
         }
-        public abstract void AlterTable(string name, string script);
-
-        public abstract void AlterView(string name, string script);
 
         public void AlterSelect(string selectName, string script)
         {
@@ -272,11 +319,7 @@ namespace SQLDAL
                 LogHelper.Error(ex);
             }
         }
-
-        public abstract bool ExecueNonQuery(string sql, out int count, out string error, out long cost);
-
-        public abstract bool ExecuteQuery(string sql, out DataTable table, out int count, out string error, out long cost);
-
+        
         public void RefreshTable()
         {
             try
@@ -436,12 +479,72 @@ namespace SQLDAL
                 return false;
             }
         }
+        
+        public bool Parse(string sql, out List<StatementObj> statements)
+        {
+            return this.connectInfo.Parse(sql, out statements);
+        }
+        public bool Format(string sql, out string formatSql)
+        {
+            return this.connectInfo.Format(sql, out formatSql);
+        }
+        public bool ExecueNonQuery(string sql, out int count, out string error, out long cost)
+        {
+            return this.connectInfo.ExecueNonQuery(this.name, sql, out count, out error, out cost);
+        }
+        public bool ExecuteQuery(string sql, out DataTable table, out int count, out string error, out long cost)
+        {
+            return this.connectInfo.ExecuteQuery(this.name, sql, out table, out count, out error, out cost);
+        }
 
-        public abstract TableInfo GetTableInfo();
-        public abstract ViewInfo GetViewInfo();
-        public abstract bool Parse(string sql, out List<StatementObj> statements);
-        public abstract bool Format(string sql, out string formatSql);
+        public ViewInfo CreateView(string name, string script)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AlterTable(string name, string script)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AlterView(string name, string script)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DropTable(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DropView(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DropSelect(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CloseTable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CloseDesignTable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool OpenTable(long start, long pageSize, out DataTable datatable, out string statement)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DesignTable(out DataTable table)
+        {
+            throw new NotImplementedException();
+        }
     }
-
-   
 }

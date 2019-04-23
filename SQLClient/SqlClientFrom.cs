@@ -2228,7 +2228,7 @@ namespace SQLClient
         private void tsmiConnectProperty_Click(object sender, EventArgs e)
         {
             ConnectInfo connectionInfo = this.cmsConnect.Tag as ConnectInfo;
-            Form form = connectionInfo.GetConnectForm();
+            Form form = connectionInfo.ConnectForm;
             IConnectionForm iconnectForm = form as IConnectionForm;
             iconnectForm.LoadConnectionInfo(connectionInfo);
             if (form.ShowDialog() == DialogResult.OK)

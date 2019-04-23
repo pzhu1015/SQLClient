@@ -55,6 +55,13 @@
             this.tsbtnMoveDown = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvFields = new System.Windows.Forms.DataGridView();
+            this.cellName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cellType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cellLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cellPrecision = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cellIsNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.primaryKeyCell = new System.Windows.Forms.DataGridViewImageColumn();
+            this.defaultCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvIndexs = new System.Windows.Forms.DataGridView();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,13 +76,7 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.cellName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cellType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cellLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cellPrecision = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cellIsNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.primaryKeyCell = new System.Windows.Forms.DataGridViewImageColumn();
-            this.defaultCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tsDesignTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -230,6 +231,7 @@
             this.tsbtnSaveAs.Name = "tsbtnSaveAs";
             this.tsbtnSaveAs.Size = new System.Drawing.Size(64, 22);
             this.tsbtnSaveAs.Text = "另存为";
+            this.tsbtnSaveAs.Click += new System.EventHandler(this.tsbtnSaveAs_Click);
             // 
             // toolStripSeparator4
             // 
@@ -342,6 +344,70 @@
             this.dgvFields.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvFields_Scroll);
             this.dgvFields.Leave += new System.EventHandler(this.dgvFields_Leave);
             // 
+            // cellName
+            // 
+            this.cellName.DataPropertyName = "FIELDNAME";
+            this.cellName.HeaderText = "名";
+            this.cellName.Name = "cellName";
+            this.cellName.ReadOnly = true;
+            this.cellName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cellName.Width = 200;
+            // 
+            // cellType
+            // 
+            this.cellType.DataPropertyName = "FIELDTYPE";
+            this.cellType.HeaderText = "类型";
+            this.cellType.Name = "cellType";
+            this.cellType.ReadOnly = true;
+            this.cellType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cellType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cellLength
+            // 
+            this.cellLength.DataPropertyName = "FIELDLENGTH";
+            this.cellLength.HeaderText = "长度";
+            this.cellLength.Name = "cellLength";
+            this.cellLength.ReadOnly = true;
+            this.cellLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cellLength.Width = 80;
+            // 
+            // cellPrecision
+            // 
+            this.cellPrecision.DataPropertyName = "FIELDSCALE";
+            this.cellPrecision.HeaderText = "小数点";
+            this.cellPrecision.Name = "cellPrecision";
+            this.cellPrecision.ReadOnly = true;
+            this.cellPrecision.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cellPrecision.Width = 80;
+            // 
+            // cellIsNull
+            // 
+            this.cellIsNull.DataPropertyName = "FIELDISNULL";
+            this.cellIsNull.FalseValue = "False";
+            this.cellIsNull.HeaderText = "不是null";
+            this.cellIsNull.IndeterminateValue = "False";
+            this.cellIsNull.Name = "cellIsNull";
+            this.cellIsNull.ReadOnly = true;
+            this.cellIsNull.TrueValue = "True";
+            this.cellIsNull.Width = 80;
+            // 
+            // primaryKeyCell
+            // 
+            this.primaryKeyCell.DataPropertyName = "FIELDPRIMARYKEY";
+            this.primaryKeyCell.HeaderText = "主键 ";
+            this.primaryKeyCell.Name = "primaryKeyCell";
+            this.primaryKeyCell.ReadOnly = true;
+            this.primaryKeyCell.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.primaryKeyCell.Width = 80;
+            // 
+            // defaultCell
+            // 
+            this.defaultCell.DataPropertyName = "FIELDDEFAULT";
+            this.defaultCell.HeaderText = "默认值";
+            this.defaultCell.Name = "defaultCell";
+            this.defaultCell.ReadOnly = true;
+            this.defaultCell.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // dgvIndexs
             // 
             this.dgvIndexs.BackgroundColor = System.Drawing.Color.White;
@@ -390,6 +456,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
@@ -486,69 +553,15 @@
             this.tabPage7.Text = "SQL预览";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
-            // cellName
+            // tabPage8
             // 
-            this.cellName.DataPropertyName = "FIELDNAME";
-            this.cellName.HeaderText = "名";
-            this.cellName.Name = "cellName";
-            this.cellName.ReadOnly = true;
-            this.cellName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cellName.Width = 200;
-            // 
-            // cellType
-            // 
-            this.cellType.DataPropertyName = "FIELDTYPE";
-            this.cellType.HeaderText = "类型";
-            this.cellType.Name = "cellType";
-            this.cellType.ReadOnly = true;
-            this.cellType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cellType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // cellLength
-            // 
-            this.cellLength.DataPropertyName = "FIELDLENGTH";
-            this.cellLength.HeaderText = "长度";
-            this.cellLength.Name = "cellLength";
-            this.cellLength.ReadOnly = true;
-            this.cellLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cellLength.Width = 80;
-            // 
-            // cellPrecision
-            // 
-            this.cellPrecision.DataPropertyName = "FIELDSCALE";
-            this.cellPrecision.HeaderText = "小数点";
-            this.cellPrecision.Name = "cellPrecision";
-            this.cellPrecision.ReadOnly = true;
-            this.cellPrecision.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cellPrecision.Width = 80;
-            // 
-            // cellIsNull
-            // 
-            this.cellIsNull.DataPropertyName = "FIELDISNULL";
-            this.cellIsNull.FalseValue = "False";
-            this.cellIsNull.HeaderText = "不是null";
-            this.cellIsNull.IndeterminateValue = "False";
-            this.cellIsNull.Name = "cellIsNull";
-            this.cellIsNull.ReadOnly = true;
-            this.cellIsNull.TrueValue = "True";
-            this.cellIsNull.Width = 80;
-            // 
-            // primaryKeyCell
-            // 
-            this.primaryKeyCell.DataPropertyName = "FIELDPRIMARYKEY";
-            this.primaryKeyCell.HeaderText = "主键 ";
-            this.primaryKeyCell.Name = "primaryKeyCell";
-            this.primaryKeyCell.ReadOnly = true;
-            this.primaryKeyCell.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.primaryKeyCell.Width = 80;
-            // 
-            // defaultCell
-            // 
-            this.defaultCell.DataPropertyName = "FIELDDEFAULT";
-            this.defaultCell.HeaderText = "默认值";
-            this.defaultCell.Name = "defaultCell";
-            this.defaultCell.ReadOnly = true;
-            this.defaultCell.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.tabPage8.Location = new System.Drawing.Point(4, 23);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(878, 474);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "唯一键";
+            this.tabPage8.UseVisualStyleBackColor = true;
             // 
             // DesignTablePage
             // 
@@ -560,6 +573,7 @@
             this.Controls.Add(this.tsDesignTable);
             this.Name = "DesignTablePage";
             this.Size = new System.Drawing.Size(886, 526);
+            this.Load += new System.EventHandler(this.DesignTablePage_Load);
             this.tsDesignTable.ResumeLayout(false);
             this.tsDesignTable.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -627,5 +641,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn cellIsNull;
         private System.Windows.Forms.DataGridViewImageColumn primaryKeyCell;
         private System.Windows.Forms.DataGridViewTextBoxColumn defaultCell;
+        private System.Windows.Forms.TabPage tabPage8;
     }
 }

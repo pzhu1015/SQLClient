@@ -123,6 +123,30 @@
   <data name="error" xml:space="preserve">
     <value>错误</value>
   </data>
+  <data name="FieldComments" xml:space="preserve">
+    <value>FIELDCOMMENTS</value>
+  </data>
+  <data name="FieldDefault" xml:space="preserve">
+    <value>FIELDDEFAULT</value>
+  </data>
+  <data name="FieldIsNull" xml:space="preserve">
+    <value>FIELDISNULL</value>
+  </data>
+  <data name="FieldIsPrimayrKey" xml:space="preserve">
+    <value>FIELDPRIMARYKEY</value>
+  </data>
+  <data name="FieldLength" xml:space="preserve">
+    <value>FIELDLENGTH</value>
+  </data>
+  <data name="FieldName" xml:space="preserve">
+    <value>FIELDNAME</value>
+  </data>
+  <data name="FieldScale" xml:space="preserve">
+    <value>FIELDSCALE</value>
+  </data>
+  <data name="FieldType" xml:space="preserve">
+    <value>FIELDTYPE</value>
+  </data>
   <data name="prompt" xml:space="preserve">
     <value>提示</value>
   </data>

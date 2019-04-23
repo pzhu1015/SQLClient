@@ -79,6 +79,78 @@ namespace SQLiteDAL.Properties {
         }
         
         /// <summary>
+        ///   查找类似 FIELDCOMMENTS 的本地化字符串。
+        /// </summary>
+        internal static string FieldComments {
+            get {
+                return ResourceManager.GetString("FieldComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FIELDDEFAULT 的本地化字符串。
+        /// </summary>
+        internal static string FieldDefault {
+            get {
+                return ResourceManager.GetString("FieldDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FIELDISNULL 的本地化字符串。
+        /// </summary>
+        internal static string FieldIsNull {
+            get {
+                return ResourceManager.GetString("FieldIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FIELDPRIMARYKEY 的本地化字符串。
+        /// </summary>
+        internal static string FieldIsPrimayrKey {
+            get {
+                return ResourceManager.GetString("FieldIsPrimayrKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FIELDLENGTH 的本地化字符串。
+        /// </summary>
+        internal static string FieldLength {
+            get {
+                return ResourceManager.GetString("FieldLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FIELDNAME 的本地化字符串。
+        /// </summary>
+        internal static string FieldName {
+            get {
+                return ResourceManager.GetString("FieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FIELDSCALE 的本地化字符串。
+        /// </summary>
+        internal static string FieldScale {
+            get {
+                return ResourceManager.GetString("FieldScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FIELDTYPE 的本地化字符串。
+        /// </summary>
+        internal static string FieldType {
+            get {
+                return ResourceManager.GetString("FieldType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 提示 的本地化字符串。
         /// </summary>
         internal static string prompt {

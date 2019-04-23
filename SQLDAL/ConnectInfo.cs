@@ -8,14 +8,17 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.ComponentModel;
+using SQLDAL.Properties;
+using System.Diagnostics;
 
 namespace SQLDAL
 {
     public abstract class ConnectInfo : IConnectInfo
     {
-        public static string LocalConnectionString = $@"Data Source = {Application.StartupPath}\AppData\SQL.db";
+        public static string LocalConnectionString = string.Format(Resources.AppSQL, Application.StartupPath);
         public event CloseConnectEventHandler CloseConnect;
         public event OpenConnectEventHandler OpenConnect;
+        protected List<DatabaseInfo> databases = new List<DatabaseInfo>();
         protected string driverName;
         protected string name;
         protected string user;
@@ -24,18 +27,18 @@ namespace SQLDAL
         protected string namespaceName;
         protected string className;
         protected string connectionString;
-        protected string designTable;
-        protected string openTable;
-        protected string openView;
-        protected string loadTable;
-        protected string loadView;
+        protected string designTableScript;
+        protected string openTableScript;
+        protected string openViewScript;
+        protected string loadTableScript;
+        protected string loadViewScript;
         protected string[] dataTypes;
+        protected Form connectForm;
         protected string message;
         protected TreeNode node;
         protected bool isOpen = false;
-        
-        protected List<DatabaseInfo> databases = new List<DatabaseInfo>();
 
+        #region 属性
         [Browsable(true)]
         [Category("基本")]
         [Description("当前数据库的驱动程序名称")]
@@ -103,80 +106,80 @@ namespace SQLDAL
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库查看表设计的脚本模版")]
-        public string DesignTable
+        public string DesignTableScript
         {
             get
             {
-                return designTable;
+                return designTableScript;
             }
 
             set
             {
-                designTable = value;
+                designTableScript = value;
             }
         }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库打开表的脚本模版")]
-        public string OpenTable
+        public string OpenTableScript
         {
             get
             {
-                return openTable;
+                return openTableScript;
             }
 
             set
             {
-                openTable = value;
+                openTableScript = value;
             }
         }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库打开视图的脚本模版")]
-        public string OpenView
+        public string OpenViewScript
         {
             get
             {
-                return openView;
+                return openViewScript;
             }
 
             set
             {
-                openView = value;
+                openViewScript = value;
             }
         }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("加载当前数据库中所有表的脚本模版")]
-        public string LoadTable
+        public string LoadTableScript
         {
             get
             {
-                return loadTable;
+                return loadTableScript;
             }
 
             set
             {
-                loadTable = value;
+                loadTableScript = value;
             }
         }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("加载当前数据库中所有视图的脚本模版")]
-        public string LoadView
+        public string LoadViewScript
         {
             get
             {
-                return loadView;
+                return loadViewScript;
             }
 
             set
             {
-                loadView = value;
+                loadViewScript = value;
             }
         }
 
@@ -314,6 +317,11 @@ namespace SQLDAL
         [Browsable(false)]
         public abstract Image OpenImage { get; }
 
+        [Browsable(false)]
+        public abstract Form ConnectForm { get; }
+
+        #endregion
+
         protected virtual void OnCloseConnect(CloseConnectEventArgs e)
         {
             if (this.CloseConnect != null)
@@ -330,12 +338,6 @@ namespace SQLDAL
             }
         }
 
-        public abstract bool Open();
-        public abstract bool Create(string name);
-        public abstract void Drop(string name);
-        public abstract Form GetConnectForm();
-        public abstract DatabaseInfo GetDatabaseInfo();
-        public abstract DbConnection GetConnection(string database);
 
         public bool Refresh()
         {
@@ -370,13 +372,73 @@ namespace SQLDAL
 
         public DatabaseInfo AddDataBaseInfo(string name)
         {
-            DatabaseInfo info = this.GetDatabaseInfo();
+            DatabaseInfo info = new DatabaseInfo();
             info.Name = name;
             info.ConnectInfo = this;
             this.databases.Add(info);
             return info;
         }
 
+        public bool ExecueNonQuery(string database, string sql, out int count, out string error, out Int64 cost)
+        {
+            try
+            {
+                using (DbConnection connection = this.GetConnection(database))
+                {
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = sql;
+                    Stopwatch watch = new Stopwatch();
+                    watch.Start();
+                    count = command.ExecuteNonQuery();
+                    watch.Stop();
+                    cost = watch.ElapsedMilliseconds;
+                    error = "";
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                count = 0;
+                error = ex.Message;
+                cost = 0;
+                return false;
+            }
+        }
+
+        public bool ExecuteQuery(string database, string sql, out DataTable table, out int count, out string error, out Int64 cost)
+        {
+            try
+            {
+                using (DbConnection connection = this.GetConnection(database))
+                {
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = sql;
+                    DataSet ds = new DataSet();
+                    Stopwatch watch = new Stopwatch();
+                    watch.Start();
+                    DbDataAdapter da = this.GetDataAdapter(command);
+                    da.Fill(ds);
+                    table = ds.Tables[0];
+                    watch.Stop();
+                    count = table.Rows.Count;
+                    cost = watch.ElapsedMilliseconds;
+                    error = "";
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                table = null;
+                count = 0;
+                cost = 0;
+                error = ex.Message;
+                return false;
+            }
+        }
+
+        #region 驱动数据访问层管理静态方法
         public static bool AddConnection(ConnectInfo info)
         {
             try
@@ -487,11 +549,11 @@ namespace SQLDAL
                         info.AssemblyName = dr["assemblyName"].ToString();
                         info.NamespaceName = dr["namespaceName"].ToString();
                         info.ClassName = dr["className"].ToString();
-                        info.DesignTable = dr["designTable"].ToString();
-                        info.OpenTable = dr["openTable"].ToString();
-                        info.OpenView = dr["openView"].ToString();
-                        info.LoadTable = dr["loadTable"].ToString();
-                        info.LoadView = dr["loadView"].ToString();
+                        info.DesignTableScript = dr["designTable"].ToString();
+                        info.OpenTableScript = dr["openTable"].ToString();
+                        info.OpenViewScript = dr["openView"].ToString();
+                        info.LoadTableScript = dr["loadTable"].ToString();
+                        info.LoadViewScript = dr["loadView"].ToString();
                         info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
                         list.Add(info);
                     }
@@ -546,6 +608,21 @@ namespace SQLDAL
                 return false;
             }
         }
+        #endregion
+
+        public abstract bool Open();
+        public abstract bool Create(string name);
+        public abstract void Drop(string name);
+        public abstract DbConnection GetConnection(string database);
+        public abstract DbDataAdapter GetDataAdapter(DbCommand command);
+        public abstract string GetLoadTableScript(string database);
+        public abstract string GetLoadViewScript(string database);
+        public abstract bool Format(string sql, out string formatSql);
+        public abstract bool Parse(string sql, out List<StatementObj> statements);
+        public abstract bool DesignTable(string database, string tablename, out DataTable table);
+        public abstract bool OpenTable(string database, string tablename, long start, long pageSize, out DataTable datatable, out string statement);
+        public abstract bool DesignView(string database, string viewname, out DataTable table);
+        public abstract bool OpenView(string dataase, string viewname, long start, long pageSize, out DataTable datatable, out string statement);
     }
 
     
