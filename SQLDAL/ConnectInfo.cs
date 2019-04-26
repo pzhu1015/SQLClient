@@ -23,6 +23,9 @@ namespace SQLDAL
         protected string name;
         protected string user;
         protected string password;
+        protected string file;
+        protected string host;
+        protected string port;
         protected string assemblyName;
         protected string namespaceName;
         protected string className;
@@ -42,66 +45,22 @@ namespace SQLDAL
         [Browsable(true)]
         [Category("基本")]
         [Description("当前数据库的驱动程序名称")]
-        public string DriverName
-        {
-            get
-            {
-                return driverName;
-            }
-
-            set
-            {
-                driverName = value;
-            }
-        }
+        public abstract string DriverName { get; }
 
         [Browsable(true)]
         [Category("基本")]
         [Description("驱动程序集名称")]
-        public string AssemblyName
-        {
-            get
-            {
-                return assemblyName;
-            }
-
-            set
-            {
-                assemblyName = value;
-            }
-        }
+        public abstract string AssemblyName { get; }
 
         [Browsable(true)]
         [Category("基本")]
         [Description("驱动程序命令空间")]
-        public string NamespaceName
-        {
-            get
-            {
-                return namespaceName;
-            }
-
-            set
-            {
-                namespaceName = value;
-            }
-        }
+        public abstract string NamespaceName { get; }
 
         [Browsable(true)]
         [Category("基本")]
         [Description("驱动程序连接信息类名")]
-        public string ClassName
-        {
-            get
-            {
-                return className;
-            }
-
-            set
-            {
-                className = value;
-            }
-        }
+        public abstract string ClassName { get; }
 
         [Browsable(true)]
         [Category("脚本")]
@@ -320,6 +279,51 @@ namespace SQLDAL
         [Browsable(false)]
         public abstract Form ConnectForm { get; }
 
+        [Browsable(false)]
+        public string File
+        {
+            get
+            {
+                return file;
+            }
+
+            set
+            {
+                file = value;
+            }
+        }
+
+        [Browsable(false)]
+        public string Host
+        {
+            get
+            {
+                return host;
+            }
+
+            set
+            {
+                host = value;
+            }
+        }
+
+        [Browsable(false)]
+        public string Port
+        {
+            get
+            {
+                return port;
+            }
+
+            set
+            {
+                port = value;
+            }
+        }
+
+        [Browsable(false)]
+        public abstract string DefaultPort { get; }
+
         #endregion
 
         protected virtual void OnCloseConnect(CloseConnectEventArgs e)
@@ -447,7 +451,7 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"INSERT INTO TB_CONNECTION VALUES('{info.Name}', '{info.User}', '{info.Password}', '{info.ConnectionString}',  '{info.DriverName}')";
+                    command.CommandText = $"INSERT INTO TB_CONNECTION VALUES('{info.Name}', '{info.User}', '{info.File}', '{info.Host}', '{info.Port}', '{info.Password}', '{info.ConnectionString}',  '{info.DriverName}')";
                     int ret = command.ExecuteNonQuery();
                     return true;
                 }
@@ -516,6 +520,9 @@ namespace SQLDAL
                         "tb_connection.name, " +
                         "tb_connection.user, " +
                         "tb_connection.password, " +
+                        "tb_connection.file, " +
+                        "tb_connection.host, " +
+                        "tb_connection.port, " +
                         "tb_connection.connectionString, " +
                         "tb_config.assemblyName, " +
                         "tb_config.namespaceName, " +
@@ -545,10 +552,10 @@ namespace SQLDAL
                         info.Name = dr["name"].ToString();
                         info.User = dr["user"].ToString();
                         info.Password = dr["password"].ToString();
+                        info.File = dr["file"].ToString();
+                        info.Host = dr["host"].ToString();
+                        info.Port = dr["port"].ToString();
                         info.ConnectionString = dr["connectionstring"].ToString();
-                        info.AssemblyName = dr["assemblyName"].ToString();
-                        info.NamespaceName = dr["namespaceName"].ToString();
-                        info.ClassName = dr["className"].ToString();
                         info.DesignTableScript = dr["designTable"].ToString();
                         info.OpenTableScript = dr["openTable"].ToString();
                         info.OpenViewScript = dr["openView"].ToString();

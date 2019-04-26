@@ -14,10 +14,13 @@ using System.Data.Common;
 
 namespace MySQLDAL
 {
-    public partial class MySQLConnectForm : Form, IConnectionForm
+    internal sealed partial class MySQLConnectForm : Form, IConnectionForm
     {
         private string user;
         private string password;
+        private string file;
+        private string host;
+        private string port;
         private string connectionString;
 
         public string User
@@ -59,6 +62,45 @@ namespace MySQLDAL
             }
         }
 
+        public string File
+        {
+            get
+            {
+                return file;
+            }
+
+            set
+            {
+                file = value;
+            }
+        }
+
+        public string Host
+        {
+            get
+            {
+                return host;
+            }
+
+            set
+            {
+                host = value;
+            }
+        }
+
+        public string Port
+        {
+            get
+            {
+                return port;
+            }
+
+            set
+            {
+                port = value;
+            }
+        }
+
         public MySQLConnectForm()
         {
             InitializeComponent();
@@ -69,6 +111,8 @@ namespace MySQLDAL
             this.connectionString = $"Database={this.txtDatabase.Text};Data Source={this.txtHost.Text};User Id={this.txtUser.Text};Password={this.txtPassword.Text};port={this.txtPort.Text}";
             this.user = this.txtUser.Text;
             this.password = this.txtPassword.Text;
+            this.host = this.txtHost.Text;
+            this.port = this.txtPort.Text;
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -96,7 +140,8 @@ namespace MySQLDAL
             this.password = info.Password;
             this.txtPassword.Text = this.password;
             MySqlConnection connection = new MySqlConnection(info.ConnectionString);
-            this.txtHost.Text = connection.DataSource;
+            this.txtHost.Text = info.Host;
+            this.txtPort.Text = info.Port;
             this.txtDatabase.Text = connection.Database;
             return true;
         }

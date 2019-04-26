@@ -56,10 +56,6 @@ namespace SQLClient
                 {
                     AccordionControlElement element = new AccordionControlElement(ElementStyle.Item);
                     ConnectInfo info = ReflectionHelper.CreateInstance<ConnectInfo>(dr["assemblyName"].ToString(), dr["namespaceName"].ToString(), dr["className"].ToString());
-                    info.DriverName = dr["name"].ToString();
-                    info.AssemblyName = dr["assemblyName"].ToString();
-                    info.ClassName = dr["className"].ToString();
-                    info.NamespaceName = dr["namespaceName"].ToString();
                     info.DesignTableScript = dr["designTable"].ToString();
                     info.OpenTableScript = dr["openTable"].ToString();
                     info.OpenViewScript = dr["openView"].ToString();
@@ -75,12 +71,10 @@ namespace SQLClient
 
                 if (this.accDataSource.SelectedElement != null)
                 {
-                    this.btnAdvance.Enabled = true;
                     this.btnOK.Enabled = true;
                 }
                 else
                 {
-                    this.btnAdvance.Enabled = false;
                     this.btnOK.Enabled = false;
                 }
 
@@ -97,18 +91,17 @@ namespace SQLClient
         {
             if (this.accDataSource.SelectedElement != null)
             {
-                this.btnAdvance.Enabled = true;
                 this.btnOK.Enabled = true;
                 ConnectInfo info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
                 if (this.connectionInfo != null && this.connectionInfo.DriverName != info.DriverName)
                 {
                     this.connectionInfo = null;
+                    this.txtConnectionString.Text = "";
                 }
                 this.pg.SelectedObject = info;
             }
             else
             {
-                this.btnAdvance.Enabled = false;
                 this.btnOK.Enabled = false;
             }
         }
@@ -118,7 +111,6 @@ namespace SQLClient
             UpLoadDriverForm form = new UpLoadDriverForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //TODO get the DAL and Driver info then to insert driver list
                 bool rslt = ConnectInfo.AddDriver(form.ConnectInfo);
                 if (rslt)
                 {
@@ -136,7 +128,17 @@ namespace SQLClient
             try
             {
                 if (this.accDataSource.SelectedElement == null) return;
-                ConnectInfo info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
+                ConnectInfo info = null;
+                if (this.connectionInfo == null)
+                {
+                    info = this.accDataSource.SelectedElement.Tag as ConnectInfo;
+                    info = ReflectionHelper.CreateInstance<ConnectInfo>(info.AssemblyName, info.NamespaceName, info.ClassName);
+                    info.Port = info.DefaultPort;
+                }
+                else
+                {
+                    info = this.connectionInfo;
+                }
                 Form form = info.ConnectForm;
                 IConnectionForm connInfo = form as IConnectionForm;
                 connInfo.LoadConnectionInfo(info);
@@ -145,6 +147,9 @@ namespace SQLClient
                     info.ConnectionString = connInfo.ConnectionString;
                     info.User = connInfo.User;
                     info.Password = connInfo.Password;
+                    info.File = connInfo.File;
+                    info.Host = connInfo.Host;
+                    info.Port = connInfo.Port;
                     this.connectionInfo = info;
                     this.txtConnectionString.Text = connInfo.ConnectionString;
                 }

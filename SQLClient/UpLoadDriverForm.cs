@@ -45,9 +45,7 @@ namespace SQLClient
                     e.Cancel = true;
                 }
                 else
-                {
-                    //TODO check the DAL and driver invalid, if not return error, otherwise add to driver list
-                    try
+                {try
                     {
                         ConnectInfo info = ReflectionHelper.CreateInstance<ConnectInfo>(this.txtAssemblyName.Text, this.txtNameSpace.Text, this.txtClassName.Text);
                         if (info == null)
@@ -59,10 +57,6 @@ namespace SQLClient
                         else
                         {
                             this.connectInfo = info;
-                            this.connectInfo.AssemblyName = this.txtAssemblyName.Text;
-                            this.connectInfo.NamespaceName = this.txtNameSpace.Text;
-                            this.connectInfo.ClassName = this.txtClassName.Text;
-                            this.connectInfo.DriverName = this.txtDriverName.Text;
                         }
                     }
                     catch(Exception ex)
@@ -88,7 +82,6 @@ namespace SQLClient
                 {
                     string filename = ofd.FileName;
                     FileInfo info = new FileInfo(filename);
-                    //info.CopyTo($@"{Application.StartupPath}\{info.Name}");
                     info.CopyTo($@"{Application.StartupPath}\{info.Name}", true);
                     this.btnDriverPath.Text = filename;
                     this.tipMessage.Show("驱动上传成功", this.btnDriverPath, this.btnDriverPath.Location, 2000);
@@ -112,8 +105,14 @@ namespace SQLClient
                 {
                     string filename = ofd.FileName;
                     FileInfo info = new FileInfo(filename);
-                    //info.CopyTo($@"{Application.StartupPath}\{info.Name}");
-                    info.CopyTo($@"{Application.StartupPath}\{info.Name}", true);
+                    string to_filename = $@"{Application.StartupPath}\{info.Name}";
+                    info.CopyTo(to_filename, true);
+                    AssemblyInfos asmInfo = ReflectionHelper.GetAssemblyInfo(to_filename);
+                    this.txtAssemblyName.Text = asmInfo.AssemblyName;
+                    this.txtNameSpace.Text = asmInfo.NameSpace;
+                    this.txtClassName.Text = asmInfo.ClassName;
+                    ConnectInfo connectInfo = ReflectionHelper.CreateInstance<ConnectInfo>(asmInfo.AssemblyName, asmInfo.NameSpace, asmInfo.ClassName);
+                    this.txtDriverName.Text = connectInfo.DriverName;
                     this.btnDALPath.Text = filename;
                     this.tipMessage.Show("数据访问层上传成功", this.btnDALPath, this.btnDALPath.Location, 2000);
                 }

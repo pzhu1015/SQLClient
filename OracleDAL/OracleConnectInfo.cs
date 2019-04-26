@@ -10,15 +10,12 @@ using System.Drawing;
 using OracleDAL.Properties;
 using System.Diagnostics;
 using gudusoft.gsqlparser;
+using System.Reflection;
 
 namespace OracleDAL
 {
-    public class OracleConnectInfo : ConnectInfo
+    public sealed class OracleConnectInfo : ConnectInfo
     {
-        public OracleConnectInfo()
-        {
-        }
-
         public override Image CloseImage
         {
             get { return Resources.oracle_close_16; }
@@ -32,6 +29,46 @@ namespace OracleDAL
         public override Form ConnectForm
         {
             get { return new OracleConnectForm(); }
+        }
+
+        public override string DriverName
+        {
+            get
+            {
+                return "Oracle";
+            }
+        }
+
+        public override string AssemblyName
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Name;
+            }
+        }
+
+        public override string NamespaceName
+        {
+            get
+            {
+                return this.GetType().Namespace;
+            }
+        }
+
+        public override string ClassName
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
+
+        public override string DefaultPort
+        {
+            get
+            {
+                return "1521";
+            }
         }
 
         public override DbConnection GetConnection(string database)

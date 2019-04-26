@@ -13,6 +13,8 @@ namespace SQLDAL
         Image CloseImage { get; }
         Image OpenImage { get; }
         Form ConnectForm { get; }
+        string DriverName { get; }
+        string DefaultPort { get; }
         #endregion
 
         #region 数据库存操作

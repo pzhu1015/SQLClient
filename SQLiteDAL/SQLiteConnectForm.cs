@@ -8,10 +8,13 @@ using System.Windows.Forms;
 
 namespace SQLiteDAL
 {
-    public partial class SQLiteConnectForm : Form, IConnectionForm
+    internal sealed partial class SQLiteConnectForm : Form, IConnectionForm
     {
         private string user;
         private string password;
+        private string file;
+        private string host;
+        private string port;
         private string connectionString;
 
         public string User
@@ -53,6 +56,45 @@ namespace SQLiteDAL
             }
         }
 
+        public string File
+        {
+            get
+            {
+                return file;
+            }
+
+            set
+            {
+                file = value;
+            }
+        }
+
+        public string Host
+        {
+            get
+            {
+                return host;
+            }
+
+            set
+            {
+                host = value;
+            }
+        }
+
+        public string Port
+        {
+            get
+            {
+                return port;
+            }
+
+            set
+            {
+                port = value;
+            }
+        }
+
         public SQLiteConnectForm()
         {
             InitializeComponent();
@@ -62,6 +104,7 @@ namespace SQLiteDAL
         {
             this.user = this.txtUser.Text;
             this.password = this.txtPassword.Text;
+            this.file = this.txtDataSource.Text;
             this.connectionString = $"Data Source={this.txtDataSource.Text}";
         }
 
@@ -108,7 +151,7 @@ namespace SQLiteDAL
 
         private void SQLiteConnectForm_Load(object sender, EventArgs e)
         {
-            this.cmbOpr.SelectedIndex = 0;
+            //this.cmbOpr.SelectedIndex = 0;
         }
 
         public bool LoadConnectionInfo(ConnectInfo info)
@@ -117,8 +160,15 @@ namespace SQLiteDAL
             this.txtUser.Text = this.user;
             this.password = info.Password;
             this.txtPassword.Text = this.password;
-            SQLiteConnection connection = new SQLiteConnection(info.ConnectionString);
-            this.txtDataSource.Text = connection.DataSource;
+            this.txtDataSource.Text = info.File;
+            if (info.File != "")
+            {
+                this.cmbOpr.SelectedIndex = 0;
+            }
+            else
+            {
+                this.cmbOpr.SelectedIndex = 1;
+            }
             return true;
         }
     }

@@ -15,10 +15,13 @@ using ADOX;
 
 namespace AccessDAL
 {
-    public partial class AccessConnectForm : Form, IConnectionForm
+    public sealed partial class AccessConnectForm : Form, IConnectionForm
     {
         private string user;
         private string password;
+        private string file;
+        private string host;
+        private string port;
         private string connectionString;
         public AccessConnectForm()
         {
@@ -64,10 +67,50 @@ namespace AccessDAL
             }
         }
 
+        public string File
+        {
+            get
+            {
+                return file;
+            }
+
+            set
+            {
+                file = value;
+            }
+        }
+
+        public string Host
+        {
+            get
+            {
+                return host;
+            }
+
+            set
+            {
+                host = value;
+            }
+        }
+
+        public string Port
+        {
+            get
+            {
+                return port;
+            }
+
+            set
+            {
+                port = value;
+            }
+        }
+
         private void AccessConnectForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.user = this.txtUser.Text;
             this.password = this.txtPassword.Text;
+            this.file = this.txtDataSource.Text;
             this.connectionString = $"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={this.txtDataSource.Text}; Jet OLEDB:Database Password={this.password}";
         }
 
@@ -77,8 +120,7 @@ namespace AccessDAL
             this.txtUser.Text = this.user;
             this.password = info.Password;
             this.txtPassword.Text = this.password;
-            OleDbConnection connection = new OleDbConnection(info.ConnectionString);
-            this.txtDataSource.Text = connection.DataSource;
+            this.txtDataSource.Text = info.File;
             return true;
         }
 

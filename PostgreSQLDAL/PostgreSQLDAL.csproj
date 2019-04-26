@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{43579FC3-BE54-4877-80D5-F7E49865A1DE}</ProjectGuid>
+    <ProjectGuid>{AB940500-910B-4C3D-B73E-64E5E348DAF6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AccessDAL</RootNamespace>
-    <AssemblyName>AccessDAL</AssemblyName>
+    <RootNamespace>PostgreSQLDAL</RootNamespace>
+    <AssemblyName>PostgreSQLDAL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +35,7 @@
     <Reference Include="gudusoft.gsqlparser">
       <HintPath>..\Helper\lib\gudusoft.gsqlparser.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,14 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessConnectForm.cs">
+    <Compile Include="PostgreSQLConnectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AccessConnectForm.Designer.cs">
-      <DependentUpon>AccessConnectForm.cs</DependentUpon>
+    <Compile Include="PostgreSQLConnectForm.Designer.cs">
+      <DependentUpon>PostgreSQLConnectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PostgreSQLConnectInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AccessConnectInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -61,17 +63,17 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Helper\Helper.csproj">
-      <Project>{c5324fcd-63e5-4786-bbab-99c5594ce063}</Project>
+      <Project>{C5324FCD-63E5-4786-BBAB-99C5594CE063}</Project>
       <Name>Helper</Name>
     </ProjectReference>
     <ProjectReference Include="..\SQLDAL\SQLDAL.csproj">
-      <Project>{eb9fd50b-500e-4f51-bcb8-3d866bb54b63}</Project>
+      <Project>{EB9FD50B-500E-4F51-BCB8-3D866BB54B63}</Project>
       <Name>SQLDAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AccessConnectForm.resx">
-      <DependentUpon>AccessConnectForm.cs</DependentUpon>
+    <EmbeddedResource Include="PostgreSQLConnectForm.resx">
+      <DependentUpon>PostgreSQLConnectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -79,33 +81,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="ADODB">
-      <Guid>{2A75196C-D9EB-4129-B803-931327F72D5C}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>8</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="ADOX">
-      <Guid>{00000600-0000-0010-8000-00AA006D2EA4}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>8</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
+    <None Include="Resources\postgresql_open_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\access_log.png" />
+    <None Include="Resources\postgresql_close_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\access_open_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\access_close_16.png" />
+    <Content Include="lib\Mono.Security.dll" />
+    <Content Include="lib\Npgsql.dll" />
+    <None Include="Resources\postgresql_log.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

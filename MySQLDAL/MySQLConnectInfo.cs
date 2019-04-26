@@ -10,15 +10,19 @@ using System.Drawing;
 using MySQLDAL.Properties;
 using System.Diagnostics;
 using gudusoft.gsqlparser;
+using System.Reflection;
 
 namespace MySQLDAL
 {
-    public class MySQLConnectInfo : ConnectInfo
+    public sealed class MySQLConnectInfo : ConnectInfo
     {
-        public MySQLConnectInfo()
+        public override string DefaultPort
         {
+            get
+            {
+                return "3306";
+            }
         }
-
         public override Image CloseImage
         {
             get { return Resources.mysql_close_16; }
@@ -34,6 +38,38 @@ namespace MySQLDAL
             get
             {
                 return new MySQLConnectForm();
+            }
+        }
+
+        public override string DriverName
+        {
+            get
+            {
+                return "MySQL";
+            }
+        }
+
+        public override string AssemblyName
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Name;
+            }
+        }
+
+        public override string NamespaceName
+        {
+            get
+            {
+                return this.GetType().Namespace;
+            }
+        }
+
+        public override string ClassName
+        {
+            get
+            {
+                return this.GetType().Name;
             }
         }
 
@@ -125,7 +161,7 @@ namespace MySQLDAL
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
                     command.CommandText = "SHOW DATABASES;";
-                    DbDataAdapter da = new MySqlDataAdapter(command as MySqlCommand);
+                    DbDataAdapter da = this.GetDataAdapter(command);
                     da.Fill(ds);
                     DataTable dt = ds.Tables[0];
                     foreach (DataRow dr in dt.Rows)

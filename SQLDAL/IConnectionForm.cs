@@ -10,6 +10,9 @@ namespace SQLDAL
         string User { get; set; }
         string ConnectionString { get; set; }
         string Password { get; set; }
+        string File { get; set; }
+        string Host { get; set; }
+        string Port { get; set; }
         bool LoadConnectionInfo(ConnectInfo info);
     }
 }

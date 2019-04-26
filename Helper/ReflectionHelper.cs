@@ -48,5 +48,29 @@ namespace Helper
             }
         }
 
+        public static AssemblyInfos GetAssemblyInfo(string path)
+        {
+            AssemblyInfos info = new AssemblyInfos();
+            Assembly assembly = Assembly.LoadFrom(path);
+            AssemblyName asmName = assembly.GetName();
+            Type[] public_types = assembly.GetExportedTypes();
+            foreach(Type type in public_types)
+            {
+                if (type.BaseType.Name == "ConnectInfo")
+                {
+                    info.AssemblyName = asmName.Name;
+                    info.NameSpace = type.Namespace;
+                    info.ClassName = type.Name;
+                }
+            }
+            return info;
+        }
+    }
+
+    public class AssemblyInfos
+    {
+        public string AssemblyName;
+        public string NameSpace;
+        public string ClassName;
     }
 }

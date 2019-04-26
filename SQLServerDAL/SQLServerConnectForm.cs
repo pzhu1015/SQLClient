@@ -14,10 +14,13 @@ using System.Windows.Forms;
 
 namespace SQLServerDAL
 {
-    public partial class SQLServerConnectForm : Form, IConnectionForm
+    internal sealed partial class SQLServerConnectForm : Form, IConnectionForm
     {
         private string user;
         private string password;
+        private string file;
+        private string host;
+        private string port;
         private string connectionString;
 
         public string User
@@ -59,6 +62,45 @@ namespace SQLServerDAL
             }
         }
 
+        public string File
+        {
+            get
+            {
+                return file;
+            }
+
+            set
+            {
+                file = value;
+            }
+        }
+
+        public string Host
+        {
+            get
+            {
+                return host;
+            }
+
+            set
+            {
+                host = value;
+            }
+        }
+
+        public string Port
+        {
+            get
+            {
+                return port;
+            }
+
+            set
+            {
+                port = value;
+            }
+        }
+
         public SQLServerConnectForm()
         {
             InitializeComponent();
@@ -68,6 +110,7 @@ namespace SQLServerDAL
         {
             this.user = this.txtUser.Text;
             this.password = this.txtPassword.Text;
+            this.host = this.txtHost.Text;
             this.connectionString = $"server={this.txtHost.Text};uid={this.txtUser.Text};pwd={this.txtPassword.Text}";
         }
 
@@ -95,8 +138,7 @@ namespace SQLServerDAL
             this.txtUser.Text = this.user;
             this.password = info.Password;
             this.txtPassword.Text = this.password;
-            SqlConnection connection = new SqlConnection(info.ConnectionString);
-            this.txtHost.Text = connection.DataSource;
+            this.txtHost.Text = info.Host;
             return true;
         }
     }

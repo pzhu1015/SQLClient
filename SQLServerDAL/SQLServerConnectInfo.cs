@@ -10,16 +10,12 @@ using System.Drawing;
 using SQLServerDAL.Properties;
 using System.Diagnostics;
 using gudusoft.gsqlparser;
+using System.Reflection;
 
 namespace SQLServerDAL
 {
-    public class SQLServerConnectInfo : ConnectInfo
+    public sealed class SQLServerConnectInfo : ConnectInfo
     {
-        public SQLServerConnectInfo()
-        {
-
-        }
-
         public override Image CloseImage
         {
             get { return Resources.sqlserver_close_16; }
@@ -35,6 +31,46 @@ namespace SQLServerDAL
             get
             {
                 return new SQLServerConnectForm();
+            }
+        }
+
+        public override string DriverName
+        {
+            get
+            {
+                return "SQLServer";
+            }
+        }
+
+        public override string AssemblyName
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Name;
+            }
+        }
+
+        public override string NamespaceName
+        {
+            get
+            {
+                return this.GetType().Namespace;
+            }
+        }
+
+        public override string ClassName
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
+
+        public override string DefaultPort
+        {
+            get
+            {
+                return "";
             }
         }
 

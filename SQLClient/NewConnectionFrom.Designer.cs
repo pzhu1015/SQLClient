@@ -41,7 +41,6 @@
             this.txtConnectName = new System.Windows.Forms.TextBox();
             this.separatorControl2 = new DevExpress.XtraEditors.SeparatorControl();
             this.separatorControl1 = new DevExpress.XtraEditors.SeparatorControl();
-            this.btnAdvance = new DevExpress.XtraEditors.SimpleButton();
             this.btnOK = new DevExpress.XtraEditors.SimpleButton();
             this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -78,11 +77,10 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.separatorControl1);
-            this.splitContainer1.Panel2.Controls.Add(this.btnAdvance);
             this.splitContainer1.Panel2.Controls.Add(this.btnOK);
             this.splitContainer1.Panel2.Controls.Add(this.btnCancel);
-            this.splitContainer1.Size = new System.Drawing.Size(620, 504);
-            this.splitContainer1.SplitterDistance = 448;
+            this.splitContainer1.Size = new System.Drawing.Size(620, 465);
+            this.splitContainer1.SplitterDistance = 413;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 21;
             // 
@@ -103,7 +101,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.groupBox3);
             this.splitContainer2.Panel2.Controls.Add(this.groupBox7);
             this.splitContainer2.Panel2.Controls.Add(this.separatorControl2);
-            this.splitContainer2.Size = new System.Drawing.Size(620, 448);
+            this.splitContainer2.Size = new System.Drawing.Size(620, 413);
             this.splitContainer2.SplitterDistance = 277;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
@@ -120,7 +118,7 @@
             this.accDataSource.Name = "accDataSource";
             this.accDataSource.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Auto;
             this.accDataSource.ShowGroupExpandButtons = false;
-            this.accDataSource.Size = new System.Drawing.Size(277, 448);
+            this.accDataSource.Size = new System.Drawing.Size(277, 413);
             this.accDataSource.TabIndex = 17;
             this.accDataSource.Text = "accordionControl1";
             this.accDataSource.SelectedElementChanged += new DevExpress.XtraBars.Navigation.SelectedElementChangedEventHandler(this.accDataSource_SelectedElementChanged);
@@ -150,7 +148,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(18, 91);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(324, 357);
+            this.groupBox1.Size = new System.Drawing.Size(324, 322);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "驱动属性";
@@ -161,7 +159,7 @@
             this.pg.Location = new System.Drawing.Point(3, 17);
             this.pg.Name = "pg";
             this.pg.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.pg.Size = new System.Drawing.Size(318, 337);
+            this.pg.Size = new System.Drawing.Size(318, 302);
             this.pg.TabIndex = 19;
             // 
             // groupBox3
@@ -215,7 +213,7 @@
             this.separatorControl2.Location = new System.Drawing.Point(0, 0);
             this.separatorControl2.Name = "separatorControl2";
             this.separatorControl2.Padding = new System.Windows.Forms.Padding(8);
-            this.separatorControl2.Size = new System.Drawing.Size(18, 448);
+            this.separatorControl2.Size = new System.Drawing.Size(18, 413);
             this.separatorControl2.TabIndex = 16;
             // 
             // separatorControl1
@@ -228,19 +226,12 @@
             this.separatorControl1.Size = new System.Drawing.Size(620, 18);
             this.separatorControl1.TabIndex = 15;
             // 
-            // btnAdvance
-            // 
-            this.btnAdvance.Location = new System.Drawing.Point(0, 0);
-            this.btnAdvance.Name = "btnAdvance";
-            this.btnAdvance.Size = new System.Drawing.Size(75, 23);
-            this.btnAdvance.TabIndex = 16;
-            // 
             // btnOK
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
-            this.btnOK.Location = new System.Drawing.Point(527, 23);
+            this.btnOK.Location = new System.Drawing.Point(527, 22);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(68, 20);
             this.btnOK.TabIndex = 8;
@@ -250,7 +241,7 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(441, 23);
+            this.btnCancel.Location = new System.Drawing.Point(441, 22);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(68, 20);
             this.btnCancel.TabIndex = 9;
@@ -260,7 +251,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 524);
+            this.ClientSize = new System.Drawing.Size(640, 485);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -300,7 +291,6 @@
         private DevExpress.XtraEditors.SimpleButton btnOK;
         private DevExpress.XtraBars.Navigation.AccordionControl accDataSource;
         private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
-        private DevExpress.XtraEditors.SimpleButton btnAdvance;
         private DevExpress.XtraEditors.SeparatorControl separatorControl1;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.TextBox txtConnectName;

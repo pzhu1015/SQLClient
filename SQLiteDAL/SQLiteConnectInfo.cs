@@ -10,16 +10,12 @@ using System.Drawing;
 using SQLiteDAL.Properties;
 using System.Diagnostics;
 using gudusoft.gsqlparser;
+using System.Reflection;
 
 namespace SQLiteDAL
 {
-    public class SQLiteConnectInfo : ConnectInfo
+    public sealed class SQLiteConnectInfo : ConnectInfo
     {
-        public SQLiteConnectInfo()
-        {
-
-        }
-
         public override Image CloseImage
         {
             get { return Resources.sqlite_close_16; }
@@ -33,6 +29,46 @@ namespace SQLiteDAL
         public override Form ConnectForm
         {
             get { return new SQLiteConnectForm(); }
+        }
+
+        public override string DriverName
+        {
+            get
+            {
+                return "SQLite";
+            }
+        }
+
+        public override string AssemblyName
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Name;
+            }
+        }
+
+        public override string NamespaceName
+        {
+            get
+            {
+                return this.GetType().Namespace;
+            }
+        }
+
+        public override string ClassName
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
+
+        public override string DefaultPort
+        {
+            get
+            {
+                return "";
+            }
         }
 
         public override DbConnection GetConnection(string database)

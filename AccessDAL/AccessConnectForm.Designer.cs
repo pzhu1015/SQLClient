@@ -187,7 +187,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "添加连接";
+            this.Text = "连接属性";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AccessConnectForm_FormClosing);
             this.Load += new System.EventHandler(this.AccessConnectForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

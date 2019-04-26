@@ -189,7 +189,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "添加连接";
+            this.Text = "连接属性";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SQLiteConnectForm_FormClosing);
             this.Load += new System.EventHandler(this.SQLiteConnectForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

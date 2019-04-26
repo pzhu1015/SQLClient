@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLParser", "SQLParser\SQLP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleDAL", "OracleDAL\OracleDAL.csproj", "{326A0AF5-C1D6-4882-A044-0F0D3BB62D9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSQLDAL", "PostgreSQLDAL\PostgreSQLDAL.csproj", "{AB940500-910B-4C3D-B73E-64E5E348DAF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -144,6 +146,16 @@ Global
 		{326A0AF5-C1D6-4882-A044-0F0D3BB62D9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{326A0AF5-C1D6-4882-A044-0F0D3BB62D9A}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{326A0AF5-C1D6-4882-A044-0F0D3BB62D9A}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{AB940500-910B-4C3D-B73E-64E5E348DAF6}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

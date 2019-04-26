@@ -52,30 +52,30 @@
             // 
             // btnDriverPath
             // 
-            this.btnDriverPath.Location = new System.Drawing.Point(119, 118);
+            this.btnDriverPath.Location = new System.Drawing.Point(119, 10);
             this.btnDriverPath.Name = "btnDriverPath";
             this.btnDriverPath.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.btnDriverPath.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnDriverPath.Size = new System.Drawing.Size(308, 20);
+            this.btnDriverPath.Size = new System.Drawing.Size(189, 20);
             this.btnDriverPath.TabIndex = 4;
             this.btnDriverPath.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnDriverPath_ButtonClick);
             // 
             // btnDALPath
             // 
-            this.btnDALPath.Location = new System.Drawing.Point(119, 144);
+            this.btnDALPath.Location = new System.Drawing.Point(119, 36);
             this.btnDALPath.Name = "btnDALPath";
             this.btnDALPath.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.btnDALPath.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnDALPath.Size = new System.Drawing.Size(308, 20);
+            this.btnDALPath.Size = new System.Drawing.Size(189, 20);
             this.btnDALPath.TabIndex = 5;
             this.btnDALPath.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnDALPath_ButtonClick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 123);
+            this.label1.Location = new System.Drawing.Point(27, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 2;
@@ -84,7 +84,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 149);
+            this.label2.Location = new System.Drawing.Point(3, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 12);
             this.label2.TabIndex = 3;
@@ -93,7 +93,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 13);
+            this.label3.Location = new System.Drawing.Point(39, 66);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 7;
@@ -101,22 +101,24 @@
             // 
             // txtDriverName
             // 
-            this.txtDriverName.Location = new System.Drawing.Point(119, 10);
+            this.txtDriverName.Location = new System.Drawing.Point(119, 63);
             this.txtDriverName.Name = "txtDriverName";
-            this.txtDriverName.Size = new System.Drawing.Size(308, 21);
+            this.txtDriverName.ReadOnly = true;
+            this.txtDriverName.Size = new System.Drawing.Size(189, 21);
             this.txtDriverName.TabIndex = 0;
             // 
             // txtAssemblyName
             // 
-            this.txtAssemblyName.Location = new System.Drawing.Point(119, 37);
+            this.txtAssemblyName.Location = new System.Drawing.Point(119, 90);
             this.txtAssemblyName.Name = "txtAssemblyName";
-            this.txtAssemblyName.Size = new System.Drawing.Size(308, 21);
+            this.txtAssemblyName.ReadOnly = true;
+            this.txtAssemblyName.Size = new System.Drawing.Size(189, 21);
             this.txtAssemblyName.TabIndex = 1;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 40);
+            this.label4.Location = new System.Drawing.Point(27, 93);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 12);
             this.label4.TabIndex = 11;
@@ -124,15 +126,16 @@
             // 
             // txtNameSpace
             // 
-            this.txtNameSpace.Location = new System.Drawing.Point(119, 64);
+            this.txtNameSpace.Location = new System.Drawing.Point(119, 117);
             this.txtNameSpace.Name = "txtNameSpace";
-            this.txtNameSpace.Size = new System.Drawing.Size(308, 21);
+            this.txtNameSpace.ReadOnly = true;
+            this.txtNameSpace.Size = new System.Drawing.Size(189, 21);
             this.txtNameSpace.TabIndex = 2;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(39, 67);
+            this.label5.Location = new System.Drawing.Point(39, 120);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 12);
             this.label5.TabIndex = 13;
@@ -144,13 +147,13 @@
             this.separatorControl1.Location = new System.Drawing.Point(5, 168);
             this.separatorControl1.Name = "separatorControl1";
             this.separatorControl1.Padding = new System.Windows.Forms.Padding(8);
-            this.separatorControl1.Size = new System.Drawing.Size(430, 18);
+            this.separatorControl1.Size = new System.Drawing.Size(311, 18);
             this.separatorControl1.TabIndex = 16;
             // 
             // btnOk
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(352, 192);
+            this.btnOk.Location = new System.Drawing.Point(191, 190);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 17;
@@ -159,7 +162,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(257, 192);
+            this.btnCancel.Location = new System.Drawing.Point(92, 192);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 18;
@@ -167,15 +170,16 @@
             // 
             // txtClassName
             // 
-            this.txtClassName.Location = new System.Drawing.Point(119, 91);
+            this.txtClassName.Location = new System.Drawing.Point(119, 144);
             this.txtClassName.Name = "txtClassName";
-            this.txtClassName.Size = new System.Drawing.Size(308, 21);
+            this.txtClassName.ReadOnly = true;
+            this.txtClassName.Size = new System.Drawing.Size(189, 21);
             this.txtClassName.TabIndex = 3;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(63, 94);
+            this.label6.Location = new System.Drawing.Point(63, 147);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(41, 12);
             this.label6.TabIndex = 19;
@@ -185,7 +189,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 227);
+            this.ClientSize = new System.Drawing.Size(322, 221);
             this.Controls.Add(this.txtClassName);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnCancel);
@@ -201,6 +205,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDALPath);
             this.Controls.Add(this.btnDriverPath);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UpLoadDriverForm";

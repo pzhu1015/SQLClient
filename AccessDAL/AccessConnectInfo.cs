@@ -12,6 +12,7 @@ using ADOX;
 using AccessDAL.Properties;
 using System.Diagnostics;
 using gudusoft.gsqlparser;
+using System.Reflection;
 
 namespace AccessDAL
 {
@@ -66,6 +67,46 @@ namespace AccessDAL
         public override Form ConnectForm
         {
             get { return new AccessConnectForm(); }
+        }
+
+        public override string DriverName
+        {
+            get
+            {
+                return "Access";
+            }
+        }
+
+        public override string AssemblyName
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Name;
+            }
+        }
+
+        public override string NamespaceName
+        {
+            get
+            {
+                return this.GetType().Namespace;
+            }
+        }
+
+        public override string ClassName
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
+
+        public override string DefaultPort
+        {
+            get
+            {
+                return "";
+            }
         }
 
         public override void Drop(string name)
