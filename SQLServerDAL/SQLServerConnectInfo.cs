@@ -74,6 +74,54 @@ namespace SQLServerDAL
             }
         }
 
+        public override string DesignTableScript
+        {
+            get
+            {
+                return Resources.designTableScript;
+            }
+        }
+
+        public override string OpenTableScript
+        {
+            get
+            {
+                return Resources.openTableScript;
+            }
+        }
+
+        public override string OpenViewScript
+        {
+            get
+            {
+                return Resources.openViewScript;
+            }
+        }
+
+        public override string LoadTableScript
+        {
+            get
+            {
+                return Resources.loadTableScript;
+            }
+        }
+
+        public override string LoadViewScript
+        {
+            get
+            {
+                return Resources.loadViewScript;
+            }
+        }
+
+        public override string[] DataTypes
+        {
+            get
+            {
+                return Resources.dataTypes.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            }
+        }
+
         public override DbConnection GetConnection(string database)
         {
             try
@@ -101,12 +149,12 @@ namespace SQLServerDAL
 
         public override string GetLoadTableScript(string database)
         {
-            return string.Format(this.loadTableScript, database);
+            return string.Format(Resources.loadTableScript, database);
         }
 
         public override string GetLoadViewScript(string database)
         {
-            return string.Format(this.loadViewScript, database);
+            return string.Format(Resources.loadViewScript, database);
         }
 
         public override void Drop(string name)

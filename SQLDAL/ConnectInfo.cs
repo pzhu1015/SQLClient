@@ -10,6 +10,16 @@ using System.IO;
 using System.ComponentModel;
 using SQLDAL.Properties;
 using System.Diagnostics;
+using System.Text;
+using System.Drawing.Design;
+using System.Windows.Forms.Design;
+
+/*
+ * MySql: root@12345
+ * Oracle: root@123456
+ * SqlServer: sa@12345
+ * Postgresql: postgres@12345
+ */
 
 namespace SQLDAL
 {
@@ -30,12 +40,6 @@ namespace SQLDAL
         protected string namespaceName;
         protected string className;
         protected string connectionString;
-        protected string designTableScript;
-        protected string openTableScript;
-        protected string openViewScript;
-        protected string loadTableScript;
-        protected string loadViewScript;
-        protected string[] dataTypes;
         protected Form connectForm;
         protected string message;
         protected TreeNode node;
@@ -65,98 +69,32 @@ namespace SQLDAL
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库查看表设计的脚本模版")]
-        public string DesignTableScript
-        {
-            get
-            {
-                return designTableScript;
-            }
-
-            set
-            {
-                designTableScript = value;
-            }
-        }
+        public abstract string DesignTableScript { get; }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库打开表的脚本模版")]
-        public string OpenTableScript
-        {
-            get
-            {
-                return openTableScript;
-            }
-
-            set
-            {
-                openTableScript = value;
-            }
-        }
+        public abstract string OpenTableScript { get; }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库打开视图的脚本模版")]
-        public string OpenViewScript
-        {
-            get
-            {
-                return openViewScript;
-            }
-
-            set
-            {
-                openViewScript = value;
-            }
-        }
+        public abstract string OpenViewScript { get; }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("加载当前数据库中所有表的脚本模版")]
-        public string LoadTableScript
-        {
-            get
-            {
-                return loadTableScript;
-            }
-
-            set
-            {
-                loadTableScript = value;
-            }
-        }
+        public abstract string LoadTableScript { get; }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("加载当前数据库中所有视图的脚本模版")]
-        public string LoadViewScript
-        {
-            get
-            {
-                return loadViewScript;
-            }
-
-            set
-            {
-                loadViewScript = value;
-            }
-        }
+        public abstract string LoadViewScript { get; }
 
         [Browsable(true)]
         [Category("脚本")]
         [Description("当前数据库支持的所有数据类型集合")]
-        public string[] DataTypes
-        {
-            get
-            {
-                return dataTypes;
-            }
-
-            set
-            {
-                dataTypes = value;
-            }
-        }
+        public abstract string[] DataTypes { get; }
  
         [Browsable(false)]
         public List<DatabaseInfo> Databases
@@ -342,7 +280,6 @@ namespace SQLDAL
             }
         }
 
-
         public bool Refresh()
         {
             if (!this.isOpen)
@@ -372,6 +309,21 @@ namespace SQLDAL
                 LogHelper.Error(ex);
                 return false;
             }
+        }
+
+        public ConnectInfo Clone()
+        {
+            ConnectInfo info = ReflectionHelper.CreateInstance<ConnectInfo>(this.AssemblyName, this.NamespaceName, this.ClassName);
+            info.IsOpen = this.IsOpen;
+            info.Message = this.Message;
+            info.ConnectionString = this.ConnectionString;
+            info.Name = this.Name;
+            info.User = this.User;
+            info.Password = this.Password;
+            info.Host = this.Host;
+            info.Port = this.Port;
+            info.File = this.File;
+            return info;
         }
 
         public DatabaseInfo AddDataBaseInfo(string name)
@@ -451,7 +403,7 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"INSERT INTO TB_CONNECTION VALUES('{info.Name}', '{info.User}', '{info.File}', '{info.Host}', '{info.Port}', '{info.Password}', '{info.ConnectionString}',  '{info.DriverName}')";
+                    command.CommandText = $"INSERT INTO TB_CONNECTION VALUES('{info.Name}', '{info.User}', '{info.File}', '{info.Host}', '{info.Port}', '{info.Password}', '{info.ConnectionString}', '{info.DriverName}')";
                     int ret = command.ExecuteNonQuery();
                     return true;
                 }
@@ -492,7 +444,25 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"UPDATE TB_CONNECTION SET connectionString={info.connectionString}, user={info.user}, password={info.password} WHERE NAME='{info.name}'";
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("UPDATE TB_CONNECTION SET ");
+                    sb.Append("user = @user, ");
+                    sb.Append("password = @password, ");
+                    sb.Append("file = @file, ");
+                    sb.Append("host = @host, ");
+                    sb.Append("port = @port, ");
+                    sb.Append("connectionString = @connectionString, ");
+                    sb.Append("driverName = @driverName ");
+                    sb.Append("WHERE name = @name");
+                    command.CommandText = sb.ToString();
+                    command.Parameters.Add(new SQLiteParameter("@user", info.User));
+                    command.Parameters.Add(new SQLiteParameter("@password", info.Password));
+                    command.Parameters.Add(new SQLiteParameter("@file", info.File));
+                    command.Parameters.Add(new SQLiteParameter("@host", info.Host));
+                    command.Parameters.Add(new SQLiteParameter("@port", info.Port));
+                    command.Parameters.Add(new SQLiteParameter("@connectionString", info.ConnectionString));
+                    command.Parameters.Add(new SQLiteParameter("@driverName", info.DriverName));
+                    command.Parameters.Add(new SQLiteParameter("@name", info.Name));
                     command.ExecuteNonQuery();
                     connection.Close();
                     return true;
@@ -526,13 +496,7 @@ namespace SQLDAL
                         "tb_connection.connectionString, " +
                         "tb_config.assemblyName, " +
                         "tb_config.namespaceName, " +
-                        "tb_config.className, " +
-                        "tb_config.designTable, " +
-                        "tb_config.openTable, " +
-                        "tb_config.openView, " +
-                        "tb_config.loadTable, " +
-                        "tb_config.loadView, " +
-                        "tb_config.dataTypes " +
+                        "tb_config.className " +
                     "FROM " +
                         "tb_connection, " +
 
@@ -556,12 +520,6 @@ namespace SQLDAL
                         info.Host = dr["host"].ToString();
                         info.Port = dr["port"].ToString();
                         info.ConnectionString = dr["connectionstring"].ToString();
-                        info.DesignTableScript = dr["designTable"].ToString();
-                        info.OpenTableScript = dr["openTable"].ToString();
-                        info.OpenViewScript = dr["openView"].ToString();
-                        info.LoadTableScript = dr["loadTable"].ToString();
-                        info.LoadViewScript = dr["loadView"].ToString();
-                        info.DataTypes = dr["dataTypes"].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
                         list.Add(info);
                     }
                     return list;
@@ -574,7 +532,7 @@ namespace SQLDAL
             }
         }
 
-        public static DataTable LoadConfig()
+        public static DataTable LoadDriver()
         {
             try
             {
@@ -604,7 +562,17 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"INSERT INTO TB_CONFIG (name, assemblyName, namespaceName, className) VALUES('{info.driverName}', '{info.assemblyName}', '{info.namespaceName}', '{info.className}')";
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("INSERT INTO TB_CONFIG(name, assemblyName, namespaceName, className) VALUES(");
+                    sb.Append("@name, ");
+                    sb.Append("@assemblyName, ");
+                    sb.Append("@namespaceName, ");
+                    sb.Append("@className)");
+                    command.CommandText = sb.ToString();
+                    command.Parameters.Add(new SQLiteParameter("@name", info.DriverName));
+                    command.Parameters.Add(new SQLiteParameter("@assemblyName", info.AssemblyName));
+                    command.Parameters.Add(new SQLiteParameter("@namespaceName", info.NamespaceName));
+                    command.Parameters.Add(new SQLiteParameter("@className", info.ClassName));
                     int ret = command.ExecuteNonQuery();
                     return true;
                 }
@@ -612,6 +580,27 @@ namespace SQLDAL
             catch(Exception ex)
             {
                 LogHelper.Error(ex);
+                return false;
+            }
+        }
+
+        public static bool RemoveDriver(string name)
+        {
+            try
+            {
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"DELETE FROM TB_CONFIG WHERE NAME='{name}'";
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex); ;
                 return false;
             }
         }
@@ -631,6 +620,4 @@ namespace SQLDAL
         public abstract bool DesignView(string database, string viewname, out DataTable table);
         public abstract bool OpenView(string dataase, string viewname, long start, long pageSize, out DataTable datatable, out string statement);
     }
-
-    
 }

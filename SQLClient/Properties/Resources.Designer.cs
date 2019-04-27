@@ -73,6 +73,16 @@ namespace SQLClient.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap add_driver_16 {
+            get {
+                object obj = ResourceManager.GetObject("add_driver_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap add_item_16 {
             get {
                 object obj = ResourceManager.GetObject("add_item_16", resourceCulture);
@@ -135,6 +145,16 @@ namespace SQLClient.Properties {
         internal static System.Drawing.Bitmap database_open_16 {
             get {
                 object obj = ResourceManager.GetObject("database_open_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap delete_driver_16 {
+            get {
+                object obj = ResourceManager.GetObject("delete_driver_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -379,6 +399,24 @@ namespace SQLClient.Properties {
             get {
                 object obj = ResourceManager.GetObject("insert_item_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 是否要删除驱动 的本地化字符串。
+        /// </summary>
+        internal static string is_delete_driver {
+            get {
+                return ResourceManager.GetString("is_delete_driver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 是否要更新驱动属性 的本地化字符串。
+        /// </summary>
+        internal static string is_update_driver {
+            get {
+                return ResourceManager.GetString("is_update_driver", resourceCulture);
             }
         }
         

@@ -31,7 +31,9 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.accDataSource = new DevExpress.XtraBars.Navigation.AccordionControl();
-            this.btnUpLoad = new DevExpress.XtraEditors.SimpleButton();
+            this.tsTool = new System.Windows.Forms.ToolStrip();
+            this.tsbtnAddDriver = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnDeleteDriver = new System.Windows.Forms.ToolStripButton();
             this.accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pg = new System.Windows.Forms.PropertyGrid();
@@ -53,6 +55,7 @@
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.accDataSource)).BeginInit();
             this.accDataSource.SuspendLayout();
+            this.tsTool.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtConnectionString.Properties)).BeginInit();
@@ -79,7 +82,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.separatorControl1);
             this.splitContainer1.Panel2.Controls.Add(this.btnOK);
             this.splitContainer1.Panel2.Controls.Add(this.btnCancel);
-            this.splitContainer1.Size = new System.Drawing.Size(620, 465);
+            this.splitContainer1.Size = new System.Drawing.Size(620, 466);
             this.splitContainer1.SplitterDistance = 413;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 21;
@@ -109,7 +112,7 @@
             // accDataSource
             // 
             this.accDataSource.AllowItemSelection = true;
-            this.accDataSource.Controls.Add(this.btnUpLoad);
+            this.accDataSource.Controls.Add(this.tsTool);
             this.accDataSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.accDataSource.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.accordionControlElement1});
@@ -123,22 +126,50 @@
             this.accDataSource.Text = "accordionControl1";
             this.accDataSource.SelectedElementChanged += new DevExpress.XtraBars.Navigation.SelectedElementChangedEventHandler(this.accDataSource_SelectedElementChanged);
             // 
-            // btnUpLoad
+            // tsTool
             // 
-            this.btnUpLoad.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnUpLoad.Image = global::SQLClient.Properties.Resources.add_datasource_16;
-            this.btnUpLoad.Location = new System.Drawing.Point(222, 10);
-            this.btnUpLoad.Name = "btnUpLoad";
-            this.btnUpLoad.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.btnUpLoad.Size = new System.Drawing.Size(26, 20);
-            this.btnUpLoad.TabIndex = 20;
-            this.btnUpLoad.ToolTip = "添加新的数据源";
-            this.btnUpLoad.Click += new System.EventHandler(this.btnUpLoad_Click);
+            this.tsTool.BackColor = System.Drawing.Color.Transparent;
+            this.tsTool.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tsTool.CanOverflow = false;
+            this.tsTool.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsTool.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsTool.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnAddDriver,
+            this.tsbtnDeleteDriver});
+            this.tsTool.Location = new System.Drawing.Point(199, 7);
+            this.tsTool.Name = "tsTool";
+            this.tsTool.Size = new System.Drawing.Size(49, 25);
+            this.tsTool.TabIndex = 16;
+            this.tsTool.Text = "toolStrip1";
+            // 
+            // tsbtnAddDriver
+            // 
+            this.tsbtnAddDriver.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbtnAddDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnAddDriver.Image = global::SQLClient.Properties.Resources.add_datasource_16;
+            this.tsbtnAddDriver.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnAddDriver.Margin = new System.Windows.Forms.Padding(0);
+            this.tsbtnAddDriver.Name = "tsbtnAddDriver";
+            this.tsbtnAddDriver.Size = new System.Drawing.Size(23, 25);
+            this.tsbtnAddDriver.Text = "添加驱动";
+            this.tsbtnAddDriver.Click += new System.EventHandler(this.tsbtnAddDriver_Click);
+            // 
+            // tsbtnDeleteDriver
+            // 
+            this.tsbtnDeleteDriver.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbtnDeleteDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnDeleteDriver.Image = global::SQLClient.Properties.Resources.delete_driver_16;
+            this.tsbtnDeleteDriver.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbtnDeleteDriver.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnDeleteDriver.Name = "tsbtnDeleteDriver";
+            this.tsbtnDeleteDriver.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnDeleteDriver.Text = "删除驱动";
+            this.tsbtnDeleteDriver.Click += new System.EventHandler(this.tsbtnDeleteDriver_Click);
             // 
             // accordionControlElement1
             // 
             this.accordionControlElement1.Expanded = true;
-            this.accordionControlElement1.HeaderControl = this.btnUpLoad;
+            this.accordionControlElement1.HeaderControl = this.tsTool;
             this.accordionControlElement1.Name = "accordionControlElement1";
             this.accordionControlElement1.Text = "数据源";
             // 
@@ -181,6 +212,7 @@
             this.txtConnectionString.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
             this.txtConnectionString.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.txtConnectionString.Properties.ReadOnly = true;
             this.txtConnectionString.Size = new System.Drawing.Size(318, 20);
             this.txtConnectionString.TabIndex = 0;
             this.txtConnectionString.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtConnectionString_ButtonClick);
@@ -203,7 +235,6 @@
             this.txtConnectName.Name = "txtConnectName";
             this.txtConnectName.Size = new System.Drawing.Size(318, 21);
             this.txtConnectName.TabIndex = 0;
-            this.txtConnectName.Text = "mysql_test";
             // 
             // separatorControl2
             // 
@@ -231,7 +262,7 @@
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
-            this.btnOK.Location = new System.Drawing.Point(527, 22);
+            this.btnOK.Location = new System.Drawing.Point(527, 25);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(68, 20);
             this.btnOK.TabIndex = 8;
@@ -241,7 +272,7 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(441, 22);
+            this.btnCancel.Location = new System.Drawing.Point(441, 25);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(68, 20);
             this.btnCancel.TabIndex = 9;
@@ -251,7 +282,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 485);
+            this.ClientSize = new System.Drawing.Size(640, 486);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -274,6 +305,9 @@
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.accDataSource)).EndInit();
             this.accDataSource.ResumeLayout(false);
+            this.accDataSource.PerformLayout();
+            this.tsTool.ResumeLayout(false);
+            this.tsTool.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.txtConnectionString.Properties)).EndInit();
@@ -298,8 +332,10 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private DevExpress.XtraEditors.SeparatorControl separatorControl2;
         private System.Windows.Forms.PropertyGrid pg;
-        private DevExpress.XtraEditors.SimpleButton btnUpLoad;
         private System.Windows.Forms.GroupBox groupBox1;
         private DevExpress.XtraEditors.ButtonEdit txtConnectionString;
+        private System.Windows.Forms.ToolStrip tsTool;
+        private System.Windows.Forms.ToolStripButton tsbtnAddDriver;
+        private System.Windows.Forms.ToolStripButton tsbtnDeleteDriver;
     }
 }

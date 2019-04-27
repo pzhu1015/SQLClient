@@ -120,8 +120,90 @@
   <data name="connect_success" xml:space="preserve">
     <value>连接成功</value>
   </data>
+  <data name="dataTypes" xml:space="preserve">
+    <value>bit
+bool
+box
+bytea
+char
+cidr
+circle
+date
+decimal
+float4
+float8
+inet
+int2
+int4
+int8
+interval
+json
+jsonb
+line
+lseg
+macaddr
+money
+path
+point
+polygon
+serial2
+serial4
+serial8
+text
+time
+timetz
+timestamp
+timestamptz
+tsquery
+tsvector
+txid_snapshot
+uuid
+varbit
+varchar
+xml
+(Domain)
+(Type)</value>
+  </data>
+  <data name="designTableScript" xml:space="preserve">
+    <value>select 
+column_name as FIELDNAME,
+data_type as FIELDTYPE,
+coalesce(character_maximum_length,numeric_precision,-1) as FIELDLENGTH,
+numeric_scale as FIELDSCALE,
+case is_nullable when 'YES' then 0 else 1 end as FIELDISNULL,
+case when b.pk_name is null then 0 else 1 end as FIELDPRIMARYKEY,
+column_default as FIELDDEFAULT,
+c.DeText as FIELDCOMMENTS
+from information_schema.columns 
+left join (
+    select pg_attr.attname as colname,pg_constraint.conname as pk_name from pg_constraint  
+    inner join pg_class on pg_constraint.conrelid = pg_class.oid 
+    inner join pg_attribute pg_attr on pg_attr.attrelid = pg_class.oid and  pg_attr.attnum = pg_constraint.conkey[1] 
+    inner join pg_type on pg_type.oid = pg_attr.atttypid
+    where pg_class.relname = @table and pg_constraint.contype='p' 
+) b on b.colname = information_schema.columns.column_name
+left join (
+    select attname,description as DeText from pg_class
+    left join pg_attribute pg_attr on pg_attr.attrelid= pg_class.oid
+    left join pg_description pg_desc on pg_desc.objoid = pg_attr.attrelid and pg_desc.objsubid=pg_attr.attnum
+    where pg_attr.attnum&gt;0 and pg_attr.attrelid=pg_class.oid and pg_class.relname=@table
+)c on c.attname = information_schema.columns.column_name
+where table_schema='public' and table_name=@table order by ordinal_position asc</value>
+  </data>
   <data name="error" xml:space="preserve">
     <value>错误</value>
+  </data>
+  <data name="loadTableScript" xml:space="preserve">
+    <value>SELECT tablename FROM pg_tables WHERE schemaname='public'</value>
+  </data>
+  <data name="loadViewScript" xml:space="preserve">
+    <value>SELECT viewname FROM pg_views WHERE schemaname = 'public'</value>
+  </data>
+  <data name="openTableScript" xml:space="preserve">
+    <value>SELECT * FROM {0} LIMIT {1} OFFSET {2}</value>
+  </data>
+  <data name="openViewScript" xml:space="preserve">
+    <value>SELECT * FROM {0} LIMIT {1} OFFSET {2}</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="postgresql_close_16" type="System.Resources.ResXFileRef, System.Windows.Forms">

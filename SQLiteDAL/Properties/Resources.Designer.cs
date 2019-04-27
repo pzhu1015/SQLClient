@@ -70,6 +70,27 @@ namespace SQLiteDAL.Properties {
         }
         
         /// <summary>
+        ///   查找类似 INTEGER
+        ///TEXT
+        ///REAL
+        ///BLOB 的本地化字符串。
+        /// </summary>
+        internal static string dataTypes {
+            get {
+                return ResourceManager.GetString("dataTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 PRAGMA table_info({0}) 的本地化字符串。
+        /// </summary>
+        internal static string designTableScript {
+            get {
+                return ResourceManager.GetString("designTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 错误 的本地化字符串。
         /// </summary>
         internal static string error {
@@ -147,6 +168,42 @@ namespace SQLiteDAL.Properties {
         internal static string FieldType {
             get {
                 return ResourceManager.GetString("FieldType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT name FROM sqlite_master WHERE type=&apos;table&apos; 的本地化字符串。
+        /// </summary>
+        internal static string loadTableScript {
+            get {
+                return ResourceManager.GetString("loadTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT name FROM sqlite_master WHERE type=&apos;view&apos; 的本地化字符串。
+        /// </summary>
+        internal static string loadViewScript {
+            get {
+                return ResourceManager.GetString("loadViewScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} LIMIT {1} OFFSET {2} 的本地化字符串。
+        /// </summary>
+        internal static string openTableScript {
+            get {
+                return ResourceManager.GetString("openTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} LIMIT {1} OFFSET {2} 的本地化字符串。
+        /// </summary>
+        internal static string openViewScript {
+            get {
+                return ResourceManager.GetString("openViewScript", resourceCulture);
             }
         }
         

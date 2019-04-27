@@ -120,8 +120,104 @@
   <data name="connect_success" xml:space="preserve">
     <value>连接成功</value>
   </data>
+  <data name="dataTypes" xml:space="preserve">
+    <value>CHAR
+NCHAR
+VARCHAR2
+VARCHAR
+NVARCHAR2
+CLOB
+NCLOB
+LONG
+NUMBER
+BINARY_FLOAT
+BINARY_DOUBLE
+DATE
+INTERVAL DAY TO SECOND
+INTERVAL YEAR TO MONTH
+TIMESTAMP
+TIMESTAMP WITH TIME ZONE
+TIMESTAMP WITH LOCAL TIME ZONE
+BLOB
+BFILE
+RAW
+LONG RAW
+ROWID
+CHARACTER
+CHARACTER VARYING
+CHAR VARYING
+NATIONAL CHARACTER
+NATIONAL CHAR
+NATIONAL CHAR
+NATIONAL CHAR
+NATIONAL CHARACTER VARYING
+NATIONAL CHAR VARYING
+NCHAR VARYING
+NUMERIC
+DECIMAL
+INTEGER
+INT
+SMALLINT
+FLOAT
+DOUBLE PRECISION
+REAL
+(COMPLEX)</value>
+  </data>
+  <data name="designTableScript" xml:space="preserve">
+    <value>SELECT
+          A .column_name AS FIELDNAME,
+          A .data_type AS FIELDTYPE,
+          NVL (DECODE (A .data_type,	'NUMBER', A .data_precision,A .data_length),'') AS FIELDLENGTH,
+          NVL (A .data_scale, 0) AS FIELDSCALE,
+          DECODE(A .nullable, 'N', 1, 0) AS FIELDISNULL,
+          DECODE (E .key1, 'P', 1, 0) AS FIELDPRIMARYKEY,
+          A .data_default AS FIELDDEFAULT,
+          f.comments AS FIELDCOMMENTS
+        FROM
+          user_tab_columns A,
+          user_col_comments f,
+          user_tab_comments,
+          (
+            SELECT
+            uc.table_name,
+            uc.constraint_name,
+            ucc.column_name,
+            uc.constraint_type key1,
+            uc.constraint_type key2
+            FROM
+              user_constraints uc,
+              user_cons_columns ucc
+            WHERE
+              (uc.constraint_type = 'R' OR uc.constraint_type = 'P')
+              AND uc.constraint_name = ucc.constraint_name
+              AND uc. OWNER = ucc. OWNER
+              AND uc.table_name = ucc.table_name
+              AND ucc.table_name NOT LIKE 'BIN$%==$0'
+           ) E
+         WHERE
+          A .table_name = E .table_name (+)
+          AND A .column_name = E .column_name (+)
+          AND A .table_name = f.table_name
+          AND A .column_name = f.column_name
+          AND A .table_name = user_tab_comments.table_name
+          AND A .table_name NOT LIKE 'BIN$%==$0'
+          AND A .table_name = '{0}'
+         ORDER BY A .COLUMN_ID ASC</value>
+  </data>
   <data name="error" xml:space="preserve">
     <value>错误</value>
+  </data>
+  <data name="loadTableScript" xml:space="preserve">
+    <value>select * from user_tables</value>
+  </data>
+  <data name="loadViewScript" xml:space="preserve">
+    <value>select * from user_views</value>
+  </data>
+  <data name="openTableScript" xml:space="preserve">
+    <value>SELECT* FROM (SELECT "SQL_TABLE".*, ROWNUM "SQL_ROWNUM" FROM(SELECT "{0}".*, ROWID "SQL_ROWID" FROM "{1}") "SQL_TABLE" WHERE ROWNUM &lt;= {2}) WHERE SQL_ROWNUM &gt; {3}</value>
+  </data>
+  <data name="openViewScript" xml:space="preserve">
+    <value>SELECT* FROM (SELECT "SQL_TABLE".*, ROWNUM "SQL_ROWNUM" FROM(SELECT "{0}".*, ROWID "SQL_ROWID" FROM "{1}") "SQL_TABLE" WHERE ROWNUM &lt;= {2}) WHERE SQL_ROWNUM &gt; {3}</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="oracle_close_16" type="System.Resources.ResXFileRef, System.Windows.Forms">

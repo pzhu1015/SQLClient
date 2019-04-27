@@ -133,7 +133,9 @@ namespace SQLClient
             NewConnectionFrom newConnectionForm = new NewConnectionFrom();
             if (newConnectionForm.ShowDialog() == DialogResult.OK)
             {
-                this.AddConnection(newConnectionForm.ConnectionInfo);
+                ConnectInfo info = newConnectionForm.ConnectionInfo;
+                this.AddConnectImage(info);
+                this.AddConnection(info);
             }
         }
 
@@ -971,17 +973,27 @@ namespace SQLClient
             }
         }
 
+        private void AddConnectImage(ConnectInfo info)
+        {
+            if (this.imgListListView.Images.ContainsKey(info.ClassName + "_close") ||
+                this.imgListListView.Images.ContainsKey(info.ClassName + "_open"))
+            {
+                return;
+            }
+            this.imgListTreeView.Images.Add(info.ClassName + "_close", info.CloseImage);
+            this.imgListTreeView.Images.Add(info.ClassName + "_open", info.OpenImage);
+        }
+
         #region FormLoad Event
         private void SQLClientForm_Load(object sender, EventArgs e)
         {
             try
             {
-                DataTable dt = ConnectInfo.LoadConfig();
+                DataTable dt = ConnectInfo.LoadDriver();
                 foreach (DataRow dr in dt.Rows)
                 {
                     ConnectInfo info = ReflectionHelper.CreateInstance<ConnectInfo>(dr["assemblyName"].ToString(), dr["namespaceName"].ToString(), dr["className"].ToString());
-                    this.imgListTreeView.Images.Add(dr["className"].ToString() + "_close", info.CloseImage);
-                    this.imgListTreeView.Images.Add(dr["className"].ToString() + "_open", info.OpenImage);
+                    this.AddConnectImage(info);
                 }
                 this.spStatusBar.SplitterDistance = this.spStatusBar.Height - 25;
                 TabPageTypeInfo pageTypeInfo = new TabPageTypeInfo(TabPageType.eObject, null);
@@ -2236,6 +2248,9 @@ namespace SQLClient
                 connectionInfo.ConnectionString = iconnectForm.ConnectionString;
                 connectionInfo.User = iconnectForm.User;
                 connectionInfo.Password = iconnectForm.Password;
+                connectionInfo.Host = iconnectForm.Host;
+                connectionInfo.File = iconnectForm.File;
+                connectionInfo.Port = iconnectForm.Port;
                 ConnectInfo.UpdateConnection(connectionInfo);
             }
         }

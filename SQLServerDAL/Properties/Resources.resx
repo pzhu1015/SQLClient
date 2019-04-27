@@ -120,8 +120,103 @@
   <data name="connect_success" xml:space="preserve">
     <value>连接成功</value>
   </data>
+  <data name="dataTypes" xml:space="preserve">
+    <value>bigint
+binary
+bit
+char
+date
+datetime
+datetime2
+datetimeoffset
+decimal
+float
+geography
+geometry
+hierarchyid
+image
+int
+money
+nchar
+ntext
+numeric
+nvarchar
+real
+smalldatetime
+smallint
+smallmoney
+sql_variant
+sysname
+text
+time
+timestamp
+tinyint
+uniqueidentifier
+varbinary
+varchar
+xml
+nvarchar(MAX)
+varbinary(MAX)
+varchar(MAX)</value>
+  </data>
+  <data name="designTableScript" xml:space="preserve">
+    <value>SELECT
+     col.name AS FIELDNAME,
+     t.name AS FIELDTYPE,
+     col.length AS FIELDLENGTH,
+     ISNULL(COLUMNPROPERTY(col.id, col.name, 'Scale'),0) AS FIELDSCALE,
+     CASE WHEN col.isnullable = 1 THEN 1 ELSE 0 END AS FIELDISNULL,
+     CASE WHEN EXISTS ( SELECT 1
+     FROM
+          dbo.sysindexes si
+     INNER JOIN dbo.sysindexkeys sik ON si.id = sik.id
+     AND si.indid = sik.indid
+     INNER JOIN dbo.syscolumns sc ON sc.id = sik.id
+     AND sc.colid = sik.colid
+     INNER JOIN dbo.sysobjects so ON so.name = si.name
+     AND so.xtype = 'PK'
+     WHERE
+          sc.id = col.id
+     AND sc.colid = col.colid
+) THEN
+     1
+ELSE
+     0
+END AS FIELDPRIMARYKEY,
+ISNULL(comm. TEXT, NULL) AS FIELDDEFAULT,
+     ISNULL(ep.[value], NULL) AS FIELDCOMMENTS
+FROM
+     dbo.syscolumns col
+LEFT JOIN dbo.systypes t ON col.xtype = t.xusertype
+INNER JOIN dbo.sysobjects obj ON col.id = obj.id
+AND obj.xtype = 'U'
+AND obj.status &gt;= 0
+LEFT JOIN dbo.syscomments comm ON col.cdefault = comm.id
+LEFT JOIN sys.extended_properties ep ON col.id = ep.major_id
+AND col.colid = ep.minor_id
+AND ep.name = 'MS_Description'
+LEFT JOIN sys.extended_properties epTwo ON obj.id = epTwo.major_id
+AND epTwo.minor_id = 0
+AND epTwo.name = 'MS_Description'
+WHERE
+     obj.name = @table
+ORDER BY
+     col.colorder</value>
+  </data>
   <data name="error" xml:space="preserve">
     <value>错误</value>
+  </data>
+  <data name="loadTableScript" xml:space="preserve">
+    <value>SELECT [TABLE_NAME] FROM [{0}].[INFORMATION_SCHEMA].[TABLES]</value>
+  </data>
+  <data name="loadViewScript" xml:space="preserve">
+    <value>SELECT [TABLE_NAME] FROM [{0}].[INFORMATION_SCHEMA].[VIEWS]</value>
+  </data>
+  <data name="openTableScript" xml:space="preserve">
+    <value>SELECT * FROM {0} ORDER BY 1 OFFSET {1} ROW FETCH NEXT {2} ROWS ONLY</value>
+  </data>
+  <data name="openViewScript" xml:space="preserve">
+    <value>SELECT * FROM {0} ORDER BY 1 OFFSET {1} ROW FETCH NEXT {2} ROWS ONLY</value>
   </data>
   <data name="prompt" xml:space="preserve">
     <value>提示</value>

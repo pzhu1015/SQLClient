@@ -70,11 +70,116 @@ namespace OracleDAL.Properties {
         }
         
         /// <summary>
+        ///   查找类似 CHAR
+        ///NCHAR
+        ///VARCHAR2
+        ///VARCHAR
+        ///NVARCHAR2
+        ///CLOB
+        ///NCLOB
+        ///LONG
+        ///NUMBER
+        ///BINARY_FLOAT
+        ///BINARY_DOUBLE
+        ///DATE
+        ///INTERVAL DAY TO SECOND
+        ///INTERVAL YEAR TO MONTH
+        ///TIMESTAMP
+        ///TIMESTAMP WITH TIME ZONE
+        ///TIMESTAMP WITH LOCAL TIME ZONE
+        ///BLOB
+        ///BFILE
+        ///RAW
+        ///LONG RAW
+        ///ROWID
+        ///CHARACTER
+        ///CHARACTER VARYING
+        ///CHAR VARYING
+        ///NATIONAL CHARACTER
+        ///NATIONAL CHAR
+        ///NATIONAL CHAR
+        ///NATIONAL CHAR
+        ///NATIONAL CHARACTER VARYING
+        ///NATIONAL CHAR VARYING
+        ///NCHAR VARYING
+        ///NUMERIC
+        ///DECIMAL
+        ///INTEGER
+        ///INT
+        ///SMALLINT
+        ///FLOAT
+        ///DOUBLE PRECISION
+        ///REAL
+        ///(COMPLE [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string dataTypes {
+            get {
+                return ResourceManager.GetString("dataTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT
+        ///          A .column_name AS FIELDNAME,
+        ///          A .data_type AS FIELDTYPE,
+        ///          NVL (DECODE (A .data_type,	&apos;NUMBER&apos;, A .data_precision,A .data_length),&apos;&apos;) AS FIELDLENGTH,
+        ///          NVL (A .data_scale, 0) AS FIELDSCALE,
+        ///          DECODE(A .nullable, &apos;N&apos;, 1, 0) AS FIELDISNULL,
+        ///          DECODE (E .key1, &apos;P&apos;, 1, 0) AS FIELDPRIMARYKEY,
+        ///          A .data_default AS FIELDDEFAULT,
+        ///          f.comments AS FIELDCOMMENTS
+        ///        FROM
+        ///          user_tab_columns A,
+        ///          user_col_comments f, [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string designTableScript {
+            get {
+                return ResourceManager.GetString("designTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 错误 的本地化字符串。
         /// </summary>
         internal static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 select * from user_tables 的本地化字符串。
+        /// </summary>
+        internal static string loadTableScript {
+            get {
+                return ResourceManager.GetString("loadTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 select * from user_views 的本地化字符串。
+        /// </summary>
+        internal static string loadViewScript {
+            get {
+                return ResourceManager.GetString("loadViewScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT* FROM (SELECT &quot;SQL_TABLE&quot;.*, ROWNUM &quot;SQL_ROWNUM&quot; FROM(SELECT &quot;{0}&quot;.*, ROWID &quot;SQL_ROWID&quot; FROM &quot;{1}&quot;) &quot;SQL_TABLE&quot; WHERE ROWNUM &lt;= {2}) WHERE SQL_ROWNUM &gt; {3} 的本地化字符串。
+        /// </summary>
+        internal static string openTableScript {
+            get {
+                return ResourceManager.GetString("openTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT* FROM (SELECT &quot;SQL_TABLE&quot;.*, ROWNUM &quot;SQL_ROWNUM&quot; FROM(SELECT &quot;{0}&quot;.*, ROWID &quot;SQL_ROWID&quot; FROM &quot;{1}&quot;) &quot;SQL_TABLE&quot; WHERE ROWNUM &lt;= {2}) WHERE SQL_ROWNUM &gt; {3} 的本地化字符串。
+        /// </summary>
+        internal static string openViewScript {
+            get {
+                return ResourceManager.GetString("openViewScript", resourceCulture);
             }
         }
         

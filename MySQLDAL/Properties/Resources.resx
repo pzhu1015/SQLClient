@@ -120,12 +120,116 @@
   <data name="connect_success" xml:space="preserve">
     <value>连接成功</value>
   </data>
+  <data name="dataTypes" xml:space="preserve">
+    <value>tinyint
+smallint
+mediumint
+int
+integer
+bigint
+bit
+real
+double
+float
+decimal
+numeric
+char
+varchar
+date
+time
+year
+timestamp
+datetime
+tinyblob
+blob
+mediumblob
+longblob
+tinytext
+text
+mediumtext
+longtext
+enum
+set
+binary
+varbinary
+point
+linestring
+polygon
+geometry
+multipoint
+multilinestring
+multipolygon
+geometrycollection
+tinyint
+smallint
+mediumint
+int
+integer
+bigint
+bit
+real
+double
+float
+decimal
+numeric
+char
+varchar
+date
+time
+year
+timestamp
+datetime
+tinyblob
+blob
+mediumblob
+longblob
+tinytext
+text
+mediumtext
+longtext
+enum
+set
+binary
+varbinary
+point
+linestring
+polygon
+geometry
+multipoint
+multilinestring
+multipolygon
+geometrycollection
+json</value>
+  </data>
+  <data name="designTableScript" xml:space="preserve">
+    <value>SELECT
+         COLUMN_NAME AS FIELDNAME,
+         DATA_TYPE AS FIELDTYPE, 
+         CASE WHEN NUMERIC_PRECISION IS NULL THEN (CASE WHEN CHARACTER_MAXIMUM_LENGTH IS NULL THEN 0 ELSE CHARACTER_MAXIMUM_LENGTH END) ELSE NUMERIC_PRECISION END AS FIELDLENGTH,
+         CASE WHEN NUMERIC_SCALE IS NULL THEN 0 ELSE NUMERIC_SCALE END AS FIELDSCALE, 
+         CASE WHEN IS_NULLABLE = 'NO' THEN TRUE ELSE FALSE END AS FIELDISNULL,  
+         CASE WHEN COLUMN_KEY = 'PRI' THEN TRUE ELSE FALSE END AS FIELDPRIMARYKEY,
+         COLUMN_DEFAULT AS FIELDDEFAULT, 
+         COLUMN_COMMENT AS FIELDCOMMENTS
+        FROM
+          information_schema.COLUMNS
+        WHERE
+         table_schema = @database
+         AND table_name = @table
+        ORDER BY ORDINAL_POSITION</value>
+  </data>
   <data name="error" xml:space="preserve">
     <value>错误</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="key_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\key_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="loadTableScript" xml:space="preserve">
+    <value>SHOW FULL TABLES WHERE Table_type != 'VIEW'</value>
+  </data>
+  <data name="loadViewScript" xml:space="preserve">
+    <value>SHOW FULL TABLES WHERE Table_type = 'VIEW'</value>
   </data>
   <data name="mysql_close_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mysql_close_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -135,6 +239,12 @@
   </data>
   <data name="mysql_open_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mysql_open_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="openTableScript" xml:space="preserve">
+    <value>SELECT * FROM {0} LIMIT {1}, {2}</value>
+  </data>
+  <data name="openViewScript" xml:space="preserve">
+    <value>SELECT * FROM {0} LIMIT {1}, {2}</value>
   </data>
   <data name="prompt" xml:space="preserve">
     <value>提示</value>

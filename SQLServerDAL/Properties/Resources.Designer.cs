@@ -70,11 +70,114 @@ namespace SQLServerDAL.Properties {
         }
         
         /// <summary>
+        ///   查找类似 bigint
+        ///binary
+        ///bit
+        ///char
+        ///date
+        ///datetime
+        ///datetime2
+        ///datetimeoffset
+        ///decimal
+        ///float
+        ///geography
+        ///geometry
+        ///hierarchyid
+        ///image
+        ///int
+        ///money
+        ///nchar
+        ///ntext
+        ///numeric
+        ///nvarchar
+        ///real
+        ///smalldatetime
+        ///smallint
+        ///smallmoney
+        ///sql_variant
+        ///sysname
+        ///text
+        ///time
+        ///timestamp
+        ///tinyint
+        ///uniqueidentifier
+        ///varbinary
+        ///varchar
+        ///xml
+        ///nvarchar(MAX)
+        ///varbinary(MAX)
+        ///varchar(MAX) 的本地化字符串。
+        /// </summary>
+        internal static string dataTypes {
+            get {
+                return ResourceManager.GetString("dataTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT
+        ///     col.name AS FIELDNAME,
+        ///     t.name AS FIELDTYPE,
+        ///     col.length AS FIELDLENGTH,
+        ///     ISNULL(COLUMNPROPERTY(col.id, col.name, &apos;Scale&apos;),0) AS FIELDSCALE,
+        ///     CASE WHEN col.isnullable = 1 THEN 1 ELSE 0 END AS FIELDISNULL,
+        ///     CASE WHEN EXISTS ( SELECT 1
+        ///     FROM
+        ///          dbo.sysindexes si
+        ///     INNER JOIN dbo.sysindexkeys sik ON si.id = sik.id
+        ///     AND si.indid = sik.indid
+        ///     INNER JOIN dbo.syscolumns sc ON sc.id = sik.id
+        ///     AND sc.colid = sik.colid
+        ///     INNER JOIN dbo.sysobjec [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string designTableScript {
+            get {
+                return ResourceManager.GetString("designTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 错误 的本地化字符串。
         /// </summary>
         internal static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT [TABLE_NAME] FROM [{0}].[INFORMATION_SCHEMA].[TABLES] 的本地化字符串。
+        /// </summary>
+        internal static string loadTableScript {
+            get {
+                return ResourceManager.GetString("loadTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT [TABLE_NAME] FROM [{0}].[INFORMATION_SCHEMA].[VIEWS] 的本地化字符串。
+        /// </summary>
+        internal static string loadViewScript {
+            get {
+                return ResourceManager.GetString("loadViewScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} ORDER BY 1 OFFSET {1} ROW FETCH NEXT {2} ROWS ONLY 的本地化字符串。
+        /// </summary>
+        internal static string openTableScript {
+            get {
+                return ResourceManager.GetString("openTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} ORDER BY 1 OFFSET {1} ROW FETCH NEXT {2} ROWS ONLY 的本地化字符串。
+        /// </summary>
+        internal static string openViewScript {
+            get {
+                return ResourceManager.GetString("openViewScript", resourceCulture);
             }
         }
         

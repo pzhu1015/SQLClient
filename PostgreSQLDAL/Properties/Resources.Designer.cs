@@ -70,11 +70,118 @@ namespace PostgreSQLDAL.Properties {
         }
         
         /// <summary>
+        ///   查找类似 bit
+        ///bool
+        ///box
+        ///bytea
+        ///char
+        ///cidr
+        ///circle
+        ///date
+        ///decimal
+        ///float4
+        ///float8
+        ///inet
+        ///int2
+        ///int4
+        ///int8
+        ///interval
+        ///json
+        ///jsonb
+        ///line
+        ///lseg
+        ///macaddr
+        ///money
+        ///path
+        ///point
+        ///polygon
+        ///serial2
+        ///serial4
+        ///serial8
+        ///text
+        ///time
+        ///timetz
+        ///timestamp
+        ///timestamptz
+        ///tsquery
+        ///tsvector
+        ///txid_snapshot
+        ///uuid
+        ///varbit
+        ///varchar
+        ///xml
+        ///(Domain)
+        ///(Type) 的本地化字符串。
+        /// </summary>
+        internal static string dataTypes {
+            get {
+                return ResourceManager.GetString("dataTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 select 
+        ///column_name as FIELDNAME,
+        ///data_type as FIELDTYPE,
+        ///coalesce(character_maximum_length,numeric_precision,-1) as FIELDLENGTH,
+        ///numeric_scale as FIELDSCALE,
+        ///case is_nullable when &apos;YES&apos; then 0 else 1 end as FIELDISNULL,
+        ///case when b.pk_name is null then 0 else 1 end as FIELDPRIMARYKEY,
+        ///column_default as FIELDDEFAULT,
+        ///c.DeText as FIELDCOMMENTS
+        ///from information_schema.columns 
+        ///left join (
+        ///    select pg_attr.attname as colname,pg_constraint.conname as pk_name from pg_constraint  
+        ///    inner join pg_ [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string designTableScript {
+            get {
+                return ResourceManager.GetString("designTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 错误 的本地化字符串。
         /// </summary>
         internal static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT tablename FROM pg_tables WHERE schemaname=&apos;public&apos; 的本地化字符串。
+        /// </summary>
+        internal static string loadTableScript {
+            get {
+                return ResourceManager.GetString("loadTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT viewname FROM pg_views WHERE schemaname = &apos;public&apos; 的本地化字符串。
+        /// </summary>
+        internal static string loadViewScript {
+            get {
+                return ResourceManager.GetString("loadViewScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} LIMIT {1} OFFSET {2} 的本地化字符串。
+        /// </summary>
+        internal static string openTableScript {
+            get {
+                return ResourceManager.GetString("openTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} LIMIT {1} OFFSET {2} 的本地化字符串。
+        /// </summary>
+        internal static string openViewScript {
+            get {
+                return ResourceManager.GetString("openViewScript", resourceCulture);
             }
         }
         

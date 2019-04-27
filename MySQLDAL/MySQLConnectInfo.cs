@@ -23,6 +23,7 @@ namespace MySQLDAL
                 return "3306";
             }
         }
+
         public override Image CloseImage
         {
             get { return Resources.mysql_close_16; }
@@ -73,6 +74,54 @@ namespace MySQLDAL
             }
         }
 
+        public override string DesignTableScript
+        {
+            get
+            {
+                return Resources.designTableScript;
+            }
+        }
+
+        public override string OpenTableScript
+        {
+            get
+            {
+                return Resources.openTableScript;
+            }
+        }
+
+        public override string OpenViewScript
+        {
+            get
+            {
+                return Resources.openViewScript;
+            }
+        }
+
+        public override string LoadTableScript
+        {
+            get
+            {
+                return Resources.loadTableScript;
+            }
+        }
+
+        public override string LoadViewScript
+        {
+            get
+            {
+                return Resources.loadViewScript;
+            }
+        }
+
+        public override string[] DataTypes
+        {
+            get
+            {
+                return Resources.dataTypes.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            }
+        }
+
         public override DbDataAdapter GetDataAdapter(DbCommand command)
         {
             return new MySqlDataAdapter(command as MySqlCommand);
@@ -100,12 +149,12 @@ namespace MySQLDAL
 
         public override string GetLoadTableScript(string database)
         {
-            return this.loadTableScript;
+            return Resources.loadTableScript;
         }
 
         public override string GetLoadViewScript(string database)
         {
-            return this.loadViewScript;
+            return Resources.loadViewScript;
         }
 
         public override void Drop(string name)
@@ -253,7 +302,7 @@ namespace MySQLDAL
                 {
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = this.DesignTableScript;
+                    command.CommandText = Resources.designTableScript;
                     command.Parameters.Add(new MySqlParameter("@database", database));
                     command.Parameters.Add(new MySqlParameter("@table", tablename));
                     DbDataAdapter da = new MySqlDataAdapter(command as MySqlCommand);
@@ -277,11 +326,11 @@ namespace MySQLDAL
             {
                 using (DbConnection connection = this.GetConnection(database))
                 {
-                    statement = string.Format(this.OpenTableScript, tablename, start, pageSize);
+                    statement = string.Format(Resources.openTableScript, tablename, start, pageSize);
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
                     command.CommandText = statement;
-                    DbDataAdapter da = new MySqlDataAdapter(command as MySqlCommand);
+                    DbDataAdapter da = this.GetDataAdapter(command);
                     da.Fill(ds);
                     datatable = ds.Tables[0];
                     return true;
@@ -303,11 +352,11 @@ namespace MySQLDAL
             {
                 using (DbConnection connection = this.GetConnection(dataase))
                 {
-                    statement = string.Format(this.OpenViewScript, viewname, start, pageSize);
+                    statement = string.Format(Resources.openViewScript, viewname, start, pageSize);
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
                     command.CommandText = statement;
-                    DbDataAdapter da = new MySqlDataAdapter(command as MySqlCommand);
+                    DbDataAdapter da = this.GetDataAdapter(command);
                     da.Fill(ds);
                     this.isOpen = true;
                     datatable = ds.Tables[0];

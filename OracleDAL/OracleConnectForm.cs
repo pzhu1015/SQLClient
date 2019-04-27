@@ -140,7 +140,7 @@ namespace OracleDAL
             this.password = info.Password;
             this.txtPassword.Text = this.password;
             this.txtHost.Text = info.Host;
-            this.txtPort.Text = info.Port;
+            this.txtPort.Text = string.IsNullOrEmpty(info.Port) ? info.DefaultPort : info.Port;
             return true;
         }
     }

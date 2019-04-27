@@ -82,6 +82,54 @@ namespace PostgreSQLDAL
             }
         }
 
+        public override string DesignTableScript
+        {
+            get
+            {
+                return Resources.designTableScript;
+            }
+        }
+
+        public override string OpenTableScript
+        {
+            get
+            {
+                return Resources.openTableScript;
+            }
+        }
+
+        public override string OpenViewScript
+        {
+            get
+            {
+                return Resources.openViewScript;
+            }
+        }
+
+        public override string LoadTableScript
+        {
+            get
+            {
+                return Resources.loadTableScript;
+            }
+        }
+
+        public override string LoadViewScript
+        {
+            get
+            {
+                return Resources.loadViewScript;
+            }
+        }
+
+        public override string[] DataTypes
+        {
+            get
+            {
+                return Resources.dataTypes.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            }
+        }
+
         public override bool Create(string name)
         {
             throw new NotImplementedException();
@@ -89,7 +137,27 @@ namespace PostgreSQLDAL
 
         public override bool DesignTable(string database, string tablename, out DataTable table)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (DbConnection connection = this.GetConnection(database))
+                {
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = this.DesignTableScript;
+                    command.Parameters.Add(new NpgsqlParameter("@table", tablename));
+                    DbDataAdapter da = this.GetDataAdapter(command);
+                    da.Fill(ds);
+                    table = ds.Tables[0];
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                table = null;
+                this.message = ex.Message;
+                LogHelper.Error(ex);
+                return false;
+            }
         }
 
         public override bool DesignView(string database, string viewname, out DataTable table)
@@ -132,6 +200,10 @@ namespace PostgreSQLDAL
             {
                 DbConnection connection = new NpgsqlConnection(this.connectionString);
                 connection.Open();
+                if (database != "")
+                {
+                    connection.ChangeDatabase(database);
+                }
                 return connection;
             }
             catch (Exception ex)
@@ -149,12 +221,12 @@ namespace PostgreSQLDAL
 
         public override string GetLoadTableScript(string database)
         {
-            throw new NotImplementedException();
+            return Resources.loadTableScript;
         }
 
         public override string GetLoadViewScript(string database)
         {
-            throw new NotImplementedException();
+            return Resources.loadViewScript;
         }
 
         public override bool Open()
@@ -170,7 +242,7 @@ namespace PostgreSQLDAL
 
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "SELECT * FROM pg_database;";
+                    command.CommandText = "SELECT * FROM pg_database";
                     DbDataAdapter da = this.GetDataAdapter(command);
                     da.Fill(ds);
                     DataTable dt = ds.Tables[0];
@@ -193,12 +265,55 @@ namespace PostgreSQLDAL
 
         public override bool OpenTable(string database, string tablename, long start, long pageSize, out DataTable datatable, out string statement)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (DbConnection connection = this.GetConnection(database))
+                {
+                    statement = string.Format(this.OpenTableScript, tablename, start, pageSize);
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = statement;
+                    DbDataAdapter da = this.GetDataAdapter(command);
+                    da.Fill(ds);
+                    datatable = ds.Tables[0];
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                datatable = null;
+                statement = "";
+                this.message = ex.Message;
+                LogHelper.Error(ex); ;
+                return false;
+            }
         }
 
         public override bool OpenView(string dataase, string viewname, long start, long pageSize, out DataTable datatable, out string statement)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (DbConnection connection = this.GetConnection(dataase))
+                {
+                    statement = string.Format(this.OpenViewScript, viewname, start, pageSize);
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = statement;
+                    DbDataAdapter da = this.GetDataAdapter(command);
+                    da.Fill(ds);
+                    this.isOpen = true;
+                    datatable = ds.Tables[0];
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                datatable = null;
+                statement = "";
+                this.message = ex.Message;
+                LogHelper.Error(ex); ;
+                return false;
+            }
         }
 
         public override bool Parse(string sql, out List<StatementObj> statements)
@@ -206,7 +321,7 @@ namespace PostgreSQLDAL
             statements = new List<StatementObj>();
             try
             {
-                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVPostgresql);
+                TGSqlParser sqlparser = new TGSqlParser(TDbVendor.DbVMysql);
                 sqlparser.SqlText.Text = sql;
                 int ret = sqlparser.Parse();
                 if (ret != 0)

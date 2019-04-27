@@ -15,6 +15,12 @@ namespace SQLDAL
         Form ConnectForm { get; }
         string DriverName { get; }
         string DefaultPort { get; }
+        string DesignTableScript { get; }
+        string OpenTableScript { get; }
+        string OpenViewScript { get; }
+        string LoadTableScript { get; }
+        string LoadViewScript { get; }
+        string[] DataTypes { get; }
         #endregion
 
         #region 数据库存操作

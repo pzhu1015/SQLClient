@@ -141,7 +141,7 @@ namespace MySQLDAL
             this.txtPassword.Text = this.password;
             MySqlConnection connection = new MySqlConnection(info.ConnectionString);
             this.txtHost.Text = info.Host;
-            this.txtPort.Text = info.Port;
+            this.txtPort.Text = string.IsNullOrEmpty(info.Port) ? info.DefaultPort : info.Port;
             this.txtDatabase.Text = connection.Database;
             return true;
         }

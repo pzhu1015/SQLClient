@@ -109,6 +109,54 @@ namespace AccessDAL
             }
         }
 
+        public override string DesignTableScript
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override string OpenTableScript
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override string OpenViewScript
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override string LoadTableScript
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override string LoadViewScript
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override string[] DataTypes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public override void Drop(string name)
         {
             try

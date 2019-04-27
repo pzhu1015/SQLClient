@@ -70,6 +70,88 @@ namespace MySQLDAL.Properties {
         }
         
         /// <summary>
+        ///   查找类似 tinyint
+        ///smallint
+        ///mediumint
+        ///int
+        ///integer
+        ///bigint
+        ///bit
+        ///real
+        ///double
+        ///float
+        ///decimal
+        ///numeric
+        ///char
+        ///varchar
+        ///date
+        ///time
+        ///year
+        ///timestamp
+        ///datetime
+        ///tinyblob
+        ///blob
+        ///mediumblob
+        ///longblob
+        ///tinytext
+        ///text
+        ///mediumtext
+        ///longtext
+        ///enum
+        ///set
+        ///binary
+        ///varbinary
+        ///point
+        ///linestring
+        ///polygon
+        ///geometry
+        ///multipoint
+        ///multilinestring
+        ///multipolygon
+        ///geometrycollection
+        ///tinyint
+        ///smallint
+        ///mediumint
+        ///int
+        ///integer
+        ///bigint
+        ///bit
+        ///real
+        ///double
+        ///float
+        ///decimal
+        ///numeric
+        ///char
+        ///varchar
+        ///date
+        ///time
+        ///year
+        ///timestamp
+        ///datetime
+        ///tinyb [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string dataTypes {
+            get {
+                return ResourceManager.GetString("dataTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT
+        ///         COLUMN_NAME AS FIELDNAME,
+        ///         DATA_TYPE AS FIELDTYPE, 
+        ///         CASE WHEN NUMERIC_PRECISION IS NULL THEN (CASE WHEN CHARACTER_MAXIMUM_LENGTH IS NULL THEN 0 ELSE CHARACTER_MAXIMUM_LENGTH END) ELSE NUMERIC_PRECISION END AS FIELDLENGTH,
+        ///         CASE WHEN NUMERIC_SCALE IS NULL THEN 0 ELSE NUMERIC_SCALE END AS FIELDSCALE, 
+        ///         CASE WHEN IS_NULLABLE = &apos;NO&apos; THEN TRUE ELSE FALSE END AS FIELDISNULL,  
+        ///         CASE WHEN COLUMN_KEY = &apos;PRI&apos; THEN TRUE ELSE FALSE END AS FIELDPRIMARYKEY,        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string designTableScript {
+            get {
+                return ResourceManager.GetString("designTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 错误 的本地化字符串。
         /// </summary>
         internal static string error {
@@ -85,6 +167,24 @@ namespace MySQLDAL.Properties {
             get {
                 object obj = ResourceManager.GetObject("key_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SHOW FULL TABLES WHERE Table_type != &apos;VIEW&apos; 的本地化字符串。
+        /// </summary>
+        internal static string loadTableScript {
+            get {
+                return ResourceManager.GetString("loadTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SHOW FULL TABLES WHERE Table_type = &apos;VIEW&apos; 的本地化字符串。
+        /// </summary>
+        internal static string loadViewScript {
+            get {
+                return ResourceManager.GetString("loadViewScript", resourceCulture);
             }
         }
         
@@ -115,6 +215,24 @@ namespace MySQLDAL.Properties {
             get {
                 object obj = ResourceManager.GetObject("mysql_open_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} LIMIT {1}, {2} 的本地化字符串。
+        /// </summary>
+        internal static string openTableScript {
+            get {
+                return ResourceManager.GetString("openTableScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM {0} LIMIT {1}, {2} 的本地化字符串。
+        /// </summary>
+        internal static string openViewScript {
+            get {
+                return ResourceManager.GetString("openViewScript", resourceCulture);
             }
         }
         
