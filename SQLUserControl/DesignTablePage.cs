@@ -685,7 +685,7 @@ namespace SQLUserControl
 
         private void DesignTablePage_Load(object sender, EventArgs e)
         {
-           
+            this.spMain.Panel2Collapsed = true;
         }
     }
 }

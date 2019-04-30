@@ -7,44 +7,19 @@ using System.Windows.Forms;
 
 namespace SQLDAL
 {
-    #region Select Event
-    public delegate void NewSelectEventHandler(object sender, NewSelectEventArgs e);
-    public class NewSelectEventArgs : EventArgs
+    #region Table Event
+    public delegate void OpenTableEventHandler(object sender, OpenTableEventArgs e);
+    public class OpenTableEventArgs : EventArgs
     {
-        private DatabaseInfo databaseInfo;
-        public NewSelectEventArgs(DatabaseInfo info)
-            :
-            base()
-        {
-            this.databaseInfo = info;
-        }
-
-        public DatabaseInfo DatabaseInfo
-        {
-            get
-            {
-                return databaseInfo;
-            }
-
-            set
-            {
-                databaseInfo = value;
-            }
-        }
-    }
-
-    public delegate void OpenSelectEventHandler(object sender, OpenSelectEventArgs e);
-    public class OpenSelectEventArgs : EventArgs
-    {
-        private SelectInfo info;
-        public OpenSelectEventArgs(SelectInfo info)
+        private TableInfo info;
+        public OpenTableEventArgs(TableInfo info)
             :
             base()
         {
             this.info = info;
         }
 
-        public SelectInfo Info
+        public TableInfo Info
         {
             get
             {
@@ -58,14 +33,11 @@ namespace SQLDAL
         }
     }
 
-    #endregion
-
-    #region Table Event
-    public delegate void OpenTableEventHandler(object sender, OpenTableEventArgs e);
-    public class OpenTableEventArgs : EventArgs
+    public delegate void CloseTableEventHandler(object sender, CloseTableEventArgs e);
+    public class CloseTableEventArgs : EventArgs
     {
         private TableInfo info;
-        public OpenTableEventArgs(TableInfo info)
+        public CloseTableEventArgs(TableInfo info)
             :
             base()
         {
@@ -111,6 +83,18 @@ namespace SQLDAL
         }
     }
 
+    public delegate void CloseDesignTableEventHandler(object sender, CloseDesignTableEventArgs e);
+    public class CloseDesignTableEventArgs : EventArgs
+    {
+        private TableInfo info;
+        public CloseDesignTableEventArgs(TableInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+    }
+
     public delegate void NewTableEventHandler(object sender, NewTableEventArgs e);
     public class NewTableEventArgs : EventArgs
     {
@@ -136,18 +120,20 @@ namespace SQLDAL
         }
     }
 
-    public delegate void CloseTableEventHandler(object sender, CloseTableEventArgs e);
-    public class CloseTableEventArgs : EventArgs
+    public delegate void OpenTablesEventHandler(object sender, OpenTablesEventArgs e);
+    public class OpenTablesEventArgs: EventArgs
     {
-        private TableInfo info;
-        public CloseTableEventArgs(TableInfo info)
+        private bool isFirst;
+        private DatabaseInfo info;
+        public OpenTablesEventArgs(DatabaseInfo info, bool isFirst)
             :
             base()
         {
             this.info = info;
+            this.isFirst = isFirst;
         }
 
-        public TableInfo Info
+        public DatabaseInfo Info
         {
             get
             {
@@ -159,17 +145,43 @@ namespace SQLDAL
                 info = value;
             }
         }
+
+        public bool IsFirst
+        {
+            get
+            {
+                return isFirst;
+            }
+
+            set
+            {
+                isFirst = value;
+            }
+        }
     }
 
-    public delegate void CloseDesignTableEventHandler(object sender, CloseDesignTableEventArgs e);
-    public class CloseDesignTableEventArgs : EventArgs
+    public delegate void CloseTablesEventHandler(object sender, CloseTablesEventArgs e);
+    public class CloseTablesEventArgs: EventArgs
     {
-        private TableInfo info;
-        public CloseDesignTableEventArgs(TableInfo info)
+        private DatabaseInfo info;
+        public CloseTablesEventArgs(DatabaseInfo info)
             :
             base()
         {
             this.info = info;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
         }
     }
 
@@ -225,6 +237,189 @@ namespace SQLDAL
             }
         }
     }
+
+    public delegate void OpenViewsEventHandler(object sender, OpenViewsEventArgs e);
+    public class OpenViewsEventArgs: EventArgs
+    {
+        private bool isFirst;
+        private DatabaseInfo info;
+        public OpenViewsEventArgs(DatabaseInfo info, bool isFirst)
+            :
+            base()
+        {
+            this.info = info;
+            this.isFirst = isFirst;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+
+        public bool IsFirst
+        {
+            get
+            {
+                return isFirst;
+            }
+
+            set
+            {
+                isFirst = value;
+            }
+        }
+    }
+
+    public delegate void CloseViewsEventHandler(object sender, CloseViewsEventArgs e);
+    public class CloseViewsEventArgs: EventArgs
+    {
+        private DatabaseInfo info;
+        public CloseViewsEventArgs(DatabaseInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+    }
+    #endregion
+
+    #region Select Event
+    public delegate void NewSelectEventHandler(object sender, NewSelectEventArgs e);
+    public class NewSelectEventArgs : EventArgs
+    {
+        private DatabaseInfo databaseInfo;
+        public NewSelectEventArgs(DatabaseInfo info)
+            :
+            base()
+        {
+            this.databaseInfo = info;
+        }
+
+        public DatabaseInfo DatabaseInfo
+        {
+            get
+            {
+                return databaseInfo;
+            }
+
+            set
+            {
+                databaseInfo = value;
+            }
+        }
+    }
+
+    public delegate void OpenSelectEventHandler(object sender, OpenSelectEventArgs e);
+    public class OpenSelectEventArgs : EventArgs
+    {
+        private SelectInfo info;
+        public OpenSelectEventArgs(SelectInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+
+        public SelectInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+    }
+
+    public delegate void OpenSelectsEventHandler(object sender, OpenSelectsEventArgs e);
+    public class OpenSelectsEventArgs: EventArgs
+    {
+        private bool isFirst;
+        private DatabaseInfo info;
+        public OpenSelectsEventArgs(DatabaseInfo info, bool isFirst)
+            :
+            base()
+        {
+            this.info = info;
+            this.isFirst = isFirst;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+
+        public bool IsFirst
+        {
+            get
+            {
+                return isFirst;
+            }
+
+            set
+            {
+                isFirst = value;
+            }
+        }
+    }
+
+    public delegate void CloseSelectsEventHandler(object sender, CloseSelectsEventArgs e);
+    public class CloseSelectsEventArgs : EventArgs
+    {
+        private DatabaseInfo info;
+        public CloseSelectsEventArgs(DatabaseInfo info)
+            :
+            base()
+        {
+            this.info = info;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+    }
+
     #endregion
 
     #region Database Event

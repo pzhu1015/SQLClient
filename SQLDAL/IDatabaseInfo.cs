@@ -32,9 +32,9 @@ namespace SQLDAL
         ViewInfo AddViewInfo(string name);
         SelectInfo AddSelectInfo(string name);
 
-        DataTable LoadTable();
-        DataTable LoadView();
-        DataTable LoadSelect();
+        bool LoadTable(bool isFirst);
+        bool LoadView(bool isFirst);
+        bool LoadSelect(bool isFirst);
         
         void CloseTable();
         void CloseDesignTable();

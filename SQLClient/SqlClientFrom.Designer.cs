@@ -40,6 +40,7 @@
             this.tsmiConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMenuOpenConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMenuCloseConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMenuDeleteConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiExportConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiImportConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +55,7 @@
             this.tsmiCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsdropUser = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsbtnConnect = new System.Windows.Forms.ToolStripButton();
             this.tsbtnUser = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -110,7 +112,7 @@
             this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiRefreshViewGruop = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSelectGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiGrupNewSelect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiGroupNewSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiRefreshSelectGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsConnect = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -162,7 +164,7 @@
             this.tsmiExprotSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiRefreshSelect = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsdropUser = new System.Windows.Forms.ToolStripDropDownButton();
+            this.spRight = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.tcMain)).BeginInit();
             this.tcMain.SuspendLayout();
             this.tsSystemMain.SuspendLayout();
@@ -187,11 +189,15 @@
             this.cmsTable.SuspendLayout();
             this.cmsView.SuspendLayout();
             this.cmsSelect.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spRight)).BeginInit();
+            this.spRight.Panel1.SuspendLayout();
+            this.spRight.SuspendLayout();
             this.SuspendLayout();
             // 
             // tvMain
             // 
-            this.tvMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tvMain.BackColor = System.Drawing.Color.White;
+            this.tvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvMain.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tvMain.FullRowSelect = true;
@@ -203,7 +209,7 @@
             this.tvMain.Name = "tvMain";
             this.tvMain.SelectedImageIndex = 0;
             this.tvMain.ShowLines = false;
-            this.tvMain.Size = new System.Drawing.Size(262, 403);
+            this.tvMain.Size = new System.Drawing.Size(262, 412);
             this.tvMain.TabIndex = 0;
             this.tvMain.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMain_NodeMouseDoubleClick);
             this.tvMain.Leave += new System.EventHandler(this.tvMain_Leave);
@@ -231,7 +237,7 @@
             this.tcMain.Margin = new System.Windows.Forms.Padding(0);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedTabPage = this.tpObject;
-            this.tcMain.Size = new System.Drawing.Size(717, 403);
+            this.tcMain.Size = new System.Drawing.Size(495, 412);
             this.tcMain.TabIndex = 0;
             this.tcMain.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.tpObject});
@@ -245,7 +251,7 @@
             this.tpObject.Margin = new System.Windows.Forms.Padding(0);
             this.tpObject.Name = "tpObject";
             this.tpObject.ShowCloseButton = DevExpress.Utils.DefaultBoolean.False;
-            this.tpObject.Size = new System.Drawing.Size(711, 374);
+            this.tpObject.Size = new System.Drawing.Size(489, 383);
             this.tpObject.Text = "对象";
             // 
             // imgListListView
@@ -282,6 +288,7 @@
             this.tsmiConnect,
             this.tsmiMenuOpenConnect,
             this.tsmiMenuCloseConnect,
+            this.tsmiMenuDeleteConnect,
             this.toolStripSeparator9,
             this.tsmiExportConnect,
             this.tsmiImportConnect});
@@ -310,6 +317,13 @@
             this.tsmiMenuCloseConnect.Size = new System.Drawing.Size(124, 22);
             this.tsmiMenuCloseConnect.Text = "关闭连接";
             this.tsmiMenuCloseConnect.Click += new System.EventHandler(this.tsmiCloseConnect_Click);
+            // 
+            // tsmiMenuDeleteConnect
+            // 
+            this.tsmiMenuDeleteConnect.Name = "tsmiMenuDeleteConnect";
+            this.tsmiMenuDeleteConnect.Size = new System.Drawing.Size(124, 22);
+            this.tsmiMenuDeleteConnect.Text = "删除连接";
+            this.tsmiMenuDeleteConnect.Click += new System.EventHandler(this.tsmiMenuDeleteConnect_Click_1);
             // 
             // toolStripSeparator9
             // 
@@ -401,6 +415,16 @@
             this.tsmiAbout.Name = "tsmiAbout";
             this.tsmiAbout.Size = new System.Drawing.Size(124, 22);
             this.tsmiAbout.Text = "关于";
+            // 
+            // tsdropUser
+            // 
+            this.tsdropUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsdropUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsdropUser.Image = ((System.Drawing.Image)(resources.GetObject("tsdropUser.Image")));
+            this.tsdropUser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsdropUser.Name = "tsdropUser";
+            this.tsdropUser.Size = new System.Drawing.Size(81, 22);
+            this.tsdropUser.Text = "pengzhihu";
             // 
             // tsbtnConnect
             // 
@@ -501,7 +525,7 @@
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripSeparator14});
-            this.tsObject.Location = new System.Drawing.Point(0, 95);
+            this.tsObject.Location = new System.Drawing.Point(0, 86);
             this.tsObject.Name = "tsObject";
             this.tsObject.Padding = new System.Windows.Forms.Padding(0);
             this.tsObject.Size = new System.Drawing.Size(982, 25);
@@ -566,7 +590,7 @@
             this.tsIndexs,
             this.tsPrimaryKeys,
             this.tsTriggers});
-            this.tsDesignTable.Location = new System.Drawing.Point(0, 70);
+            this.tsDesignTable.Location = new System.Drawing.Point(0, 61);
             this.tsDesignTable.Name = "tsDesignTable";
             this.tsDesignTable.Padding = new System.Windows.Forms.Padding(0);
             this.tsDesignTable.Size = new System.Drawing.Size(982, 25);
@@ -630,7 +654,7 @@
             this.toolStripSeparator7,
             this.toolStripLabel5,
             this.toolStripSeparator10});
-            this.tsNewSelect.Location = new System.Drawing.Point(0, 45);
+            this.tsNewSelect.Location = new System.Drawing.Point(0, 36);
             this.tsNewSelect.Name = "tsNewSelect";
             this.tsNewSelect.Padding = new System.Windows.Forms.Padding(0);
             this.tsNewSelect.Size = new System.Drawing.Size(982, 25);
@@ -717,7 +741,7 @@
             this.tsOpenTableWarn,
             this.toolStripSeparator11});
             this.tsOpenTable.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.tsOpenTable.Location = new System.Drawing.Point(0, 20);
+            this.tsOpenTable.Location = new System.Drawing.Point(0, 11);
             this.tsOpenTable.Name = "tsOpenTable";
             this.tsOpenTable.Padding = new System.Windows.Forms.Padding(0);
             this.tsOpenTable.Size = new System.Drawing.Size(982, 25);
@@ -794,7 +818,7 @@
             this.spStatusBar.Panel2.Controls.Add(this.tsDesignTable);
             this.spStatusBar.Panel2.Controls.Add(this.tsObject);
             this.spStatusBar.Size = new System.Drawing.Size(982, 524);
-            this.spStatusBar.SplitterDistance = 403;
+            this.spStatusBar.SplitterDistance = 412;
             this.spStatusBar.SplitterWidth = 1;
             this.spStatusBar.TabIndex = 32;
             // 
@@ -812,10 +836,9 @@
             // 
             // spMain.Panel2
             // 
-            this.spMain.Panel2.Controls.Add(this.tcMain);
-            this.spMain.Size = new System.Drawing.Size(982, 403);
+            this.spMain.Panel2.Controls.Add(this.spRight);
+            this.spMain.Size = new System.Drawing.Size(982, 412);
             this.spMain.SplitterDistance = 262;
-            this.spMain.SplitterWidth = 3;
             this.spMain.TabIndex = 5;
             this.spMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.spMain_SplitterMoved);
             // 
@@ -868,6 +891,7 @@
             this.tsmiRefreshTableGroup.Name = "tsmiRefreshTableGroup";
             this.tsmiRefreshTableGroup.Size = new System.Drawing.Size(124, 22);
             this.tsmiRefreshTableGroup.Text = "刷新";
+            this.tsmiRefreshTableGroup.Click += new System.EventHandler(this.tsmiRefreshTableGroup_Click);
             // 
             // cmsViewGroup
             // 
@@ -913,19 +937,19 @@
             // cmsSelectGroup
             // 
             this.cmsSelectGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiGrupNewSelect,
+            this.tsmiGroupNewSelect,
             this.toolStripSeparator18,
             this.tsmiRefreshSelectGroup});
             this.cmsSelectGroup.Name = "cmsSelectGroup";
             this.cmsSelectGroup.Size = new System.Drawing.Size(125, 54);
             // 
-            // tsmiGrupNewSelect
+            // tsmiGroupNewSelect
             // 
-            this.tsmiGrupNewSelect.Image = global::SQLClient.Properties.Resources.new_select_16;
-            this.tsmiGrupNewSelect.Name = "tsmiGrupNewSelect";
-            this.tsmiGrupNewSelect.Size = new System.Drawing.Size(124, 22);
-            this.tsmiGrupNewSelect.Text = "新建查询";
-            this.tsmiGrupNewSelect.Click += new System.EventHandler(this.tsmiGrupNewSelect_Click);
+            this.tsmiGroupNewSelect.Image = global::SQLClient.Properties.Resources.new_select_16;
+            this.tsmiGroupNewSelect.Name = "tsmiGroupNewSelect";
+            this.tsmiGroupNewSelect.Size = new System.Drawing.Size(124, 22);
+            this.tsmiGroupNewSelect.Text = "新建查询";
+            this.tsmiGroupNewSelect.Click += new System.EventHandler(this.tsmiGroupNewSelect_Click);
             // 
             // toolStripSeparator18
             // 
@@ -937,6 +961,7 @@
             this.tsmiRefreshSelectGroup.Name = "tsmiRefreshSelectGroup";
             this.tsmiRefreshSelectGroup.Size = new System.Drawing.Size(124, 22);
             this.tsmiRefreshSelectGroup.Text = "刷新";
+            this.tsmiRefreshSelectGroup.Click += new System.EventHandler(this.tsmiRefreshSelectGroup_Click);
             // 
             // cmsConnect
             // 
@@ -983,6 +1008,7 @@
             this.tsmiDeleteConnect.Name = "tsmiDeleteConnect";
             this.tsmiDeleteConnect.Size = new System.Drawing.Size(124, 22);
             this.tsmiDeleteConnect.Text = "删除连接";
+            this.tsmiDeleteConnect.Click += new System.EventHandler(this.tsmiDeleteConnect_Click);
             // 
             // toolStripSeparator23
             // 
@@ -1299,16 +1325,24 @@
             this.tsmiRefreshSelect.Name = "tsmiRefreshSelect";
             this.tsmiRefreshSelect.Size = new System.Drawing.Size(124, 22);
             this.tsmiRefreshSelect.Text = "刷新";
+            this.tsmiRefreshSelect.Click += new System.EventHandler(this.tsmiRefreshSelect_Click);
             // 
-            // tsdropUser
+            // spRight
             // 
-            this.tsdropUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsdropUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsdropUser.Image = ((System.Drawing.Image)(resources.GetObject("tsdropUser.Image")));
-            this.tsdropUser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsdropUser.Name = "tsdropUser";
-            this.tsdropUser.Size = new System.Drawing.Size(81, 22);
-            this.tsdropUser.Text = "pengzhihu";
+            this.spRight.BackColor = System.Drawing.Color.White;
+            this.spRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spRight.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.spRight.IsSplitterFixed = true;
+            this.spRight.Location = new System.Drawing.Point(0, 0);
+            this.spRight.Name = "spRight";
+            // 
+            // spRight.Panel1
+            // 
+            this.spRight.Panel1.Controls.Add(this.tcMain);
+            this.spRight.Size = new System.Drawing.Size(716, 412);
+            this.spRight.SplitterDistance = 495;
+            this.spRight.SplitterWidth = 1;
+            this.spRight.TabIndex = 1;
             // 
             // SqlClientForm
             // 
@@ -1356,6 +1390,9 @@
             this.cmsTable.ResumeLayout(false);
             this.cmsView.ResumeLayout(false);
             this.cmsSelect.ResumeLayout(false);
+            this.spRight.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.spRight)).EndInit();
+            this.spRight.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1433,7 +1470,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiGroupExprotView;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
         private System.Windows.Forms.ToolStripMenuItem tsmiRefreshViewGruop;
-        private System.Windows.Forms.ToolStripMenuItem tsmiGrupNewSelect;
+        private System.Windows.Forms.ToolStripMenuItem tsmiGroupNewSelect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator18;
         private System.Windows.Forms.ToolStripMenuItem tsmiRefreshSelectGroup;
         private System.Windows.Forms.ContextMenuStrip cmsConnect;
@@ -1495,6 +1532,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
         private System.Windows.Forms.ToolStripDropDownButton tsdropUser;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMenuDeleteConnect;
+        private System.Windows.Forms.SplitContainer spRight;
     }
 }
 

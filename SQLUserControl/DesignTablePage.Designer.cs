@@ -53,7 +53,7 @@
             this.tsbtnPrimaryKey = new System.Windows.Forms.ToolStripButton();
             this.tsbtnMoveUp = new System.Windows.Forms.ToolStripButton();
             this.tsbtnMoveDown = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.spMain = new System.Windows.Forms.SplitContainer();
             this.dgvFields = new System.Windows.Forms.DataGridView();
             this.cellName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cellType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,16 +71,16 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tsDesignTable.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spMain)).BeginInit();
+            this.spMain.Panel1.SuspendLayout();
+            this.spMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFields)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIndexs)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -297,21 +297,21 @@
             this.tsbtnMoveDown.Text = "下移";
             this.tsbtnMoveDown.Click += new System.EventHandler(this.tsbtnMoveDown_Click);
             // 
-            // splitContainer1
+            // spMain
             // 
-            this.splitContainer1.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.spMain.BackColor = System.Drawing.SystemColors.Control;
+            this.spMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spMain.Location = new System.Drawing.Point(0, 0);
+            this.spMain.Margin = new System.Windows.Forms.Padding(0);
+            this.spMain.Name = "spMain";
+            this.spMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer1.Panel1
+            // spMain.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.dgvFields);
-            this.splitContainer1.Size = new System.Drawing.Size(878, 474);
-            this.splitContainer1.SplitterDistance = 340;
-            this.splitContainer1.TabIndex = 2;
+            this.spMain.Panel1.Controls.Add(this.dgvFields);
+            this.spMain.Size = new System.Drawing.Size(878, 474);
+            this.spMain.SplitterDistance = 340;
+            this.spMain.TabIndex = 2;
             // 
             // dgvFields
             // 
@@ -472,7 +472,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.splitContainer1);
+            this.tabPage1.Controls.Add(this.spMain);
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
@@ -501,6 +501,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "外键";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Location = new System.Drawing.Point(4, 23);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(878, 474);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "唯一键";
+            this.tabPage8.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
@@ -553,16 +563,6 @@
             this.tabPage7.Text = "SQL预览";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
-            // tabPage8
-            // 
-            this.tabPage8.Location = new System.Drawing.Point(4, 23);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(878, 474);
-            this.tabPage8.TabIndex = 7;
-            this.tabPage8.Text = "唯一键";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
             // DesignTablePage
             // 
             this.Appearance.BackColor = System.Drawing.SystemColors.Control;
@@ -576,9 +576,9 @@
             this.Load += new System.EventHandler(this.DesignTablePage_Load);
             this.tsDesignTable.ResumeLayout(false);
             this.tsDesignTable.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.spMain.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.spMain)).EndInit();
+            this.spMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFields)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIndexs)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -624,7 +624,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewComboBoxColumn Column10;
         private System.Windows.Forms.DataGridViewComboBoxColumn Column11;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer spMain;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;

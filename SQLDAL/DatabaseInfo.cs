@@ -12,6 +12,12 @@ namespace SQLDAL
     {
         public event CloseDatabaseEventHandler CloseDatabase;
         public event OpenDatabaseEventHandler OpenDatabase;
+        public event OpenTablesEventHandler OpenTables;
+        public event OpenViewsEventHandler OpenViews;
+        public event OpenSelectsEventHandler OpenSelects;
+        public event CloseTablesEventHandler CloseTables;
+        public event CloseViewsEventHandler CloseViews;
+        public event CloseSelectsEventHandler CloseSelects;
         private TreeNode node;
         private string name;
         private string message;
@@ -169,6 +175,54 @@ namespace SQLDAL
             }
         }
 
+        private void OnOpenTables(OpenTablesEventArgs e)
+        {
+            if (this.OpenTables != null)
+            {
+                this.OpenTables(this, e);
+            }
+        }
+
+        private void OnOpenViews(OpenViewsEventArgs e)
+        {
+            if (this.OpenViews != null)
+            {
+                this.OpenViews(this, e);
+            }
+        }
+
+        private void OnOpenSelects(OpenSelectsEventArgs e)
+        {
+            if (this.OpenSelects != null)
+            {
+                this.OpenSelects(this, e);
+            }
+        }
+
+        private void OnCloseTables(CloseTablesEventArgs e)
+        {
+            if (this.CloseTables != null)
+            {
+                this.CloseTables(this, e);
+            }
+        }
+
+        private void OnCloseViews(CloseViewsEventArgs e)
+        {
+            if (this.CloseViews != null)
+            {
+                this.CloseViews(this, e);
+            }
+        }
+
+        private void OnCloseSelects(CloseSelectsEventArgs e)
+        {
+            if (this.CloseSelects != null)
+            {
+                this.CloseSelects(this, e);
+            }
+        }
+
         public TableInfo AddTableInfo(string name)
         {
             TableInfo info = new TableInfo();
@@ -177,6 +231,7 @@ namespace SQLDAL
             this.tables.Add(info);
             return info;
         }
+
         public ViewInfo AddViewInfo(string name)
         {
             ViewInfo info = new ViewInfo();
@@ -185,6 +240,7 @@ namespace SQLDAL
             this.views.Add(info);
             return info;
         }
+
         public SelectInfo AddSelectInfo(string name)
         {
             SelectInfo info = new SelectInfo();
@@ -193,6 +249,7 @@ namespace SQLDAL
             this.selects.Add(info);
             return info;
         }
+
         public TableInfo CreateTable(string name, string script)
         {
             try
@@ -211,6 +268,7 @@ namespace SQLDAL
                 return null;
             }
         }
+
         public SelectInfo CreateSelect(string selectName, string script)
         {
             try
@@ -234,7 +292,7 @@ namespace SQLDAL
             }
         }
 
-        public DataTable LoadTable()
+        public bool LoadTable(bool isFirst)
         {
             try
             {
@@ -245,17 +303,23 @@ namespace SQLDAL
                     command.CommandText = this.connectInfo.GetLoadTableScript(this.name);
                     DbDataAdapter da = this.connectInfo.GetDataAdapter(command);
                     da.Fill(ds);
-                    return ds.Tables[0];
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        this.AddTableInfo(dr[0].ToString());
+                    }
                 }
+                this.OnOpenTables(new OpenTablesEventArgs(this, isFirst));
+                return true;
             }
             catch (Exception ex)
             {
+                this.message = ex.Message;
                 LogHelper.Error(ex);
-                return null;
+                return false;
             }
         }
 
-        public DataTable LoadView()
+        public bool LoadView(bool isFirst)
         {
             try
             {
@@ -266,17 +330,22 @@ namespace SQLDAL
                     command.CommandText = this.connectInfo.GetLoadViewScript(this.name);
                     DbDataAdapter da = this.connectInfo.GetDataAdapter(command);
                     da.Fill(ds);
-                    return ds.Tables[0];
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        this.AddViewInfo(dr[0].ToString());
+                    }
                 }
+                this.OnOpenViews(new OpenViewsEventArgs(this, isFirst));
+                return true;
             }
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
-                return null;
+                return false;
             }
         }
 
-        public DataTable LoadSelect()
+        public bool LoadSelect(bool isFirst)
         {
             try
             {
@@ -288,14 +357,52 @@ namespace SQLDAL
                     command.CommandText = $"SELECT * FROM TB_SELECT WHERE DATABASE='{this.name}' AND CONNECT='{this.connectInfo.Name}'";
                     DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
                     da.Fill(ds);
-                    return ds.Tables[0];
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        this.AddSelectInfo(dr[0].ToString());
+                    }
                 }
+                this.OnOpenSelects(new OpenSelectsEventArgs(this, isFirst));
+                return true;
             }
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
-                return null;
+                return false;
             }
+        }
+
+        public bool UnLoadTable()
+        {
+            foreach (TableInfo info in this.tables)
+            {
+                info.Close();
+            }
+            this.tables.Clear();
+            this.OnCloseTables(new CloseTablesEventArgs(this));
+            return true;
+        }
+
+        public bool UnLoadView()
+        {
+            foreach (ViewInfo info in this.views)
+            {
+                info.Close();
+            }
+            this.views.Clear();
+            this.OnCloseViews(new CloseViewsEventArgs(this));
+            return true;
+        }
+
+        public bool UnLoadSelect()
+        {
+            foreach (SelectInfo info in this.selects)
+            {
+                info.Close();
+            }
+            this.selects.Clear();
+            this.OnCloseSelects(new CloseSelectsEventArgs(this));
+            return true;
         }
 
         public void AlterSelect(string selectName, string script)
@@ -328,12 +435,8 @@ namespace SQLDAL
                 {
                     return;
                 }
-                this.tables.Clear();
-                DataTable dt = this.LoadTable();
-                foreach (DataRow dr in dt.Rows)
-                {
-                    this.AddTableInfo(dr[0].ToString());
-                }
+                this.UnLoadTable();
+                this.LoadTable(false);
             }
             catch (Exception ex)
             {
@@ -349,12 +452,8 @@ namespace SQLDAL
                 {
                     return;
                 }
-                this.views.Clear();
-                DataTable dt = this.LoadView();
-                foreach (DataRow dr in dt.Rows)
-                {
-                    this.AddViewInfo(dr[0].ToString());
-                }
+                this.UnLoadView();
+                this.LoadView(false);
             }
             catch (Exception ex)
             {
@@ -370,12 +469,8 @@ namespace SQLDAL
                 {
                     return;
                 }
-                this.selects.Clear();
-                DataTable dt = this.LoadSelect();
-                foreach (DataRow dr in dt.Rows)
-                {
-                    this.AddSelectInfo(dr[0].ToString());
-                }
+                this.UnLoadSelect();
+                this.LoadSelect(false);
             }
             catch (Exception ex)
             {
@@ -392,35 +487,11 @@ namespace SQLDAL
                     return true;
                 }
 
-                DataTable dt = this.LoadTable();
-                if (dt == null)
-                {
-                    return false;
-                }
-                foreach (DataRow dr in dt.Rows)
-                {
-                    this.AddTableInfo(dr[0].ToString());
-                }
+                this.LoadTable(true);
 
-                dt = this.LoadView();
-                if (dt == null)
-                {
-                    return false;
-                }
-                foreach (DataRow dr in dt.Rows)
-                {
-                    this.AddViewInfo(dr[0].ToString());
-                }
+                this.LoadView(true);
 
-                dt = this.LoadSelect();
-                if (dt == null)
-                {
-                    return false;
-                }
-                foreach (DataRow dr in dt.Rows)
-                {
-                    this.AddSelectInfo(dr[0].ToString());
-                }
+                this.LoadSelect(true);
 
                 this.isOpen = true;
                 this.OnOpenDatabase(new OpenDatabaseEventArgs(this));
@@ -440,39 +511,27 @@ namespace SQLDAL
             {
                 return;
             }
-            this.tables.Clear();
-            this.Views.Clear();
-            this.Selects.Clear();
-            this.Open();
+            this.RefreshTable();
+            this.RefreshView();
+            this.RefreshSelect();
         }
 
         public bool Close()
         {
             try
             {
-                if (this.isOpen)
+                if (!this.isOpen)
                 {
-                    foreach(TableInfo info in this.tables)
-                    {
-                        info.Close();
-                    }
-                    this.tables.Clear();
-                    foreach(ViewInfo info in this.views)
-                    {
-                        info.Close();
-                    }
-                    this.views.Clear();
-                    foreach(SelectInfo info in this.selects)
-                    {
-                        info.Close();
-                    }
-                    this.selects.Clear();
-                    this.isOpen = false;
-                    this.OnCloseDatabase(new CloseDatabaseEventArgs(this));
+                    return true;
                 }
+                this.UnLoadTable();
+                this.UnLoadView();
+                this.UnLoadSelect();
+                this.isOpen = false;
+                this.OnCloseDatabase(new CloseDatabaseEventArgs(this));
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.message = ex.Message;
                 LogHelper.Error(ex);

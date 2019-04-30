@@ -24,6 +24,21 @@ namespace SQLClient
             this.DoubleBuffered = true; 
         }
 
+        //const int WM_SYSCOMMAND = 0x112;
+        //const int SC_CLOSE = 0xF060;
+        //const int SC_MINIMIZE = 0xF020;
+        //const int SC_MAXIMIZE = 0xF030;
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == WM_SYSCOMMAND)
+        //    {
+        //        if (m.WParam.ToInt32() == SC_MAXIMIZE)
+        //        {
+        //            this.spMain.SplitterDistance = 261;
+        //        }
+        //    }
+        //}
+
         /// <summary>
         /// 设置状态栏左右宽度
         /// </summary>
@@ -283,7 +298,6 @@ namespace SQLClient
             {
                 NodeTypeInfo nodeTypeInfo = args as NodeTypeInfo;
                 DatabaseInfo info = nodeTypeInfo.DatabaseInfo;
-                TreeNode node = nodeTypeInfo.Node;
                 bool rslt = info.Open();
                 this.Invoke(new MethodInvoker(delegate ()
                 {
@@ -886,12 +900,14 @@ namespace SQLClient
                         if (!nodeTypeInfo.ConnectionInfo.IsOpen)
                         {
                             this.tsmiOpenConnect.Enabled = true;
+                            this.tsmiDeleteConnect.Enabled = true;
                             this.tsmiCloseConnect.Enabled = false;
                             this.tsmiRefreshConnect.Enabled = false;
                         }
                         else
                         {
                             this.tsmiOpenConnect.Enabled = false;
+                            this.tsmiDeleteConnect.Enabled = false;
                             this.tsmiCloseConnect.Enabled = true;
                             this.tsmiRefreshConnect.Enabled = true;
                         }
@@ -973,6 +989,10 @@ namespace SQLClient
             }
         }
 
+        /// <summary>
+        /// 添加驱动打开关闭状态图片
+        /// </summary>
+        /// <param name="info">连接信息</param>
         private void AddConnectImage(ConnectInfo info)
         {
             if (this.imgListListView.Images.ContainsKey(info.ClassName + "_close") ||
@@ -985,6 +1005,7 @@ namespace SQLClient
         }
 
         #region FormLoad Event
+
         private void SQLClientForm_Load(object sender, EventArgs e)
         {
             try
@@ -1013,6 +1034,7 @@ namespace SQLClient
                     this.tvMain.Nodes.Add(node);
                     this.tsObjectBlank.Text = $"{this.tvMain.Nodes.Count}服务器";
                 }
+                this.spMain.SplitterDistance = 261;
             }
             catch(Exception ex)
             {
@@ -1020,6 +1042,10 @@ namespace SQLClient
                 LogHelper.Error(ex);
             }
         }
+
+        #endregion
+
+        #region DAL Event
 
         private void Info_OpenConnect(object sender, OpenConnectEventArgs e)
         {
@@ -1034,6 +1060,12 @@ namespace SQLClient
                     {
                         dbInfo.OpenDatabase += DbInfo_OpenDatabase;
                         dbInfo.CloseDatabase += DbInfo_CloseDatabase;
+                        dbInfo.OpenTables += DbInfo_OpenTables;
+                        dbInfo.OpenViews += DbInfo_OpenViews;
+                        dbInfo.OpenSelects += DbInfo_OpenSelects;
+                        dbInfo.CloseTables += DbInfo_CloseTables;
+                        dbInfo.CloseViews += DbInfo_CloseViews;
+                        dbInfo.CloseSelects += DbInfo_CloseSelects;
                         TreeNode dbNode = new TreeNode();
                         dbNode.Text = dbInfo.Name;
                         dbNode.ImageKey = Resources.image_key_database_close;
@@ -1062,7 +1094,85 @@ namespace SQLClient
             }));
         }
 
-        private void DbInfo_CloseDatabase(object sender, CloseDatabaseEventArgs e)
+        private void DbInfo_CloseSelects(object sender, CloseSelectsEventArgs e)
+        {
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                try
+                {
+                    DatabaseInfo info = e.Info;
+                    TreeNode node = info.Node;
+                    NodeTypeInfo nodeTypeInfo = node.Tag as NodeTypeInfo;
+                    TreeNode sgNode = node.Nodes[2];
+                    foreach (TreeNode sNode in sgNode.Nodes)
+                    {
+                        NodeTypeInfo sNodeTypeInfo = sNode.Tag as NodeTypeInfo;
+                        SelectInfo sInfo = sNodeTypeInfo.SelectInfo;
+                        XtraTabPage openSelectPage = sInfo.OpenSelectPage as XtraTabPage;
+                        if (openSelectPage != null)
+                        {
+                            this.tcMain.TabPages.Remove(openSelectPage);
+                            this.SelectPage();
+                        }
+                    }
+
+                    foreach (object o in info.NewSelectPages)
+                    {
+                        XtraTabPage page = o as XtraTabPage;
+                        this.tcMain.TabPages.Remove(page);
+                        this.SelectPage();
+                    }
+                    while (sgNode.Nodes.Count > 0)
+                    {
+                        sgNode.Nodes[0].Remove();
+                    }
+                    info.NewSelectPages.Clear();
+                    nodeTypeInfo.SelectList.Clear();
+                    this.tpObject.Controls.Remove(nodeTypeInfo.SelectList);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ex);
+                }
+            }));
+        }
+
+        private void DbInfo_CloseViews(object sender, CloseViewsEventArgs e)
+        {
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                try
+                {
+                    DatabaseInfo info = e.Info;
+                    TreeNode node = info.Node;
+                    NodeTypeInfo nodeTypeInfo = node.Tag as NodeTypeInfo;
+                    TreeNode vgNode = node.Nodes[1];
+                    foreach (TreeNode vNode in vgNode.Nodes)
+                    {
+                        NodeTypeInfo vNodeTypeInfo = vNode.Tag as NodeTypeInfo;
+                        ViewInfo vInfo = vNodeTypeInfo.ViewInfo;
+                        XtraTabPage openViewPage = vInfo.OpenViewPage as XtraTabPage;
+                        if (openViewPage != null)
+                        {
+                            this.tcMain.TabPages.Remove(openViewPage);
+                            this.SelectPage();
+                        }
+                    }
+                    while (vgNode.Nodes.Count > 0)
+                    {
+                        vgNode.Nodes[0].Remove();
+                    }
+                    nodeTypeInfo.ViewList.Clear();
+                    this.tpObject.Controls.Remove(nodeTypeInfo.ViewList);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ex);
+                }
+            }));
+        }
+
+        private void DbInfo_CloseTables(object sender, CloseTablesEventArgs e)
         {
             this.Invoke(new MethodInvoker(delegate ()
             {
@@ -1079,7 +1189,6 @@ namespace SQLClient
                         XtraTabPage openTablePage = tbInfo.OpenTablePage as XtraTabPage;
                         if (openTablePage != null)
                         {
-                            //TODO close page
                             this.tcMain.TabPages.Remove(openTablePage);
                             this.SelectPage();
                         }
@@ -1087,45 +1196,9 @@ namespace SQLClient
                         XtraTabPage designTablePage = tbInfo.DesignTablePage as XtraTabPage;
                         if (designTablePage != null)
                         {
-                            //TODO close page
                             this.tcMain.TabPages.Remove(designTablePage);
                             this.SelectPage();
                         }
-                    }
-
-                    TreeNode vgNode = node.Nodes[1];
-                    foreach (TreeNode vNode in vgNode.Nodes)
-                    {
-                        NodeTypeInfo vNodeTypeInfo = vNode.Tag as NodeTypeInfo;
-                        ViewInfo vInfo = vNodeTypeInfo.ViewInfo;
-                        XtraTabPage openViewPage = vInfo.OpenViewPage as XtraTabPage;
-                        if (openViewPage != null)
-                        {
-                            //TODO close page
-                            this.tcMain.TabPages.Remove(openViewPage);
-                            this.SelectPage();
-                        }
-                    }
-
-                    TreeNode sgNode = node.Nodes[2];
-                    foreach (TreeNode sNode in sgNode.Nodes)
-                    {
-                        NodeTypeInfo sNodeTypeInfo = sNode.Tag as NodeTypeInfo;
-                        SelectInfo sInfo = sNodeTypeInfo.SelectInfo;
-                        XtraTabPage openSelectPage = sInfo.OpenSelectPage as XtraTabPage;
-                        if (openSelectPage != null)
-                        {
-                            //TODO close page
-                            this.tcMain.TabPages.Remove(openSelectPage);
-                            this.SelectPage();
-                        }
-                    }
-
-                    foreach(object o in info.NewSelectPages)
-                    {
-                        XtraTabPage page = o as XtraTabPage;
-                        this.tcMain.TabPages.Remove(page);
-                        this.SelectPage();
                     }
 
                     foreach (object o in info.NewTablePages)
@@ -1134,18 +1207,213 @@ namespace SQLClient
                         this.tcMain.TabPages.Remove(page);
                         this.SelectPage();
                     }
+                    while(tgNode.Nodes.Count > 0)
+                    {
+                        tgNode.Nodes[0].Remove();
+                    }
                     info.NewTablePages.Clear();
-                    info.NewSelectPages.Clear();
-                    tgNode.Remove();
-                    vgNode.Remove();
-                    sgNode.Remove();
                     nodeTypeInfo.TableList.Clear();
-                    nodeTypeInfo.ViewList.Clear();
-                    nodeTypeInfo.SelectList.Clear();
                     this.tpObject.Controls.Remove(nodeTypeInfo.TableList);
-                    this.tpObject.Controls.Remove(nodeTypeInfo.ViewList);
-                    this.tpObject.Controls.Remove(nodeTypeInfo.SelectList);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ex);
+                }
+            }));
+        }
 
+        private void DbInfo_OpenSelects(object sender, OpenSelectsEventArgs e)
+        {
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                try
+                {
+                    DatabaseInfo info = e.Info;
+                    TreeNode node = info.Node;
+                    NodeTypeInfo nodeTypeInfo = node.Tag as NodeTypeInfo;
+                    TreeNode sgNode = null;
+                    NodeTypeInfo sgNodeTypeInfo = null;
+                    if (e.IsFirst)
+                    {
+                        sgNode = new TreeNode();
+                        sgNodeTypeInfo = new NodeTypeInfo(NodeType.eSelectGroup, sgNode, info);
+                        sgNode.Text = Resources.node_name_select;
+                        sgNode.ImageKey = Resources.image_key_select;
+                        sgNode.SelectedImageKey = Resources.image_key_select;
+                        sgNode.Tag = sgNodeTypeInfo;
+                        node.Nodes.Add(sgNode);
+                    }
+                    else
+                    {
+                        sgNode = node.Nodes[2];
+                        sgNodeTypeInfo = sgNode.Tag as NodeTypeInfo;
+                    }
+                    
+                    sgNodeTypeInfo.SelectList = new SelectListView();
+                    sgNodeTypeInfo.SelectList.NewSelect += SelectList_NewSelect;
+                    sgNodeTypeInfo.SelectList.OpenSelect += SelectList_OpenSelect;
+                    sgNodeTypeInfo.SelectList.ListViewShowMenu += SelectList_ListViewShowMenu;
+                    sgNodeTypeInfo.SelectList.SmallImageList = this.imgListListView;
+                    sgNodeTypeInfo.SelectList.Dock = DockStyle.Fill;
+                    sgNodeTypeInfo.SelectList.View = View.List;
+                    sgNodeTypeInfo.SelectList.Visible = false;
+                    sgNodeTypeInfo.SelectList.Tag = sgNodeTypeInfo;
+                    sgNodeTypeInfo.SelectList.DatabaseInfo = info;
+                    sgNodeTypeInfo.SelectList.Tree = this.tvMain;
+                    this.tpObject.Controls.Add(sgNodeTypeInfo.SelectList);
+                    foreach (SelectInfo sInfo in info.Selects)
+                    {
+                        TreeNode sNode = new TreeNode();
+                        sNode.Text = sInfo.Name;
+                        sNode.ImageKey = Resources.image_key_select;
+                        sNode.SelectedImageKey = Resources.image_key_select;
+                        sNode.Tag = new NodeTypeInfo(NodeType.eSelect, sNode, sInfo);
+                        sInfo.Node = sNode;
+                        sgNode.Nodes.Add(sNode);
+                        sgNodeTypeInfo.SelectList.AddItem(sInfo, Resources.image_key_select);
+                    }
+                    nodeTypeInfo.SelectList = sgNodeTypeInfo.SelectList;
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ex);
+                }
+            }));
+        }
+
+        private void DbInfo_OpenViews(object sender, OpenViewsEventArgs e)
+        {
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                try
+                {
+                    DatabaseInfo info = e.Info;
+                    TreeNode node = info.Node;
+                    NodeTypeInfo nodeTypeInfo = node.Tag as NodeTypeInfo;
+                    TreeNode vgNode = null;
+                    NodeTypeInfo vgNodeTypeInfo = null;
+                    if (e.IsFirst)
+                    {
+                        vgNode = new TreeNode();
+                        vgNodeTypeInfo = new NodeTypeInfo(NodeType.eViewGroup, vgNode, info);
+                        vgNode.Text = Resources.node_name_view;
+                        vgNode.ImageKey = Resources.image_key_view;
+                        vgNode.SelectedImageKey = Resources.image_key_view;
+                        vgNode.Tag = vgNodeTypeInfo;
+                        node.Nodes.Add(vgNode);
+                    }
+                    else
+                    {
+                        vgNode = node.Nodes[1];
+                        vgNodeTypeInfo = vgNode.Tag as NodeTypeInfo;
+                    }
+
+                    //add view node and view listview
+                    vgNodeTypeInfo.ViewList = new ViewListView();
+                    vgNodeTypeInfo.ViewList.OpenView += ViewList_OpenView;
+                    vgNodeTypeInfo.ViewList.DesignView += ViewList_DesignView;
+                    vgNodeTypeInfo.ViewList.ListViewShowMenu += ViewList_ListViewShowMenu;
+                    vgNodeTypeInfo.ViewList.SmallImageList = this.imgListListView;
+                    vgNodeTypeInfo.ViewList.Dock = DockStyle.Fill;
+                    vgNodeTypeInfo.ViewList.View = View.List;
+                    vgNodeTypeInfo.ViewList.Visible = false;
+                    vgNodeTypeInfo.ViewList.Tag = vgNodeTypeInfo;
+                    vgNodeTypeInfo.ViewList.DatabaseInfo = info;
+                    vgNodeTypeInfo.ViewList.Tree = this.tvMain;
+                    this.tpObject.Controls.Add(vgNodeTypeInfo.ViewList);
+                    foreach (ViewInfo vInfo in info.Views)
+                    {
+                        TreeNode vNode = new TreeNode();
+                        vNode.Text = vInfo.Name;
+                        vNode.ImageKey = Resources.image_key_view;
+                        vNode.SelectedImageKey = Resources.image_key_view;
+                        vNode.Tag = new NodeTypeInfo(NodeType.eView, vNode, vInfo);
+                        vInfo.Node = vNode;
+                        vgNode.Nodes.Add(vNode);
+                        vgNodeTypeInfo.ViewList.AddItem(vInfo, Resources.image_key_view);
+                    }
+                    nodeTypeInfo.ViewList = vgNodeTypeInfo.ViewList;
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ex);
+                }
+            }));
+        }
+
+        private void DbInfo_OpenTables(object sender, OpenTablesEventArgs e)
+        {
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                try
+                {
+                    DatabaseInfo info = e.Info;
+                    TreeNode node = info.Node;
+                    NodeTypeInfo nodeTypeInfo = node.Tag as NodeTypeInfo;
+                    TreeNode tgNode = null;
+                    NodeTypeInfo tgNodeTypeInfo = null;
+                    if (e.IsFirst)
+                    {
+                        tgNode = new TreeNode();
+                        tgNodeTypeInfo = new NodeTypeInfo(NodeType.eTableGroup, tgNode, info);
+                        tgNode.Text = Resources.node_name_table;
+                        tgNode.ImageKey = Resources.image_key_table;
+                        tgNode.SelectedImageKey = Resources.image_key_table;
+                        tgNode.Tag = tgNodeTypeInfo;
+                        node.Nodes.Add(tgNode);
+                    }
+                    else
+                    {
+                        tgNode = node.Nodes[0];
+                        tgNodeTypeInfo = tgNode.Tag as NodeTypeInfo;
+                    }
+                    
+                    tgNodeTypeInfo.TableList = new TableListView();
+                    tgNodeTypeInfo.TableList.OpenTable += TableList_OpenTable;
+                    tgNodeTypeInfo.TableList.DesignTable += TableList_DesignTable;
+                    tgNodeTypeInfo.TableList.NewTable += TableList_NewTable;
+                    tgNodeTypeInfo.TableList.ListViewShowMenu += TableList_ListViewShowMenu;
+                    tgNodeTypeInfo.TableList.SmallImageList = this.imgListListView;
+                    tgNodeTypeInfo.TableList.Dock = DockStyle.Fill;
+                    tgNodeTypeInfo.TableList.View = View.List;
+                    tgNodeTypeInfo.TableList.Visible = false;
+                    tgNodeTypeInfo.TableList.Tag = tgNodeTypeInfo;
+                    tgNodeTypeInfo.TableList.DatabaseInfo = info;
+                    tgNodeTypeInfo.TableList.Tree = this.tvMain;
+                    this.tpObject.Controls.Add(tgNodeTypeInfo.TableList);
+                    foreach (TableInfo tbInfo in info.Tables)
+                    {
+                        TreeNode tbNode = new TreeNode();
+                        tbNode.Text = tbInfo.Name;
+                        tbNode.ImageKey = Resources.image_key_table;
+                        tbNode.SelectedImageKey = Properties.Resources.image_key_table;
+                        tbNode.Tag = new NodeTypeInfo(NodeType.eTable, tbNode, tbInfo);
+                        tgNode.Nodes.Add(tbNode);
+                        tbInfo.Node = tbNode;
+                        tgNodeTypeInfo.TableList.AddItem(tbInfo, Properties.Resources.image_key_table);
+                    }
+                    nodeTypeInfo.TableList = tgNodeTypeInfo.TableList;
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ex);
+                }
+            }));
+        }
+
+        private void DbInfo_CloseDatabase(object sender, CloseDatabaseEventArgs e)
+        {
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                try
+                {
+                    DatabaseInfo info = e.Info;
+                    TreeNode node = info.Node;
+                    NodeTypeInfo nodeTypeInfo = node.Tag as NodeTypeInfo;
+                    while(node.Nodes.Count > 0)
+                    {
+                        node.Nodes[0].Remove();
+                    }
                     node.ImageKey = Resources.image_key_database_close;
                     node.SelectedImageKey = Resources.image_key_database_close;
                     this.tsObjectBlank.Text = $"{info.ConnectInfo.Databases.Count}数据据库";
@@ -1173,117 +1441,9 @@ namespace SQLClient
                     DatabaseInfo info = e.Info;
                     TreeNode node = info.Node;
                     NodeTypeInfo nodeTypeInfo = node.Tag as NodeTypeInfo;
-                    this.tvMain.BeginUpdate();
-                    //add table group node
-                    TreeNode tgNode = new TreeNode();
-                    NodeTypeInfo tgNodeTypeInfo = new NodeTypeInfo(NodeType.eTableGroup, tgNode, info);
-                    tgNode.Text = Resources.node_name_table;
-                    tgNode.ImageKey = Resources.image_key_table;
-                    tgNode.SelectedImageKey = Resources.image_key_table;
-                    tgNode.Tag = tgNodeTypeInfo;
-                    node.Nodes.Add(tgNode);
-
-                    //add table node and add table listview
-                    tgNodeTypeInfo.TableList = new TableListView();
-                    tgNodeTypeInfo.TableList.OpenTable += TableList_OpenTable;
-                    tgNodeTypeInfo.TableList.DesignTable += TableList_DesignTable;
-                    tgNodeTypeInfo.TableList.NewTable += TableList_NewTable;
-                    tgNodeTypeInfo.TableList.ListViewShowMenu += TableList_ListViewShowMenu;
-                    tgNodeTypeInfo.TableList.SmallImageList = this.imgListListView;
-                    tgNodeTypeInfo.TableList.Dock = DockStyle.Fill;
-                    tgNodeTypeInfo.TableList.View = View.List;
-                    tgNodeTypeInfo.TableList.Visible = false;
-                    tgNodeTypeInfo.TableList.Tag = tgNodeTypeInfo;
-                    tgNodeTypeInfo.TableList.DatabaseInfo = info;
-                    tgNodeTypeInfo.TableList.Tree = this.tvMain;
-                    this.tpObject.Controls.Add(tgNodeTypeInfo.TableList);
-                    foreach (TableInfo tbInfo in info.Tables)
-                    {
-                        TreeNode tbNode = new TreeNode();
-                        tbNode.Text = tbInfo.Name;
-                        tbNode.ImageKey = Resources.image_key_table;
-                        tbNode.SelectedImageKey = Properties.Resources.image_key_table;
-                        tbNode.Tag = new NodeTypeInfo(NodeType.eTable, tbNode, tbInfo);
-                        tgNode.Nodes.Add(tbNode);
-                        tbInfo.Node = tbNode;
-                        tgNodeTypeInfo.TableList.AddItem(tbInfo, Properties.Resources.image_key_table);
-                    }
-
-                    //add view group node
-                    TreeNode vgpNode = new TreeNode();
-                    NodeTypeInfo vgNodeTypeInfo = new NodeTypeInfo(NodeType.eViewGroup, vgpNode, info);
-                    vgpNode.Text = Resources.node_name_view;
-                    vgpNode.ImageKey = Resources.image_key_view;
-                    vgpNode.SelectedImageKey = Resources.image_key_view;
-                    vgpNode.Tag = vgNodeTypeInfo;
-                    node.Nodes.Add(vgpNode);
-
-                    //add view node and view listview
-                    vgNodeTypeInfo.ViewList = new ViewListView();
-                    vgNodeTypeInfo.ViewList.OpenView += ViewList_OpenView;
-                    vgNodeTypeInfo.ViewList.DesignView += ViewList_DesignView;
-                    vgNodeTypeInfo.ViewList.ListViewShowMenu += ViewList_ListViewShowMenu;
-                    vgNodeTypeInfo.ViewList.SmallImageList = this.imgListListView;
-                    vgNodeTypeInfo.ViewList.Dock = DockStyle.Fill;
-                    vgNodeTypeInfo.ViewList.View = View.List;
-                    vgNodeTypeInfo.ViewList.Visible = false;
-                    vgNodeTypeInfo.ViewList.Tag = vgNodeTypeInfo;
-                    vgNodeTypeInfo.ViewList.DatabaseInfo = info;
-                    vgNodeTypeInfo.ViewList.Tree = this.tvMain;
-                    this.tpObject.Controls.Add(vgNodeTypeInfo.ViewList);
-                    foreach (ViewInfo vInfo in info.Views)
-                    {
-                        TreeNode vNode = new TreeNode();
-                        vNode.Text = vInfo.Name;
-                        vNode.ImageKey = Resources.image_key_view;
-                        vNode.SelectedImageKey = Resources.image_key_view;
-                        vNode.Tag = new NodeTypeInfo(NodeType.eView, vNode, vInfo);
-                        vInfo.Node = vNode;
-                        vgpNode.Nodes.Add(vNode);
-                        vgNodeTypeInfo.ViewList.AddItem(vInfo, Resources.image_key_view);
-                    }
-
-                    //add select group
-                    TreeNode sgNode = new TreeNode();
-                    NodeTypeInfo sgNodeTypeInfo = new NodeTypeInfo(NodeType.eSelectGroup, sgNode, info);
-                    sgNode.Text = Resources.node_name_select;
-                    sgNode.ImageKey = Resources.image_key_select;
-                    sgNode.SelectedImageKey = Resources.image_key_select;
-                    sgNode.Tag = sgNodeTypeInfo;
-                    node.Nodes.Add(sgNode);
-
-                    //add select node and select listview
-                    sgNodeTypeInfo.SelectList = new SelectListView();
-                    sgNodeTypeInfo.SelectList.NewSelect += SelectList_NewSelect;
-                    sgNodeTypeInfo.SelectList.OpenSelect += SelectList_OpenSelect;
-                    sgNodeTypeInfo.SelectList.ListViewShowMenu += SelectList_ListViewShowMenu;
-                    sgNodeTypeInfo.SelectList.SmallImageList = this.imgListListView;
-                    sgNodeTypeInfo.SelectList.Dock = DockStyle.Fill;
-                    sgNodeTypeInfo.SelectList.View = View.List;
-                    sgNodeTypeInfo.SelectList.Visible = false;
-                    sgNodeTypeInfo.SelectList.Tag = sgNodeTypeInfo;
-                    sgNodeTypeInfo.SelectList.DatabaseInfo = info;
-                    sgNodeTypeInfo.SelectList.Tree = this.tvMain;
-                    this.tpObject.Controls.Add(sgNodeTypeInfo.SelectList);
-                    foreach (SelectInfo sInfo in info.Selects)
-                    {
-                        TreeNode sNode = new TreeNode();
-                        sNode.Text = sInfo.Name;
-                        sNode.ImageKey = Resources.image_key_select;
-                        sNode.SelectedImageKey = Resources.image_key_select;
-                        sNode.Tag = new NodeTypeInfo(NodeType.eSelect, sNode, sInfo);
-                        sInfo.Node = sNode;
-                        sgNode.Nodes.Add(sNode);
-                        sgNodeTypeInfo.SelectList.AddItem(sInfo, Resources.image_key_select);
-                    }
-                    this.tvMain.EndUpdate();
                     node.ImageKey = Resources.image_key_database_open;
                     node.SelectedImageKey = Resources.image_key_database_open;
                     node.Expand();
-                    nodeTypeInfo.TableList = tgNodeTypeInfo.TableList;
-                    nodeTypeInfo.ViewList = vgNodeTypeInfo.ViewList;
-                    nodeTypeInfo.SelectList = sgNodeTypeInfo.SelectList;
-
                     this.SelectDbNode(node, this.currentViewListType, true);
                     this.SelectToolBar();
                     nodeTypeInfo.TableList.UnSelectItem();
@@ -1334,6 +1494,7 @@ namespace SQLClient
                 }
             }));
         }
+
         #endregion
 
         #region ListView Event
@@ -1840,6 +2001,7 @@ namespace SQLClient
                 LogHelper.Error(ex);
             }
         }
+
         #endregion
 
         #region FormResize Event
@@ -1973,26 +2135,6 @@ namespace SQLClient
             }
         }
 
-        private void tsmiOpenConnect_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                NodeTypeInfo nodeTypeInfo = this.tvMain.SelectedNode.Tag as NodeTypeInfo;
-                ConnectInfo info = nodeTypeInfo.ConnectionInfo;
-                if (info.IsOpen)
-                {
-                    return;
-                }
-                AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(OpenConnect);
-                ah.BeginInvoke(nodeTypeInfo, null, null);
-                this.waitForm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Error(ex);
-            }
-        }
-
         private void tsmiOpenDatabase_Click(object sender, EventArgs e)
         {
             try
@@ -2096,44 +2238,12 @@ namespace SQLClient
             }
         }
 
-        private void tsmiGrupNewSelect_Click(object sender, EventArgs e)
+        private void tsmiGroupNewSelect_Click(object sender, EventArgs e)
         {
             try
             {
                 DatabaseInfo databaseInfo = this.cmsSelectGroup.Tag as DatabaseInfo;
                 this.NewSelect(databaseInfo);
-            }
-            catch(Exception ex)
-            {
-                LogHelper.Error(ex);
-            }
-        }
-
-        private void tsmiOpenSelect_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SelectInfo info = this.cmsSelect.Tag as SelectInfo;
-                if (info.IsOpen)
-                {
-                    return;
-                }
-                AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(OpenSelect);
-                ah.BeginInvoke(info, null, null);
-                this.waitForm.ShowDialog();
-            }
-            catch(Exception ex)
-            {
-                LogHelper.Error(ex);
-            }
-        }
-
-        private void tsmiNewSelect_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SelectInfo selectInfo = this.cmsSelect.Tag as SelectInfo;
-                this.NewSelect(selectInfo.DatabaseInfo);
             }
             catch(Exception ex)
             {
@@ -2158,24 +2268,6 @@ namespace SQLClient
                 this.waitForm.ShowDialog();
             }
             catch (Exception ex)
-            {
-                LogHelper.Error(ex);
-            }
-        }
-
-        private void tsmiCloseConnect_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (this.tvMain.SelectedNode == null) return;
-                NodeTypeInfo nodeTypeInfo = this.tvMain.SelectedNode.Tag as NodeTypeInfo;
-                if (nodeTypeInfo.NodeType != NodeType.eConnect) return;
-                ConnectInfo info = nodeTypeInfo.ConnectionInfo;
-                AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(CloseConnect);
-                ah.BeginInvoke(nodeTypeInfo, null, null);
-                this.waitForm.ShowDialog();
-            }
-            catch(Exception ex)
             {
                 LogHelper.Error(ex);
             }
@@ -2269,14 +2361,160 @@ namespace SQLClient
                 if (info.IsOpen)
                 {
                     this.tsmiMenuCloseConnect.Enabled = true;
+                    this.tsmiMenuDeleteConnect.Enabled = false;
+                    this.tsmiMenuOpenConnect.Enabled = false;
                 }
                 else
                 {
                     this.tsmiMenuCloseConnect.Enabled = false;
+                    this.tsmiMenuDeleteConnect.Enabled = true;
+                    this.tsmiMenuOpenConnect.Enabled = true;
                 }
             }
         }
+
+        private void tsmiDeleteConnect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NodeTypeInfo nodeTypeInfo = this.tvMain.SelectedNode.Tag as NodeTypeInfo;
+                ConnectInfo info = nodeTypeInfo.ConnectionInfo;
+                if (info.IsOpen)
+                {
+                    return;
+                }
+                info.Node.Remove();
+                ConnectInfo.RemoveConnection(info.Name);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
+        private void tsmiOpenConnect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NodeTypeInfo nodeTypeInfo = this.tvMain.SelectedNode.Tag as NodeTypeInfo;
+                ConnectInfo info = nodeTypeInfo.ConnectionInfo;
+                if (info.IsOpen)
+                {
+                    return;
+                }
+                AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(OpenConnect);
+                ah.BeginInvoke(nodeTypeInfo, null, null);
+                this.waitForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
+        private void tsmiCloseConnect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.tvMain.SelectedNode == null) return;
+                NodeTypeInfo nodeTypeInfo = this.tvMain.SelectedNode.Tag as NodeTypeInfo;
+                if (nodeTypeInfo.NodeType != NodeType.eConnect) return;
+                ConnectInfo info = nodeTypeInfo.ConnectionInfo;
+                AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(CloseConnect);
+                ah.BeginInvoke(nodeTypeInfo, null, null);
+                this.waitForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
+        private void tsmiMenuDeleteConnect_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.tvMain.SelectedNode == null) return;
+                NodeTypeInfo nodeTypeInfo = this.tvMain.SelectedNode.Tag as NodeTypeInfo;
+                if (nodeTypeInfo.NodeType != NodeType.eConnect) return;
+                ConnectInfo info = nodeTypeInfo.ConnectionInfo;
+                if (info.IsOpen)
+                {
+                    return;
+                }
+                info.Node.Remove();
+                ConnectInfo.RemoveConnection(info.Name);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
+        private void tsmiOpenSelect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SelectInfo info = this.cmsSelect.Tag as SelectInfo;
+                if (info.IsOpen)
+                {
+                    return;
+                }
+                AsyncHelper.AsyncHandlerArgs ah = new AsyncHelper.AsyncHandlerArgs(OpenSelect);
+                ah.BeginInvoke(info, null, null);
+                this.waitForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
+        private void tsmiNewSelect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SelectInfo selectInfo = this.cmsSelect.Tag as SelectInfo;
+                this.NewSelect(selectInfo.DatabaseInfo);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
+        private void tsmiRefreshSelect_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsmiRefreshSelectGroup_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DatabaseInfo databaseInfo = this.cmsSelectGroup.Tag as DatabaseInfo;
+                databaseInfo.RefreshSelect();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+
         #endregion
 
+        private void tsmiRefreshTableGroup_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DatabaseInfo databaseInfo = this.cmsTableGroup.Tag as DatabaseInfo;
+                databaseInfo.RefreshTable();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
+        
     }
 }
