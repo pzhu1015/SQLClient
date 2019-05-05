@@ -41,6 +41,7 @@
             // 
             // tsTable
             // 
+            this.tsTable.AllowMerge = false;
             this.tsTable.GripMargin = new System.Windows.Forms.Padding(0);
             this.tsTable.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {

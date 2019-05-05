@@ -1,4 +1,5 @@
 ﻿using Helper;
+using SQLDAL.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +19,9 @@ namespace SQLDAL
         public event CloseTablesEventHandler CloseTables;
         public event CloseViewsEventHandler CloseViews;
         public event CloseSelectsEventHandler CloseSelects;
+        public event RefreshTablesEventHandler RefreshTables;
+        public event RefreshViewsEventHandler RefreshViews;
+        public event RefreshSelectEventHandler RefreshSelects;
         private TreeNode node;
         private string name;
         private string message;
@@ -26,6 +30,9 @@ namespace SQLDAL
         private List<TableInfo> tables = new List<TableInfo>();
         private List<ViewInfo> views = new List<ViewInfo>();
         private List<SelectInfo> selects = new List<SelectInfo>();
+        private Dictionary<string, TableInfo> tableMaps = new Dictionary<string, TableInfo>();
+        private Dictionary<string, ViewInfo> viewMaps = new Dictionary<string, ViewInfo>();
+        private Dictionary<string, SelectInfo> selectMaps = new Dictionary<string, SelectInfo>();
         private List<object> newSelectPages = new List<object>();
         private List<object> newTablePages = new List<object>();
 
@@ -223,12 +230,37 @@ namespace SQLDAL
             }
         }
 
+        private void OnRefreshTables(RefreshTablesEventArgs e)
+        {
+            if (this.RefreshTables != null)
+            {
+                this.RefreshTables(this, e);
+            }
+        }
+
+        private void OnRefreshViews(RefreshViewsEventArgs e)
+        {
+            if (this.RefreshViews != null)
+            {
+                this.RefreshViews(this, e);
+            }
+        }
+
+        private void OnRefreshSelects(RefreshSelectsEventArgs e)
+        {
+            if (this.RefreshSelects != null)
+            {
+                this.RefreshSelects(this, e);
+            }
+        }
+
         public TableInfo AddTableInfo(string name)
         {
             TableInfo info = new TableInfo();
             info.Name = name;
             info.DatabaseInfo = this;
             this.tables.Add(info);
+            this.tableMaps.Add(info.Name, info);
             return info;
         }
 
@@ -238,6 +270,7 @@ namespace SQLDAL
             info.Name = name;
             info.DatabaseInfo = this;
             this.views.Add(info);
+            this.viewMaps.Add(info.Name, info);
             return info;
         }
 
@@ -247,6 +280,7 @@ namespace SQLDAL
             info.Name = name;
             info.DatabaseInfo = this;
             this.selects.Add(info);
+            this.selectMaps.Add(info.Name, info);
             return info;
         }
 
@@ -276,7 +310,8 @@ namespace SQLDAL
                 using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
                 {
                     connection.Open();
-                    DbCommand command = connection.CreateCommand(); command.CommandText = $"INSERT INTO TB_SELECT VALUES(@selectName, @script, @connectName, @databaseName)";
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = Resources.InsertSelectScript;
                     command.Parameters.Add(new SQLiteParameter("selectName", selectName));
                     command.Parameters.Add(new SQLiteParameter("script", script));
                     command.Parameters.Add(new SQLiteParameter("connectName", this.connectInfo.Name));
@@ -292,7 +327,7 @@ namespace SQLDAL
             }
         }
 
-        public bool LoadTable(bool isFirst)
+        public bool LoadTable()
         {
             try
             {
@@ -308,7 +343,6 @@ namespace SQLDAL
                         this.AddTableInfo(dr[0].ToString());
                     }
                 }
-                this.OnOpenTables(new OpenTablesEventArgs(this, isFirst));
                 return true;
             }
             catch (Exception ex)
@@ -319,7 +353,7 @@ namespace SQLDAL
             }
         }
 
-        public bool LoadView(bool isFirst)
+        public bool LoadView()
         {
             try
             {
@@ -335,7 +369,6 @@ namespace SQLDAL
                         this.AddViewInfo(dr[0].ToString());
                     }
                 }
-                this.OnOpenViews(new OpenViewsEventArgs(this, isFirst));
                 return true;
             }
             catch (Exception ex)
@@ -345,7 +378,7 @@ namespace SQLDAL
             }
         }
 
-        public bool LoadSelect(bool isFirst)
+        public bool LoadSelect()
         {
             try
             {
@@ -354,7 +387,9 @@ namespace SQLDAL
                     connection.Open();
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"SELECT * FROM TB_SELECT WHERE DATABASE='{this.name}' AND CONNECT='{this.connectInfo.Name}'";
+                    command.CommandText = Resources.LoadSelectScript;
+                    command.Parameters.Add(new SQLiteParameter("@database", this.name));
+                    command.Parameters.Add(new SQLiteParameter("@connect", this.connectInfo.Name));
                     DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
                     da.Fill(ds);
                     foreach (DataRow dr in ds.Tables[0].Rows)
@@ -362,7 +397,6 @@ namespace SQLDAL
                         this.AddSelectInfo(dr[0].ToString());
                     }
                 }
-                this.OnOpenSelects(new OpenSelectsEventArgs(this, isFirst));
                 return true;
             }
             catch (Exception ex)
@@ -379,7 +413,7 @@ namespace SQLDAL
                 info.Close();
             }
             this.tables.Clear();
-            this.OnCloseTables(new CloseTablesEventArgs(this));
+            this.tableMaps.Clear();
             return true;
         }
 
@@ -390,7 +424,7 @@ namespace SQLDAL
                 info.Close();
             }
             this.views.Clear();
-            this.OnCloseViews(new CloseViewsEventArgs(this));
+            this.viewMaps.Clear();
             return true;
         }
 
@@ -401,7 +435,7 @@ namespace SQLDAL
                 info.Close();
             }
             this.selects.Clear();
-            this.OnCloseSelects(new CloseSelectsEventArgs(this));
+            this.selectMaps.Clear();
             return true;
         }
 
@@ -413,7 +447,8 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DataSet ds = new DataSet();
-                    DbCommand command = connection.CreateCommand();command.CommandText = $"UPDATE TB_SELECT SET CONTENTS=@script WHERE NAME=@selectName AND CONNECT=@connectName AND DATABASE=@databaseName";
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = Resources.UpdateSelectScript;
                     command.Parameters.Add(new SQLiteParameter("@script", script));
                     command.Parameters.Add(new SQLiteParameter("@selectName", selectName));
                     command.Parameters.Add(new SQLiteParameter("@connectName", this.connectInfo.Name));
@@ -435,8 +470,40 @@ namespace SQLDAL
                 {
                     return;
                 }
-                this.UnLoadTable();
-                this.LoadTable(false);
+
+                List<TableInfo> openTables = new List<TableInfo>();
+                List<TableInfo> designTables = new List<TableInfo>();
+                List<TableInfo> newTables = new List<TableInfo>();
+                using (DbConnection connection = this.connectInfo.GetConnection(this.name))
+                {
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = this.connectInfo.GetLoadTableScript(this.name);
+                    DbDataAdapter da = this.connectInfo.GetDataAdapter(command);
+                    da.Fill(ds);
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        string tableName = dr[0].ToString();
+                        if (this.tableMaps.ContainsKey(tableName))
+                        {
+                            TableInfo tableInfo = this.tableMaps[tableName];
+                            if (tableInfo.IsOpen)
+                            {
+                                openTables.Add(tableInfo);
+                            }
+                            if (tableInfo.IsDesign)
+                            {
+                                designTables.Add(tableInfo);
+                            }
+                        }
+                        else
+                        {
+                            TableInfo tableInfo = this.AddTableInfo(tableName);
+                            newTables.Add(tableInfo);
+                        }
+                    }
+                }
+                this.OnRefreshTables(new RefreshTablesEventArgs(this, newTables, openTables, designTables));
             }
             catch (Exception ex)
             {
@@ -452,8 +519,39 @@ namespace SQLDAL
                 {
                     return;
                 }
-                this.UnLoadView();
-                this.LoadView(false);
+                List<ViewInfo> newViews = new List<ViewInfo>();
+                List<ViewInfo> openViews = new List<ViewInfo>();
+                List<ViewInfo> designViews = new List<ViewInfo>();
+                using (DbConnection connection = this.connectInfo.GetConnection(this.name))
+                {
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = this.connectInfo.GetLoadViewScript(this.name);
+                    DbDataAdapter da = this.connectInfo.GetDataAdapter(command);
+                    da.Fill(ds);
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        string viewName = dr[0].ToString();
+                        if (this.viewMaps.ContainsKey(viewName))
+                        {
+                            ViewInfo viewInfo = this.viewMaps[viewName];
+                            if (viewInfo.IsOpen)
+                            {
+                                openViews.Add(viewInfo);
+                            }
+                            if (viewInfo.IsDesign)
+                            {
+                                designViews.Add(viewInfo);
+                            }
+                        }
+                        else
+                        {
+                            ViewInfo viewInfo = this.AddViewInfo(viewName);
+                            newViews.Add(viewInfo);
+                        }
+                    }
+                }
+                this.OnRefreshViews(new RefreshViewsEventArgs(this, newViews, openViews, designViews));
             }
             catch (Exception ex)
             {
@@ -468,9 +566,38 @@ namespace SQLDAL
                 if (!this.isOpen)
                 {
                     return;
+                };
+                List<SelectInfo> newSelects = new List<SelectInfo>();
+                List<SelectInfo> openSelects = new List<SelectInfo>();
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DataSet ds = new DataSet();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = Resources.LoadSelectScript;
+                    command.Parameters.Add(new SQLiteParameter("@database", this.name));
+                    command.Parameters.Add(new SQLiteParameter("@connect", this.connectInfo.Name));
+                    DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
+                    da.Fill(ds);
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        string selectName = dr[0].ToString();
+                        if (this.selectMaps.ContainsKey(selectName))
+                        {
+                            SelectInfo selectInfo = this.selectMaps[selectName];
+                            if (selectInfo.IsOpen)
+                            {
+                                openSelects.Add(selectInfo);
+                            }
+                        }
+                        else
+                        {
+                            SelectInfo selectInfo = this.AddSelectInfo(selectName);
+                            newSelects.Add(selectInfo);
+                        }
+                    }
                 }
-                this.UnLoadSelect();
-                this.LoadSelect(false);
+                this.OnRefreshSelects(new RefreshSelectsEventArgs(this, newSelects, openSelects));
             }
             catch (Exception ex)
             {
@@ -487,11 +614,14 @@ namespace SQLDAL
                     return true;
                 }
 
-                this.LoadTable(true);
+                this.LoadTable();
+                this.OnOpenTables(new OpenTablesEventArgs(this));
 
-                this.LoadView(true);
+                this.LoadView();
+                this.OnOpenViews(new OpenViewsEventArgs(this));
 
-                this.LoadSelect(true);
+                this.LoadSelect();
+                this.OnOpenSelects(new OpenSelectsEventArgs(this));
 
                 this.isOpen = true;
                 this.OnOpenDatabase(new OpenDatabaseEventArgs(this));
@@ -525,8 +655,11 @@ namespace SQLDAL
                     return true;
                 }
                 this.UnLoadTable();
+                this.OnCloseTables(new CloseTablesEventArgs(this));
                 this.UnLoadView();
+                this.OnCloseViews(new CloseViewsEventArgs(this));
                 this.UnLoadSelect();
+                this.OnCloseSelects(new CloseSelectsEventArgs(this));
                 this.isOpen = false;
                 this.OnCloseDatabase(new CloseDatabaseEventArgs(this));
                 return true;

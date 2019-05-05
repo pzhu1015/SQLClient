@@ -120,4 +120,57 @@
   <data name="AppSQL" xml:space="preserve">
     <value>Data Source = {0}\AppData\SQL.db</value>
   </data>
+  <data name="DeleteConnectScript" xml:space="preserve">
+    <value>DELETE FROM TB_CONNECTION WHERE NAME=@name</value>
+  </data>
+  <data name="DeleteDriverScript" xml:space="preserve">
+    <value>DELETE FROM TB_CONFIG WHERE NAME=@name</value>
+  </data>
+  <data name="InsertConnectScript" xml:space="preserve">
+    <value>INSERT INTO TB_CONNECTION VALUES(@connectName, @user, @file, @host, @port, @password, @connectionString, @driverName)"</value>
+  </data>
+  <data name="InsertDriverScript" xml:space="preserve">
+    <value>INSERT INTO TB_CONFIG(name, assemblyName, namespaceName, className) VALUES(@name, @assemblyName, @namespaceName, @className)</value>
+  </data>
+  <data name="InsertSelectScript" xml:space="preserve">
+    <value>INSERT INTO TB_SELECT VALUES(@selectName, @script, @connectName, @databaseName)</value>
+  </data>
+  <data name="LoadConnectScript" xml:space="preserve">
+    <value>SELECT 
+tb_connection.name,
+tb_connection.user, 
+tb_connection.password,
+tb_connection.file,
+tb_connection.host,
+tb_connection.port,
+tb_connection.connectionString,
+tb_config.assemblyName,
+tb_config.namespaceName,
+tb_config.className
+FROM 
+tb_connection, 
+tb_config
+WHERE 
+tb_connection.driverName = tb_config.name</value>
+  </data>
+  <data name="LoadDriverScript" xml:space="preserve">
+    <value>SELECT * FROM tb_config</value>
+  </data>
+  <data name="LoadSelectScript" xml:space="preserve">
+    <value>SELECT * FROM TB_SELECT WHERE DATABASE=@database AND CONNECT=@connect</value>
+  </data>
+  <data name="UpdateConnectScript" xml:space="preserve">
+    <value>UPDATE TB_CONNECTION SET 
+user = @user,  
+password = @password,  
+file = @file,  
+host = @host,  
+port = @port, 
+connectionString = @connectionString,  
+driverName = @driverName
+WHERE name = @name</value>
+  </data>
+  <data name="UpdateSelectScript" xml:space="preserve">
+    <value>UPDATE TB_SELECT SET CONTENTS=@script WHERE NAME=@selectName AND CONNECT=@connectName AND DATABASE=@databaseName</value>
+  </data>
 </root>

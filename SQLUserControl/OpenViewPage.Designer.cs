@@ -52,6 +52,7 @@
             // 
             // tsOpenTable
             // 
+            this.tsOpenTable.AllowMerge = false;
             this.tsOpenTable.BackColor = System.Drawing.SystemColors.Control;
             this.tsOpenTable.GripMargin = new System.Windows.Forms.Padding(0);
             this.tsOpenTable.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -193,6 +194,7 @@
             // 
             this.tgv.CrtPage = ((long)(0));
             this.tgv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tgv.Info = null;
             this.tgv.Location = new System.Drawing.Point(0, 25);
             this.tgv.Name = "tgv";
             this.tgv.RowCount = ((long)(0));

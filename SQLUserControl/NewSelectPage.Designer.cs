@@ -91,6 +91,7 @@
             // 
             // tsNewSelect
             // 
+            this.tsNewSelect.AllowMerge = false;
             this.tsNewSelect.BackColor = System.Drawing.SystemColors.Control;
             this.tsNewSelect.GripMargin = new System.Windows.Forms.Padding(0);
             this.tsNewSelect.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;

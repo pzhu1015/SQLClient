@@ -403,7 +403,15 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"INSERT INTO TB_CONNECTION VALUES('{info.Name}', '{info.User}', '{info.File}', '{info.Host}', '{info.Port}', '{info.Password}', '{info.ConnectionString}', '{info.DriverName}')";
+                    command.CommandText = Resources.InsertConnectScript;
+                    command.Parameters.Add(new SQLiteParameter("@connectName", info.Name));
+                    command.Parameters.Add(new SQLiteParameter("@user", info.User));
+                    command.Parameters.Add(new SQLiteParameter("@file", info.File));
+                    command.Parameters.Add(new SQLiteParameter("@host", info.Host));
+                    command.Parameters.Add(new SQLiteParameter("@port", info.Port));
+                    command.Parameters.Add(new SQLiteParameter("@password", info.Password));
+                    command.Parameters.Add(new SQLiteParameter("@connectionString", info.ConnectionString));
+                    command.Parameters.Add(new SQLiteParameter("@driverName", info.DriverName));
                     int ret = command.ExecuteNonQuery();
                     return true;
                 }
@@ -423,7 +431,8 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"DELETE FROM TB_CONNECTION WHERE NAME='{name}'";
+                    command.CommandText = Resources.DeleteConnectScript;
+                    command.Parameters.Add(new SQLiteParameter("@name", name));
                     command.ExecuteNonQuery();
                     connection.Close();
                     return true;
@@ -444,17 +453,7 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("UPDATE TB_CONNECTION SET ");
-                    sb.Append("user = @user, ");
-                    sb.Append("password = @password, ");
-                    sb.Append("file = @file, ");
-                    sb.Append("host = @host, ");
-                    sb.Append("port = @port, ");
-                    sb.Append("connectionString = @connectionString, ");
-                    sb.Append("driverName = @driverName ");
-                    sb.Append("WHERE name = @name");
-                    command.CommandText = sb.ToString();
+                    command.CommandText = Resources.UpdateConnectScript;
                     command.Parameters.Add(new SQLiteParameter("@user", info.User));
                     command.Parameters.Add(new SQLiteParameter("@password", info.Password));
                     command.Parameters.Add(new SQLiteParameter("@file", info.File));
@@ -485,24 +484,7 @@ namespace SQLDAL
                     List<ConnectInfo> list = new List<ConnectInfo>();
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText =
-                    "SELECT " +
-                        "tb_connection.name, " +
-                        "tb_connection.user, " +
-                        "tb_connection.password, " +
-                        "tb_connection.file, " +
-                        "tb_connection.host, " +
-                        "tb_connection.port, " +
-                        "tb_connection.connectionString, " +
-                        "tb_config.assemblyName, " +
-                        "tb_config.namespaceName, " +
-                        "tb_config.className " +
-                    "FROM " +
-                        "tb_connection, " +
-
-                        "tb_config " +
-                    "WHERE " +
-                        "tb_connection.driverName = tb_config.name;";
+                    command.CommandText = Resources.LoadConnectScript;
                     DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
                     da.Fill(ds);
                     DataTable dt = ds.Tables[0];
@@ -541,7 +523,7 @@ namespace SQLDAL
                     connection.Open();
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = "SELECT * FROM tb_config";
+                    command.CommandText = Resources.LoadDriverScript;
                     DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
                     da.Fill(ds);
                     return ds.Tables[0];
@@ -562,13 +544,7 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO TB_CONFIG(name, assemblyName, namespaceName, className) VALUES(");
-                    sb.Append("@name, ");
-                    sb.Append("@assemblyName, ");
-                    sb.Append("@namespaceName, ");
-                    sb.Append("@className)");
-                    command.CommandText = sb.ToString();
+                    command.CommandText = Resources.InsertDriverScript;
                     command.Parameters.Add(new SQLiteParameter("@name", info.DriverName));
                     command.Parameters.Add(new SQLiteParameter("@assemblyName", info.AssemblyName));
                     command.Parameters.Add(new SQLiteParameter("@namespaceName", info.NamespaceName));
@@ -592,7 +568,8 @@ namespace SQLDAL
                 {
                     connection.Open();
                     DbCommand command = connection.CreateCommand();
-                    command.CommandText = $"DELETE FROM TB_CONFIG WHERE NAME='{name}'";
+                    command.CommandText = Resources.DeleteDriverScript;
+                    command.Parameters.Add(new SQLiteParameter("@name", name));
                     command.ExecuteNonQuery();
                     connection.Close();
                     return true;

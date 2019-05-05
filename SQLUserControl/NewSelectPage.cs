@@ -10,7 +10,6 @@ using System.Reflection;
 using System.Threading;
 using SQLUserControl.Properties;
 using System.Data;
-//using ICSharpCode.TextEditor;
 
 namespace SQLUserControl
 {
@@ -104,11 +103,11 @@ namespace SQLUserControl
         public void BindData()
         {
             this.txtMain.Text = this.selectInfo.Open();
+            this.txtMain.Refresh();
         }
 
         private void RunSql(object args)
         {
-            //Thread.Sleep(2000);
             string str = args as string;
             try
             {
@@ -209,7 +208,7 @@ namespace SQLUserControl
             PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.txtMain, true, null);
             this.txtMain.ShowEOLMarkers = false;
-            this.txtMain.ShowHRuler = false;
+            //this.txtMain.ShowHRuler = false;
             this.txtMain.ShowInvalidLines = false;
             this.txtMain.ShowMatchingBracket = true;
             this.txtMain.ShowSpaces = false;
@@ -217,7 +216,8 @@ namespace SQLUserControl
             this.txtMain.ShowVRuler = false;
             this.txtMain.AllowCaretBeyondEOL = false;
             this.txtMain.IsIconBarVisible = false;
-            this.txtMain.HorizontalScroll.Visible = false;
+            //this.txtMain.HorizontalScroll.Visible = false;
+            //this.txtMain.VerticalScroll.Visible = false;
             this.txtMain.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             this.txtMain.Document.FoldingManager.FoldingStrategy = new SQLFolding();
             this.splitMain.Panel2Collapsed = true;
@@ -293,6 +293,7 @@ namespace SQLUserControl
                             TabPageTypeInfo pageTypeInfo = this.page.Tag as TabPageTypeInfo;
                             pageTypeInfo.PageType = TabPageType.eOpenSelect;
                             pageTypeInfo.Info = this.selectInfo;
+                            this.selectInfo.OpenSelectPage = this.page;
                         }
                         else
                         {
@@ -408,6 +409,11 @@ namespace SQLUserControl
             {
                 this.txtMain.ActiveTextAreaControl.SelectionManager.RemoveSelectedText();
             }
+        }
+
+        public void RefreshSelect()
+        {
+            this.BindData();
         }
         #endregion
     }

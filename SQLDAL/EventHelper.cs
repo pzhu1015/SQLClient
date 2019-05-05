@@ -123,14 +123,12 @@ namespace SQLDAL
     public delegate void OpenTablesEventHandler(object sender, OpenTablesEventArgs e);
     public class OpenTablesEventArgs: EventArgs
     {
-        private bool isFirst;
         private DatabaseInfo info;
-        public OpenTablesEventArgs(DatabaseInfo info, bool isFirst)
+        public OpenTablesEventArgs(DatabaseInfo info)
             :
             base()
         {
             this.info = info;
-            this.isFirst = isFirst;
         }
 
         public DatabaseInfo Info
@@ -145,23 +143,10 @@ namespace SQLDAL
                 info = value;
             }
         }
-
-        public bool IsFirst
-        {
-            get
-            {
-                return isFirst;
-            }
-
-            set
-            {
-                isFirst = value;
-            }
-        }
     }
 
     public delegate void CloseTablesEventHandler(object sender, CloseTablesEventArgs e);
-    public class CloseTablesEventArgs: EventArgs
+    public class CloseTablesEventArgs : EventArgs
     {
         private DatabaseInfo info;
         public CloseTablesEventArgs(DatabaseInfo info)
@@ -181,6 +166,76 @@ namespace SQLDAL
             set
             {
                 info = value;
+            }
+        }
+    }
+
+    public delegate void RefreshTablesEventHandler(object sender, RefreshTablesEventArgs e);
+    public class RefreshTablesEventArgs : EventArgs
+    {
+        private DatabaseInfo info;
+        private List<TableInfo> newTables;
+        private List<TableInfo> designTables;
+        private List<TableInfo> openTables;
+        public RefreshTablesEventArgs(DatabaseInfo info, List<TableInfo> newTables, List<TableInfo> openTables, List<TableInfo> designTables)
+            :
+            base()
+        {
+            this.info = info;
+            this.newTables = newTables;
+            this.openTables = openTables;
+            this.designTables = designTables;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+
+        public List<TableInfo> OpenTables
+        {
+            get
+            {
+                return openTables;
+            }
+
+            set
+            {
+                openTables = value;
+            }
+        }
+
+        public List<TableInfo> NewTables
+        {
+            get
+            {
+                return newTables;
+            }
+
+            set
+            {
+                newTables = value;
+            }
+        }
+
+        public List<TableInfo> DesignTables
+        {
+            get
+            {
+                return designTables;
+            }
+
+            set
+            {
+                designTables = value;
             }
         }
     }
@@ -241,14 +296,12 @@ namespace SQLDAL
     public delegate void OpenViewsEventHandler(object sender, OpenViewsEventArgs e);
     public class OpenViewsEventArgs: EventArgs
     {
-        private bool isFirst;
         private DatabaseInfo info;
-        public OpenViewsEventArgs(DatabaseInfo info, bool isFirst)
+        public OpenViewsEventArgs(DatabaseInfo info)
             :
             base()
         {
             this.info = info;
-            this.isFirst = isFirst;
         }
 
         public DatabaseInfo Info
@@ -261,19 +314,6 @@ namespace SQLDAL
             set
             {
                 info = value;
-            }
-        }
-
-        public bool IsFirst
-        {
-            get
-            {
-                return isFirst;
-            }
-
-            set
-            {
-                isFirst = value;
             }
         }
     }
@@ -299,6 +339,76 @@ namespace SQLDAL
             set
             {
                 info = value;
+            }
+        }
+    }
+
+    public delegate void RefreshViewsEventHandler(object sender, RefreshViewsEventArgs e);
+    public class RefreshViewsEventArgs : EventArgs
+    {
+        private DatabaseInfo info;
+        private List<ViewInfo> newViews;
+        private List<ViewInfo> openViews;
+        private List<ViewInfo> designViews;
+        public RefreshViewsEventArgs(DatabaseInfo info, List<ViewInfo> newViews, List<ViewInfo> openViews, List<ViewInfo> designViews)
+            :
+            base()
+        {
+            this.info = info;
+            this.newViews = newViews;
+            this.openViews = openViews;
+            this.designViews = designViews;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+
+        public List<ViewInfo> NewViews
+        {
+            get
+            {
+                return newViews;
+            }
+
+            set
+            {
+                newViews = value;
+            }
+        }
+
+        public List<ViewInfo> OpenViews
+        {
+            get
+            {
+                return openViews;
+            }
+
+            set
+            {
+                openViews = value;
+            }
+        }
+
+        public List<ViewInfo> DesignViews
+        {
+            get
+            {
+                return designViews;
+            }
+
+            set
+            {
+                designViews = value;
             }
         }
     }
@@ -358,14 +468,12 @@ namespace SQLDAL
     public delegate void OpenSelectsEventHandler(object sender, OpenSelectsEventArgs e);
     public class OpenSelectsEventArgs: EventArgs
     {
-        private bool isFirst;
         private DatabaseInfo info;
-        public OpenSelectsEventArgs(DatabaseInfo info, bool isFirst)
+        public OpenSelectsEventArgs(DatabaseInfo info)
             :
             base()
         {
             this.info = info;
-            this.isFirst = isFirst;
         }
 
         public DatabaseInfo Info
@@ -378,19 +486,6 @@ namespace SQLDAL
             set
             {
                 info = value;
-            }
-        }
-
-        public bool IsFirst
-        {
-            get
-            {
-                return isFirst;
-            }
-
-            set
-            {
-                isFirst = value;
             }
         }
     }
@@ -420,6 +515,60 @@ namespace SQLDAL
         }
     }
 
+    public delegate void RefreshSelectEventHandler(object sender, RefreshSelectsEventArgs e);
+    public class RefreshSelectsEventArgs : EventArgs
+    {
+        private DatabaseInfo info;
+        private List<SelectInfo> newSelects;
+        private List<SelectInfo> openSelects;
+        public RefreshSelectsEventArgs(DatabaseInfo info, List<SelectInfo> newSelects, List<SelectInfo> openSelects)
+            :
+            base()
+        {
+            this.info = info;
+            this.newSelects = newSelects;
+            this.openSelects = openSelects;
+        }
+
+        public DatabaseInfo Info
+        {
+            get
+            {
+                return info;
+            }
+
+            set
+            {
+                info = value;
+            }
+        }
+
+        public List<SelectInfo> NewSelects
+        {
+            get
+            {
+                return newSelects;
+            }
+
+            set
+            {
+                newSelects = value;
+            }
+        }
+
+        public List<SelectInfo> OpenSelects
+        {
+            get
+            {
+                return openSelects;
+            }
+
+            set
+            {
+                openSelects = value;
+            }
+        }
+    }
     #endregion
 
     #region Database Event

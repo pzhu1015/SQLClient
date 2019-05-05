@@ -687,5 +687,10 @@ namespace SQLUserControl
         {
             this.spMain.Panel2Collapsed = true;
         }
+
+        public void RefreshDesignTable()
+        {
+            this.BindData();
+        }
     }
 }

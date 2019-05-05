@@ -91,6 +91,7 @@
             // 
             // tsDesignTable
             // 
+            this.tsDesignTable.AllowMerge = false;
             this.tsDesignTable.BackColor = System.Drawing.SystemColors.Control;
             this.tsDesignTable.GripMargin = new System.Windows.Forms.Padding(0);
             this.tsDesignTable.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;

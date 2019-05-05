@@ -40,6 +40,7 @@
             // 
             // tsView
             // 
+            this.tsView.AllowMerge = false;
             this.tsView.GripMargin = new System.Windows.Forms.Padding(0);
             this.tsView.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {

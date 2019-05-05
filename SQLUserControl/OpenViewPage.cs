@@ -107,5 +107,15 @@ namespace SQLUserControl
         {
             this.SetStatusBar(e.CrtPage, e.Statement, e.RowIndex, e.Count);
         }
+
+        public void RefreshView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RefreshDesignView()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

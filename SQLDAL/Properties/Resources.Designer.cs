@@ -68,5 +68,118 @@ namespace SQLDAL.Properties {
                 return ResourceManager.GetString("AppSQL", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 DELETE FROM TB_CONNECTION WHERE NAME=@name 的本地化字符串。
+        /// </summary>
+        internal static string DeleteConnectScript {
+            get {
+                return ResourceManager.GetString("DeleteConnectScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 DELETE FROM TB_CONFIG WHERE NAME=@name 的本地化字符串。
+        /// </summary>
+        internal static string DeleteDriverScript {
+            get {
+                return ResourceManager.GetString("DeleteDriverScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 INSERT INTO TB_CONNECTION VALUES(@connectName, @user, @file, @host, @port, @password, @connectionString, @driverName)&quot; 的本地化字符串。
+        /// </summary>
+        internal static string InsertConnectScript {
+            get {
+                return ResourceManager.GetString("InsertConnectScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 INSERT INTO TB_CONFIG(name, assemblyName, namespaceName, className) VALUES(@name, @assemblyName, @namespaceName, @className) 的本地化字符串。
+        /// </summary>
+        internal static string InsertDriverScript {
+            get {
+                return ResourceManager.GetString("InsertDriverScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 INSERT INTO TB_SELECT VALUES(@selectName, @script, @connectName, @databaseName) 的本地化字符串。
+        /// </summary>
+        internal static string InsertSelectScript {
+            get {
+                return ResourceManager.GetString("InsertSelectScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT 
+        ///tb_connection.name,
+        ///tb_connection.user, 
+        ///tb_connection.password,
+        ///tb_connection.file,
+        ///tb_connection.host,
+        ///tb_connection.port,
+        ///tb_connection.connectionString,
+        ///tb_config.assemblyName,
+        ///tb_config.namespaceName,
+        ///tb_config.className
+        ///FROM 
+        ///tb_connection, 
+        ///tb_config
+        ///WHERE 
+        ///tb_connection.driverName = tb_config.name 的本地化字符串。
+        /// </summary>
+        internal static string LoadConnectScript {
+            get {
+                return ResourceManager.GetString("LoadConnectScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM tb_config 的本地化字符串。
+        /// </summary>
+        internal static string LoadDriverScript {
+            get {
+                return ResourceManager.GetString("LoadDriverScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT * FROM TB_SELECT WHERE DATABASE=@database AND CONNECT=@connect 的本地化字符串。
+        /// </summary>
+        internal static string LoadSelectScript {
+            get {
+                return ResourceManager.GetString("LoadSelectScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 UPDATE TB_CONNECTION SET 
+        ///user = @user,  
+        ///password = @password,  
+        ///file = @file,  
+        ///host = @host,  
+        ///port = @port, 
+        ///connectionString = @connectionString,  
+        ///driverName = @driverName
+        ///WHERE name = @name 的本地化字符串。
+        /// </summary>
+        internal static string UpdateConnectScript {
+            get {
+                return ResourceManager.GetString("UpdateConnectScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 UPDATE TB_SELECT SET CONTENTS=@script WHERE NAME=@selectName AND CONNECT=@connectName AND DATABASE=@databaseName 的本地化字符串。
+        /// </summary>
+        internal static string UpdateSelectScript {
+            get {
+                return ResourceManager.GetString("UpdateSelectScript", resourceCulture);
+            }
+        }
     }
 }

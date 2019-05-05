@@ -77,5 +77,11 @@ namespace SQLUserControl
         {
             this.SetStatusBar(e.CrtPage, e.Statement, e.RowIndex, e.Count);
         }
+
+        public void RefreshTable()
+        {
+            this.BindData(0);
+        }
+        
     }
 }

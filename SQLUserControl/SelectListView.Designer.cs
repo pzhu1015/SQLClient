@@ -39,6 +39,7 @@
             // 
             // tsSelect
             // 
+            this.tsSelect.AllowMerge = false;
             this.tsSelect.GripMargin = new System.Windows.Forms.Padding(0);
             this.tsSelect.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsSelect.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
