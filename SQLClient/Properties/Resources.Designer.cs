@@ -93,6 +93,26 @@ namespace SQLClient.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap camara {
+            get {
+                object obj = ResourceManager.GetObject("camara", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap capture_48 {
+            get {
+                object obj = ResourceManager.GetObject("capture_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap command_line_16 {
             get {
                 object obj = ResourceManager.GetObject("command_line_16", resourceCulture);
@@ -225,6 +245,26 @@ namespace SQLClient.Properties {
         internal static System.Drawing.Bitmap design_view_16 {
             get {
                 object obj = ResourceManager.GetObject("design_view_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap detect_rec {
+            get {
+                object obj = ResourceManager.GetObject("detect_rec", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap detect_success_64 {
+            get {
+                object obj = ResourceManager.GetObject("detect_success_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -436,6 +476,16 @@ namespace SQLClient.Properties {
         internal static System.Drawing.Bitmap load_select_16 {
             get {
                 object obj = ResourceManager.GetObject("load_select_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap login_user_48 {
+            get {
+                object obj = ResourceManager.GetObject("login_user_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

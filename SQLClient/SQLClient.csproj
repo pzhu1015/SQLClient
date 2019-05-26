@@ -38,6 +38,12 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge.Controls">
+      <HintPath>..\..\..\FaceDectionTest\Helper\lib\AForge.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\..\FaceDectionTest\Helper\lib\AForge.Video.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.BonusSkins.v15.2" />
     <Reference Include="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -61,6 +67,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegistForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistForm.Designer.cs">
+      <DependentUpon>RegistForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SqlClientFrom.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +105,12 @@
     <Compile Include="UpLoadDriverForm.Designer.cs">
       <DependentUpon>UpLoadDriverForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegistForm.resx">
+      <DependentUpon>RegistForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SqlClientFrom.resx">
       <DependentUpon>SqlClientFrom.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,6 +189,10 @@
     <None Include="Resources\view_list_16.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FaceDetection\FaceDetection.csproj">
+      <Project>{EADA4023-CADF-4DD1-9AA6-95F253969F67}</Project>
+      <Name>FaceDetection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Helper\Helper.csproj">
       <Project>{c5324fcd-63e5-4786-bbab-99c5594ce063}</Project>
       <Name>Helper</Name>
@@ -190,6 +218,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\add_driver_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camara.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\detect_success_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\detect_rec.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\capture_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login_user_48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

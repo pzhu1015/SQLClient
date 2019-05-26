@@ -325,4 +325,19 @@
   <data name="is_update_driver" xml:space="preserve">
     <value>是否要更新驱动属性</value>
   </data>
+  <data name="camara" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camara.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="detect_rec" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\detect_rec.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="detect_success_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\detect_success_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="capture_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\capture_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="login_user_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\login_user_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

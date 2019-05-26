@@ -35,7 +35,7 @@ namespace Helper
 
         private static readonly ILog logfatal = log4net.LogManager.GetLogger("logfatal");
 
-        public static void initLog(string config)
+        public static void Initialize(string config)
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo(config));
         }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using DevExpress.UserSkins;
 using DevExpress.Skins;
 using DevExpress.LookAndFeel;
-using System.Threading;
-using System.IO;
 using Helper;
+using SQLDAL;
 
 namespace SQLClient
 {
@@ -17,18 +14,55 @@ namespace SQLClient
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            string config = $@"{Application.StartupPath}\log4net.config";
-            LogHelper.initLog(config);
-
+            LogHelper.Initialize($@"{Application.StartupPath}\log4net.config");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            BonusSkins.Register();
-            SkinManager.EnableFormSkins();
-            UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
-            Application.Run(new SqlClientForm());
+            if (args.Length == 0)
+            {
+                Application.Run(new LoginForm());
+            }
+            else
+            {
+                string userId = "";
+                string passWd = "";
+                int i = 0;
+                while (i < args.Length)
+                {
+                    if (args[i] == "-user")
+                    {
+                        userId = args[i + 1];
+                        i++;
+                    }
+                    else if (args[i] == "-password")
+                    {
+                        passWd = args[i + 1];
+                        i++;
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                    i++;
+                }
+                string error;
+                bool rslt = ConnectInfo.Login(userId, passWd, out error);
+                if (rslt)
+                {
+                    BonusSkins.Register();
+                    SkinManager.EnableFormSkins();
+                    UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
+                    SqlClientForm form = new SqlClientForm();
+                    form.User = userId;
+                    form.Password = passWd;
+                    Application.Run(form);
+                }
+                else
+                {
+                    Application.Exit();
+                }
+            }
         }
     }
 }

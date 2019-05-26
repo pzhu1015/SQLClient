@@ -395,6 +395,63 @@ namespace SQLDAL
         }
 
         #region 驱动数据访问层管理静态方法
+        public static bool Login(string user, string password, out string error)
+        {
+            try
+            {
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"select password from tb_user where user='{user}'";
+                    DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count == 0)
+                    {
+                        error = $"当前用户'{user}'不存在，请联系管理员注册登录用户";
+                        return false;
+                    }
+                    string en_password = EncryptHelper.MD5Encrypt64(password);
+                    string db_password = dt.Rows[0]["password"].ToString();
+                    if (en_password != db_password)
+                    {
+                        error = $"当前用户'{user}'密码不正确";
+                        return false;
+                    }
+                }
+                error = "登录成功";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                error = ex.Message;
+                return false;
+            }
+        }
+
+
+        public static int GetPermission(string user)
+        {
+            try
+            {
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"select permission from tb_user where user='{user}'";
+                    int permission = Convert.ToInt32(command.ExecuteScalar());
+                    return permission;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                return -1;
+            }
+        }
+
         public static bool AddConnection(ConnectInfo info)
         {
             try
@@ -596,5 +653,6 @@ namespace SQLDAL
         public abstract bool OpenTable(string database, string tablename, long start, long pageSize, out DataTable datatable, out string statement);
         public abstract bool DesignView(string database, string viewname, out DataTable table);
         public abstract bool OpenView(string dataase, string viewname, long start, long pageSize, out DataTable datatable, out string statement);
+
     }
 }

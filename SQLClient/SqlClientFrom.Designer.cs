@@ -56,6 +56,7 @@
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsdropUser = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsbtnMenuRegist = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbtnConnect = new System.Windows.Forms.ToolStripButton();
             this.tsbtnUser = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -209,7 +210,7 @@
             this.tvMain.Name = "tvMain";
             this.tvMain.SelectedImageIndex = 0;
             this.tvMain.ShowLines = false;
-            this.tvMain.Size = new System.Drawing.Size(262, 482);
+            this.tvMain.Size = new System.Drawing.Size(262, 491);
             this.tvMain.TabIndex = 0;
             this.tvMain.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMain_NodeMouseDoubleClick);
             this.tvMain.Leave += new System.EventHandler(this.tvMain_Leave);
@@ -237,7 +238,7 @@
             this.tcMain.Margin = new System.Windows.Forms.Padding(0);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedTabPage = this.tpObject;
-            this.tcMain.Size = new System.Drawing.Size(495, 482);
+            this.tcMain.Size = new System.Drawing.Size(495, 491);
             this.tcMain.TabIndex = 0;
             this.tcMain.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.tpObject});
@@ -251,7 +252,7 @@
             this.tpObject.Margin = new System.Windows.Forms.Padding(0);
             this.tpObject.Name = "tpObject";
             this.tpObject.ShowCloseButton = DevExpress.Utils.DefaultBoolean.False;
-            this.tpObject.Size = new System.Drawing.Size(489, 453);
+            this.tpObject.Size = new System.Drawing.Size(489, 462);
             this.tpObject.Text = "对象";
             // 
             // imgListListView
@@ -420,11 +421,21 @@
             // 
             this.tsdropUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsdropUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsdropUser.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnMenuRegist});
             this.tsdropUser.Image = ((System.Drawing.Image)(resources.GetObject("tsdropUser.Image")));
             this.tsdropUser.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsdropUser.Name = "tsdropUser";
             this.tsdropUser.Size = new System.Drawing.Size(81, 22);
             this.tsdropUser.Text = "pengzhihu";
+            // 
+            // tsbtnMenuRegist
+            // 
+            this.tsbtnMenuRegist.Enabled = false;
+            this.tsbtnMenuRegist.Name = "tsbtnMenuRegist";
+            this.tsbtnMenuRegist.Size = new System.Drawing.Size(152, 22);
+            this.tsbtnMenuRegist.Text = "注册";
+            this.tsbtnMenuRegist.Click += new System.EventHandler(this.tsbtnMenuRegist_Click);
             // 
             // tsbtnConnect
             // 
@@ -820,7 +831,7 @@
             this.spStatusBar.Panel2.Controls.Add(this.tsDesignTable);
             this.spStatusBar.Panel2.Controls.Add(this.tsObject);
             this.spStatusBar.Size = new System.Drawing.Size(982, 524);
-            this.spStatusBar.SplitterDistance = 482;
+            this.spStatusBar.SplitterDistance = 491;
             this.spStatusBar.SplitterWidth = 1;
             this.spStatusBar.TabIndex = 32;
             // 
@@ -840,7 +851,7 @@
             // spMain.Panel2
             // 
             this.spMain.Panel2.Controls.Add(this.spRight);
-            this.spMain.Size = new System.Drawing.Size(982, 482);
+            this.spMain.Size = new System.Drawing.Size(982, 491);
             this.spMain.SplitterDistance = 262;
             this.spMain.TabIndex = 5;
             this.spMain.TabStop = false;
@@ -858,7 +869,7 @@
             // spRight.Panel1
             // 
             this.spRight.Panel1.Controls.Add(this.tcMain);
-            this.spRight.Size = new System.Drawing.Size(716, 482);
+            this.spRight.Size = new System.Drawing.Size(716, 491);
             this.spRight.SplitterDistance = 495;
             this.spRight.TabIndex = 1;
             // 
@@ -1361,6 +1372,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.msMain;
             this.Name = "SqlClientForm";
+            this.ShowIcon = false;
             this.Text = "SQLClient";
             this.Load += new System.EventHandler(this.SQLClientForm_Load);
             this.SizeChanged += new System.EventHandler(this.SQLClientForm_SizeChanged);
@@ -1539,6 +1551,7 @@
         private System.Windows.Forms.ToolStripDropDownButton tsdropUser;
         private System.Windows.Forms.ToolStripMenuItem tsmiMenuDeleteConnect;
         private System.Windows.Forms.SplitContainer spRight;
+        private System.Windows.Forms.ToolStripMenuItem tsbtnMenuRegist;
     }
 }
 

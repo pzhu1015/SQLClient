@@ -15,6 +15,8 @@ namespace SQLClient
 
     public partial class SqlClientForm : Form
     {
+        public string User { get; set; }
+        public string Password { get; set; }
         private LoadingForm waitForm = new LoadingForm();
         private TreeNode currentDbNode = null;
         private NodeType currentViewListType = NodeType.eTable;
@@ -23,21 +25,6 @@ namespace SQLClient
             InitializeComponent();
             this.DoubleBuffered = true; 
         }
-
-        //const int WM_SYSCOMMAND = 0x112;
-        //const int SC_CLOSE = 0xF060;
-        //const int SC_MINIMIZE = 0xF020;
-        //const int SC_MAXIMIZE = 0xF030;
-        //protected override void WndProc(ref Message m)
-        //{
-        //    if (m.Msg == WM_SYSCOMMAND)
-        //    {
-        //        if (m.WParam.ToInt32() == SC_MAXIMIZE)
-        //        {
-        //            this.spMain.SplitterDistance = 261;
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// 设置状态栏左右宽度
@@ -1010,6 +997,16 @@ namespace SQLClient
         {
             try
             {
+                this.tsdropUser.Text = this.User;
+                int permission = ConnectInfo.GetPermission(this.User);
+                if (permission == 0)
+                {
+                    this.tsbtnMenuRegist.Enabled = true;
+                }
+                else
+                {
+                    this.tsbtnMenuRegist.Enabled = false;
+                }
                 DataTable dt = ConnectInfo.LoadDriver();
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -2667,5 +2664,10 @@ namespace SQLClient
 
         #endregion
 
+        private void tsbtnMenuRegist_Click(object sender, EventArgs e)
+        {
+            RegistForm registForm = new RegistForm();
+            registForm.ShowDialog();
+        }
     }
 }
