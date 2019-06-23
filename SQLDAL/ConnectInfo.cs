@@ -40,6 +40,7 @@ namespace SQLDAL
         protected string namespaceName;
         protected string className;
         protected string connectionString;
+        protected string loginUser;
         protected Form connectForm;
         protected string message;
         protected TreeNode node;
@@ -195,6 +196,20 @@ namespace SQLDAL
         }
 
         [Browsable(false)]
+        public string LoginUser
+        {
+            get
+            {
+                return loginUser;
+            }
+
+            set
+            {
+                loginUser = value;
+            }
+        }
+
+        [Browsable(false)]
         public TreeNode Node
         {
             get
@@ -262,6 +277,8 @@ namespace SQLDAL
         [Browsable(false)]
         public abstract string DefaultPort { get; }
 
+        
+
         #endregion
 
         protected virtual void OnCloseConnect(CloseConnectEventArgs e)
@@ -323,6 +340,7 @@ namespace SQLDAL
             info.Host = this.Host;
             info.Port = this.Port;
             info.File = this.File;
+            info.LoginUser = this.LoginUser;
             return info;
         }
 
@@ -395,6 +413,7 @@ namespace SQLDAL
         }
 
         #region 驱动数据访问层管理静态方法
+
         public static bool Login(string user, string password, out string error)
         {
             try
@@ -420,7 +439,7 @@ namespace SQLDAL
                         return false;
                     }
                 }
-                error = "登录成功";
+                error = "";
                 return true;
             }
             catch (Exception ex)
@@ -431,6 +450,81 @@ namespace SQLDAL
             }
         }
 
+        public static bool Regist(string user, string password, string phone, string email, string age, string gender, byte[] face, byte[] faceresult, out string error)
+        {
+            try
+            {
+                if (user == "")
+                {
+                    error = "用户名不能为空";
+                    return false;
+                }
+                if (password == "")
+                {
+                    error = "密码不能为空";
+                    return false;
+                }
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"select password from tb_user where user='{user}'";
+                    DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count == 1)
+                    {
+                        error = $"当前用户'{user}'已存在，请选择其他用户名注册";
+                        return false;
+                    }
+                    string en_password = EncryptHelper.MD5Encrypt64(password);
+                    command.CommandText = "insert into tb_user values(@user, @password, @phone, @email, @age, @gender, @face, @faceresult, @permission)";
+                    command.Parameters.Add(new SQLiteParameter("@user", user));
+                    command.Parameters.Add(new SQLiteParameter("@password", en_password));
+                    command.Parameters.Add(new SQLiteParameter("@phone", phone));
+                    command.Parameters.Add(new SQLiteParameter("@email", email));
+                    command.Parameters.Add(new SQLiteParameter("@age", age));
+                    command.Parameters.Add(new SQLiteParameter("@gender", gender));
+                    command.Parameters.Add(new SQLiteParameter("@face", face));
+                    command.Parameters.Add(new SQLiteParameter("@faceresult", faceresult));
+                    command.Parameters.Add(new SQLiteParameter("@permission", 1));
+                    command.ExecuteNonQuery();
+                }
+                error = "";
+                return true;
+            }
+            catch(Exception ex)
+            {
+                LogHelper.Error(ex);
+                error = ex.Message;
+                return false;
+            }
+        }
+
+        public static bool LoadUser(out DataTable dt, out string error)
+        {
+            try
+            {
+                using (DbConnection connection = new SQLiteConnection(ConnectInfo.LocalConnectionString))
+                {
+                    connection.Open();
+                    DbCommand command = connection.CreateCommand();
+                    command.CommandText = $"select * from tb_user";
+                    DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                }
+                error = "";
+                return true;
+            }
+            catch(Exception ex)
+            {
+                LogHelper.Error(ex);
+                error = ex.Message;
+                dt = null;
+                return false;
+            }
+        }
 
         public static int GetPermission(string user)
         {
@@ -469,6 +563,8 @@ namespace SQLDAL
                     command.Parameters.Add(new SQLiteParameter("@password", info.Password));
                     command.Parameters.Add(new SQLiteParameter("@connectionString", info.ConnectionString));
                     command.Parameters.Add(new SQLiteParameter("@driverName", info.DriverName));
+                    command.Parameters.Add(new SQLiteParameter("@owner", info.LoginUser));
+
                     int ret = command.ExecuteNonQuery();
                     return true;
                 }
@@ -519,6 +615,8 @@ namespace SQLDAL
                     command.Parameters.Add(new SQLiteParameter("@connectionString", info.ConnectionString));
                     command.Parameters.Add(new SQLiteParameter("@driverName", info.DriverName));
                     command.Parameters.Add(new SQLiteParameter("@name", info.Name));
+                    command.Parameters.Add(new SQLiteParameter("@owner", info.LoginUser));
+
                     command.ExecuteNonQuery();
                     connection.Close();
                     return true;
@@ -531,7 +629,7 @@ namespace SQLDAL
             }
         }
 
-        public static List<ConnectInfo> LoadConnection()
+        public static List<ConnectInfo> LoadConnection(string owner)
         {
             try
             {
@@ -542,6 +640,7 @@ namespace SQLDAL
                     DataSet ds = new DataSet();
                     DbCommand command = connection.CreateCommand();
                     command.CommandText = Resources.LoadConnectScript;
+                    command.Parameters.Add(new SQLiteParameter("@owner", owner));
                     DbDataAdapter da = new SQLiteDataAdapter(command as SQLiteCommand);
                     da.Fill(ds);
                     DataTable dt = ds.Tables[0];

@@ -29,7 +29,7 @@ namespace FaceDetection
         public int FaceNumber { get; set; } = 1;
         public VideoSourcePlayer VideoPlayer { get; set; }
         public List<FaceItem> Faces { get; set; }
-
+        public bool IsDetected { get; set; } = false;
         public FaceResult FaceResult
         {
             get
@@ -336,11 +336,12 @@ namespace FaceDetection
                 {
                     if (registerClicked)
                     {
-                        registerFeatureData = new byte[faceModel.lFeatureSize];
+                        this.registerFeatureData = new byte[faceModel.lFeatureSize];
                         Marshal.Copy(faceModel.pbFeature, registerFeatureData, 0, faceModel.lFeatureSize);
                     }
 
                     #region 人脸识别（100张人脸） 17-20毫秒
+                    bool isdetected = false;
                     foreach (var item in this.Faces.OrderByDescending(i => i.OrderId))
                     {
                         var fm = item.FaceModel;
@@ -350,9 +351,11 @@ namespace FaceDetection
                         {
                             item.OrderId = DateTime.Now.Ticks;
                             faceResult.ID = item.FaceID;
+                            isdetected = true;
                             break;
                         }
                     }
+                    this.IsDetected = isdetected;
                     #endregion
 
                 }
@@ -363,7 +366,7 @@ namespace FaceDetection
                 bitmap.UnlockBits(bmpData);
                 if (registerClicked)
                 {
-                    this.OnCaputurePicture(new CapturePictureEventArgs(bitmap, this.faceResult.RealRetangle));
+                    this.OnCaputurePicture(new CapturePictureEventArgs(bitmap, this.faceResult.RealRetangle, this.registerFeatureData));
                     registerClicked = false;
                 }
                 else
@@ -373,6 +376,81 @@ namespace FaceDetection
             }
         }
 
+
+        public bool MatchBitmap(Bitmap bitmap, FaceModel fm)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            #region 图片转换 0.7-2微妙
+            var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+            var imageData = new ImageData
+            {
+                u32PixelArrayFormat = 513,//Rgb24,
+                i32Width = bitmap.Width,
+                i32Height = bitmap.Height,
+                pi32Pitch = new int[4],
+                ppu8Plane = new IntPtr[4]
+            };
+            imageData.pi32Pitch[0] = bmpData.Stride;
+            imageData.ppu8Plane[0] = bmpData.Scan0;
+
+            sw.Stop();
+            faceResult.Score = sw.ElapsedTicks;
+
+            #endregion
+
+            try
+            {
+                #region 人脸检测 5-8毫秒
+                DetectResult pDetectResult = new DetectResult();
+                var ret = (ErrorCode)Detect.Detection(faceDetectEnginer, ref imageData, out pDetectResult.lfaceOrient);
+                if (ret != ErrorCode.Ok)
+                    return false;
+                var detectResult = (DetectResult)Marshal.PtrToStructure(pDetectResult.lfaceOrient, typeof(DetectResult));
+                if (detectResult.nFace == 0)
+                    return false;
+                var faceRect = (FaceRect)Marshal.PtrToStructure(detectResult.rcFace, typeof(FaceRect));
+                faceResult.Rectangle = new Rectangle((int)(faceRect.left * rateW), (int)(faceRect.top * rateH), (int)((faceRect.right - faceRect.left) * rateW), (int)((faceRect.bottom - faceRect.top) * rateH));
+                faceResult.RealRetangle = new Rectangle(faceRect.left, faceRect.top, (faceRect.right - faceRect.left), (faceRect.bottom - faceRect.top));
+                var faceOrient = (int)Marshal.PtrToStructure(detectResult.lfaceOrient, typeof(int));
+                #endregion
+
+                #region 获取人脸特征 160-180毫秒
+                var faceFeatureInput = new FaceFeatureInput
+                {
+                    rcFace = faceRect,
+                    lOrient = faceOrient
+                };
+
+                var faceModel = new FaceModel();
+                ret = (ErrorCode)Match.ExtractFeature(faceMatchEngine, ref imageData, ref faceFeatureInput, out faceModel);
+                #endregion
+
+                if (ret == ErrorCode.Ok)
+                {
+                    if (registerClicked)
+                    {
+                        this.registerFeatureData = new byte[faceModel.lFeatureSize];
+                        Marshal.Copy(faceModel.pbFeature, registerFeatureData, 0, faceModel.lFeatureSize);
+                    }
+
+                    #region 人脸识别（100张人脸） 17-20毫秒
+                    float score = 0;
+                    Match.FacePairMatch(faceMatchEngine, ref fm, ref faceModel, out score);
+                    if (score > 0.5)
+                    {
+                        return true;
+                    }
+                    #endregion
+                }
+            }
+            finally
+            {
+                bitmap.UnlockBits(bmpData);
+            }
+            return false;
+        }
+
     }
 
     public delegate void CaputurePictureEventHandler(object sender, CapturePictureEventArgs e);
@@ -380,12 +458,14 @@ namespace FaceDetection
     {
         private Bitmap bitmap;
         private Rectangle rectangle;
-        public CapturePictureEventArgs(Bitmap bitmap, Rectangle rectangle)
+        private byte[] faceResult;
+        public CapturePictureEventArgs(Bitmap bitmap, Rectangle rectangle, byte[] faceResult)
             :
             base()
         {
             this.bitmap = bitmap;
             this.rectangle = rectangle;
+            this.faceResult = faceResult;
         }
 
         public Bitmap Bitmap
@@ -411,6 +491,19 @@ namespace FaceDetection
             set
             {
                 rectangle = value;
+            }
+        }
+
+        public byte[] FaceResult
+        {
+            get
+            {
+                return faceResult;
+            }
+
+            set
+            {
+                faceResult = value;
             }
         }
     }

@@ -70,7 +70,7 @@ namespace SQLDAL.Properties {
         }
         
         /// <summary>
-        ///   查找类似 DELETE FROM TB_CONNECTION WHERE NAME=@name 的本地化字符串。
+        ///   查找类似 DELETE FROM TB_CONNECTION WHERE NAME=@name and OWNER=@owner 的本地化字符串。
         /// </summary>
         internal static string DeleteConnectScript {
             get {
@@ -88,7 +88,7 @@ namespace SQLDAL.Properties {
         }
         
         /// <summary>
-        ///   查找类似 INSERT INTO TB_CONNECTION VALUES(@connectName, @user, @file, @host, @port, @password, @connectionString, @driverName)&quot; 的本地化字符串。
+        ///   查找类似 INSERT INTO TB_CONNECTION VALUES(@connectName, @user, @file, @host, @port, @password, @connectionString, @driverName, @owner)&quot; 的本地化字符串。
         /// </summary>
         internal static string InsertConnectScript {
             get {
@@ -122,7 +122,7 @@ namespace SQLDAL.Properties {
         ///tb_connection.file,
         ///tb_connection.host,
         ///tb_connection.port,
-        ///tb_connection.connectionString,
+        ///tb_connection.connectionString, tb_connection.owner,
         ///tb_config.assemblyName,
         ///tb_config.namespaceName,
         ///tb_config.className
@@ -130,7 +130,7 @@ namespace SQLDAL.Properties {
         ///tb_connection, 
         ///tb_config
         ///WHERE 
-        ///tb_connection.driverName = tb_config.name 的本地化字符串。
+        ///tb_connection.driverName = tb_config.name and tb_connection.owner = @owner 的本地化字符串。
         /// </summary>
         internal static string LoadConnectScript {
             get {
@@ -165,7 +165,7 @@ namespace SQLDAL.Properties {
         ///port = @port, 
         ///connectionString = @connectionString,  
         ///driverName = @driverName
-        ///WHERE name = @name 的本地化字符串。
+        ///WHERE name = @name and owner=@owner 的本地化字符串。
         /// </summary>
         internal static string UpdateConnectScript {
             get {

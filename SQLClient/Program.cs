@@ -54,7 +54,7 @@ namespace SQLClient
                     SkinManager.EnableFormSkins();
                     UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
                     SqlClientForm form = new SqlClientForm();
-                    form.User = userId;
+                    form.LoginUser = userId;
                     form.Password = passWd;
                     Application.Run(form);
                 }

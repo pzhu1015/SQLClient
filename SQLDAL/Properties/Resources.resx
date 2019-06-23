@@ -121,13 +121,13 @@
     <value>Data Source = {0}\AppData\SQL.db</value>
   </data>
   <data name="DeleteConnectScript" xml:space="preserve">
-    <value>DELETE FROM TB_CONNECTION WHERE NAME=@name</value>
+    <value>DELETE FROM TB_CONNECTION WHERE NAME=@name and OWNER=@owner</value>
   </data>
   <data name="DeleteDriverScript" xml:space="preserve">
     <value>DELETE FROM TB_CONFIG WHERE NAME=@name</value>
   </data>
   <data name="InsertConnectScript" xml:space="preserve">
-    <value>INSERT INTO TB_CONNECTION VALUES(@connectName, @user, @file, @host, @port, @password, @connectionString, @driverName)"</value>
+    <value>INSERT INTO TB_CONNECTION VALUES(@connectName, @user, @file, @host, @port, @password, @connectionString, @driverName, @owner)"</value>
   </data>
   <data name="InsertDriverScript" xml:space="preserve">
     <value>INSERT INTO TB_CONFIG(name, assemblyName, namespaceName, className) VALUES(@name, @assemblyName, @namespaceName, @className)</value>
@@ -143,7 +143,7 @@ tb_connection.password,
 tb_connection.file,
 tb_connection.host,
 tb_connection.port,
-tb_connection.connectionString,
+tb_connection.connectionString, tb_connection.owner,
 tb_config.assemblyName,
 tb_config.namespaceName,
 tb_config.className
@@ -151,7 +151,7 @@ FROM
 tb_connection, 
 tb_config
 WHERE 
-tb_connection.driverName = tb_config.name</value>
+tb_connection.driverName = tb_config.name and tb_connection.owner = @owner</value>
   </data>
   <data name="LoadDriverScript" xml:space="preserve">
     <value>SELECT * FROM tb_config</value>
@@ -168,7 +168,7 @@ host = @host,
 port = @port, 
 connectionString = @connectionString,  
 driverName = @driverName
-WHERE name = @name</value>
+WHERE name = @name and owner=@owner</value>
   </data>
   <data name="UpdateSelectScript" xml:space="preserve">
     <value>UPDATE TB_SELECT SET CONTENTS=@script WHERE NAME=@selectName AND CONNECT=@connectName AND DATABASE=@databaseName</value>

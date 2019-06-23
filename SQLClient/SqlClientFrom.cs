@@ -15,7 +15,7 @@ namespace SQLClient
 
     public partial class SqlClientForm : Form
     {
-        public string User { get; set; }
+        public string LoginUser { get; set; }
         public string Password { get; set; }
         private LoadingForm waitForm = new LoadingForm();
         private TreeNode currentDbNode = null;
@@ -136,6 +136,7 @@ namespace SQLClient
             if (newConnectionForm.ShowDialog() == DialogResult.OK)
             {
                 ConnectInfo info = newConnectionForm.ConnectionInfo;
+                info.LoginUser = this.LoginUser;
                 this.AddConnectImage(info);
                 this.AddConnection(info);
             }
@@ -997,8 +998,8 @@ namespace SQLClient
         {
             try
             {
-                this.tsdropUser.Text = this.User;
-                int permission = ConnectInfo.GetPermission(this.User);
+                this.tsdropUser.Text = this.LoginUser;
+                int permission = ConnectInfo.GetPermission(this.LoginUser);
                 if (permission == 0)
                 {
                     this.tsbtnMenuRegist.Enabled = true;
@@ -1017,7 +1018,7 @@ namespace SQLClient
                 TabPageTypeInfo pageTypeInfo = new TabPageTypeInfo(TabPageType.eObject, null);
                 this.tpObject.Tag = pageTypeInfo;
                 this.ShowStatusBar(pageTypeInfo);
-                List<ConnectInfo> list = ConnectInfo.LoadConnection();
+                List<ConnectInfo> list = ConnectInfo.LoadConnection(this.LoginUser);
                 foreach (ConnectInfo info in list)
                 {
                     info.CloseConnect += Info_CloseConnect;
