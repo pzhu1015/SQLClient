@@ -3,6 +3,7 @@
 ## 功能描述
 
 ​			通用SQL客户端通过提供统一的GUI访问界面，这些界面获取数据可以调用标准的DAL(Data Access Layer)接口定义来实现不同数据库的数据适配，也就是说用户只要按照DAL定义的数据标准，实现相关的接口，就可以使用SQLClient来展示新型数据库中的表，视图，索引等。
+    新增SQLClient登录控制,人脸识别自动登录(AForge, libarcsoft)
 
 ## SQLClient程序结构
 
